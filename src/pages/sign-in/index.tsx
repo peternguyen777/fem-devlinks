@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useSignIn, useUser } from "@clerk/nextjs";
@@ -6,8 +8,10 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { Spinner } from "~/components/icons/spinner";
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -20,21 +24,17 @@ import {
 import { Input } from "~/components/ui/input";
 
 const formSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .email({ message: "Invalid email" }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
+  username: z.string().email({ message: "Invalid email" }),
+  password: z.string().min(1, { message: "Required" }),
 });
 
 export default function SignIn() {
   const { isSignedIn } = useUser();
   const { isLoaded, signIn, setActive } = useSignIn();
   const router = useRouter();
+
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,6 +54,7 @@ export default function SignIn() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (signIn) {
+      setIsSigningIn(true);
       await signIn
         .create({
           identifier: values.username,
@@ -62,13 +63,17 @@ export default function SignIn() {
         .then((result) => {
           if (result.status === "complete") {
             setActive({ session: result.createdSessionId });
+            setError(undefined);
             router.push("/");
           }
         })
-        .catch((err) =>
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          console.error("error", err.errors[0].longMessage),
-        );
+        .catch((err) => {
+          console.error("error", err.errors[0].longMessage);
+          setError(err.errors[0].longMessage);
+        })
+        .finally(() => {
+          setIsSigningIn(false);
+        });
     }
   }
 
@@ -101,10 +106,8 @@ export default function SignIn() {
               control={form.control}
               name="username"
               render={({ field }) => (
-                <FormItem className="space-y-1">
-                  <FormLabel>
-                    <h6>Username</h6>
-                  </FormLabel>
+                <FormItem>
+                  <FormLabel>Email Address</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="e.g. alex@email.com"
@@ -119,7 +122,7 @@ export default function SignIn() {
                       }
                     />
                   </FormControl>
-                  <FormMessage className="text-right" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -127,7 +130,7 @@ export default function SignIn() {
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem className="space-y-1">
+                <FormItem>
                   <FormLabel>
                     <h6>Password</h6>
                   </FormLabel>
@@ -147,15 +150,20 @@ export default function SignIn() {
                       }
                     />
                   </FormControl>
-                  <FormMessage className="text-right" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
             <div className="flex flex-col items-center">
+              {error && (
+                <h6 className="text-destructive mb-2 w-full">{error}</h6>
+              )}
               <Button
                 type="submit"
-                className="font-instrument w-full bg-[#633CFF] text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF]"
+                disabled={isSigningIn}
+                className="font-instrument w-full items-start bg-[#633CFF] text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF]"
               >
+                {isSigningIn && <Spinner />}
                 Submit
               </Button>
               <h5 className="mt-6 text-[#737373]">
