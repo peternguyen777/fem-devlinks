@@ -20,9 +20,12 @@ import {
 import { Input } from "~/components/ui/input";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+  username: z
+    .string()
+    .min(2, {
+      message: "Username must be at least 2 characters.",
+    })
+    .email(),
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
@@ -30,11 +33,8 @@ const formSchema = z.object({
 
 export default function SignIn() {
   const { isSignedIn } = useUser();
+  const { isLoaded, signIn, setActive } = useSignIn();
   const router = useRouter();
-
-  if (isSignedIn) {
-    router.push("/");
-  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,7 +44,9 @@ export default function SignIn() {
     },
   });
 
-  const { isLoaded, signIn, setActive } = useSignIn();
+  if (isSignedIn) {
+    router.push("/");
+  }
 
   if (!isLoaded) {
     return null;
@@ -104,7 +106,19 @@ export default function SignIn() {
                     <h6>Username</h6>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. alex@email.com" {...field} />
+                    <Input
+                      placeholder="e.g. alex@email.com"
+                      {...field}
+                      icon={
+                        <Image
+                          src="/images/icon-email.svg"
+                          alt="password icon"
+                          height={16}
+                          width={16}
+                        />
+                      }
+                      className="font-instrument border-[#D9D9D9] text-[16px] font-normal leading-[24px] placeholder:text-[#333333] placeholder:opacity-50"
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -125,6 +139,14 @@ export default function SignIn() {
                       {...field}
                       type="password"
                       autoComplete="on"
+                      icon={
+                        <Image
+                          src="/images/icon-password.svg"
+                          alt="password icon"
+                          height={16}
+                          width={16}
+                        />
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -134,7 +156,7 @@ export default function SignIn() {
             <div className="flex flex-col items-center">
               <Button
                 type="submit"
-                className="font-instrument w-full bg-[#633CFF] font-bold text-white hover:bg-[#BEADFF]"
+                className="font-instrument w-full bg-[#633CFF] text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF]"
               >
                 Submit
               </Button>

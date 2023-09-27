@@ -74,6 +74,9 @@ module.exports = {
         instrument: ["var(--font-instrument)"],
         "instrument-italic": ["var(--font-instrument-italic)"],
       },
+      boxShadow: {
+        custom: "0px 0px 32px rgba(99, 60, 255, 0.25)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
