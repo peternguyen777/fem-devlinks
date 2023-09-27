@@ -25,7 +25,7 @@ const formSchema = z.object({
     .min(2, {
       message: "Username must be at least 2 characters.",
     })
-    .email(),
+    .email({ message: "Invalid email" }),
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
@@ -117,11 +117,9 @@ export default function SignIn() {
                           width={16}
                         />
                       }
-                      className="font-instrument border-[#D9D9D9] text-[16px] font-normal leading-[24px] placeholder:text-[#333333] placeholder:opacity-50"
                     />
                   </FormControl>
-
-                  <FormMessage />
+                  <FormMessage className="text-right" />
                 </FormItem>
               )}
             />
@@ -149,7 +147,7 @@ export default function SignIn() {
                       }
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-right" />
                 </FormItem>
               )}
             />

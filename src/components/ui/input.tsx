@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { cn } from "~/lib/utils";
+import { useFormField } from "./form";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -9,10 +10,12 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, icon, ...props }, ref) => {
+    const { error } = useFormField();
     return (
       <div
         className={cn(
           "focus-within:shadow-custom  box-content flex h-12 gap-3 rounded-md border border-[#D9D9D9] px-4 transition-colors duration-100 focus-within:border-[#633CFF]",
+          error && "border-[#FF3939]",
           className,
         )}
       >

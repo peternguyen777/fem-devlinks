@@ -153,14 +153,14 @@ const FormMessage = React.forwardRef<
   }
 
   return (
-    <p
+    <h6
       ref={ref}
       id={formMessageId}
-      className={cn("text-destructive text-sm font-medium", className)}
+      className={cn("text-[#FF3939]", className)}
       {...props}
     >
       {body}
-    </p>
+    </h6>
   );
 });
 FormMessage.displayName = "FormMessage";
