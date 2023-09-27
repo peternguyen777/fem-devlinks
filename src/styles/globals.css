@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  h3 {
+    @apply font-instrument text-[32px] font-bold leading-[48px] text-[#333333];
+  }
+
+  h4 {
+    @apply font-instrument text-[16px] font-bold leading-[24px] text-[#333333];
+  }
+
+  h5 {
+    @apply font-instrument text-[16px] font-normal leading-[24px] text-[#333333];
+  }
+
+  h6 {
+    @apply font-instrument text-[12px] font-normal leading-[18px] text-[#333333];
+  }
+
+  p {
+    @apply font-instrument text-[16px] font-normal leading-[24px] text-[#333333];
+  }
+}
