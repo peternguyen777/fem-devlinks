@@ -61,6 +61,8 @@ export default function SignIn() {
           alt="devlinks logo"
           width={183}
           height={40}
+          className="cursor-pointer"
+          onClick={() => router.push("/")}
         />
         <h3 className="mt-16">Login</h3>
         <p className="mt-2 text-[#737373]">
