@@ -1,44 +1,68 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useSignIn, useUser } from "@clerk/nextjs";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { Button } from "~/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
+
+const formSchema = z.object({
+  username: z
+    .string()
+    .min(2, {
+      message: "Username must be at least 2 characters.",
+    })
+    .email({ message: "Invalid email" }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+});
 
 export default function SignIn() {
   const { isSignedIn } = useUser();
+  const { isLoaded, signIn, setActive } = useSignIn();
   const router = useRouter();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
 
   if (isSignedIn) {
     router.push("/");
   }
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const { isLoaded, signIn, setActive } = useSignIn();
-
   if (!isLoaded) {
     return null;
   }
 
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     if (signIn) {
       await signIn
         .create({
-          identifier: email,
-          password,
+          identifier: values.username,
+          password: values.password,
         })
         .then((result) => {
           if (result.status === "complete") {
-            console.log(result);
             setActive({ session: result.createdSessionId });
             router.push("/");
-          } else {
-            console.log(result);
           }
         })
         .catch((err) =>
@@ -68,41 +92,81 @@ export default function SignIn() {
         <p className="mt-2 text-[#737373]">
           Add your details below to get back into the app
         </p>
-        <form onSubmit={submit} className="mt-10 space-y-6">
-          <div>
-            <label htmlFor="email">
-              <h6>Email address</h6>
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="e.g. alex@email.com"
-              className="placeholder:font-instrument mt-1 w-full rounded-md border p-2"
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="mt-10 space-y-6"
+          >
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel>
+                    <h6>Username</h6>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="e.g. alex@email.com"
+                      {...field}
+                      icon={
+                        <Image
+                          src="/images/icon-email.svg"
+                          alt="password icon"
+                          height={16}
+                          width={16}
+                        />
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage className="text-right" />
+                </FormItem>
+              )}
             />
-          </div>
-          <div>
-            <label htmlFor="password">
-              <h6>Password</h6>
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              className="placeholder:font-instrument mt-1 w-full rounded-md border p-2"
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel>
+                    <h6>Password</h6>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your password"
+                      {...field}
+                      type="password"
+                      autoComplete="on"
+                      icon={
+                        <Image
+                          src="/images/icon-password.svg"
+                          alt="password icon"
+                          height={16}
+                          width={16}
+                        />
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage className="text-right" />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="flex flex-col items-center">
-            <button className="w-full rounded-md bg-[#633CFF] px-[27px] py-[11px]">
-              <h4 className="text-white">Login</h4>
-            </button>
-            <h5 className="mt-6 text-[#737373]">Don&apos;t have an account?</h5>
-            <Link href="/sign-up">
-              <h5 className="text-[#633CFF]">Create account</h5>
-            </Link>
-          </div>
-        </form>
+            <div className="flex flex-col items-center">
+              <Button
+                type="submit"
+                className="font-instrument w-full bg-[#633CFF] text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF]"
+              >
+                Submit
+              </Button>
+              <h5 className="mt-6 text-[#737373]">
+                Don&apos;t have an account?
+              </h5>
+              <Link href="/sign-up">
+                <h5 className="text-[#633CFF]">Create account</h5>
+              </Link>
+            </div>
+          </form>
+        </Form>
       </main>
     </>
   );
