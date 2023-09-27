@@ -17,14 +17,14 @@ const InstrumentSansItalic = localFont({
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
-      {/* Turn this on if using shadcn */}
-      {/* <style jsx global>
+      {/* Global font for shadcn-ui */}
+      <style jsx global>
         {`
           html {
             font-family: ${InstrumentSans.style.fontFamily};
           }
         `}
-      </style> */}
+      </style>
       <ClerkProvider {...pageProps}>
         <main
           className={`${InstrumentSansItalic.variable} ${InstrumentSans.variable}`}

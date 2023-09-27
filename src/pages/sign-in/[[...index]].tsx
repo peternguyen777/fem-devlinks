@@ -3,6 +3,7 @@
 import { useSignIn, useUser } from "@clerk/nextjs";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -75,7 +76,7 @@ export default function SignIn() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="e.g. alex@email.com"
-              className="placeholder:font-instrument w-full rounded-md border p-2"
+              className="placeholder:font-instrument mt-1 w-full rounded-md border p-2"
             />
           </div>
           <div>
@@ -87,13 +88,17 @@ export default function SignIn() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="placeholder:font-instrument w-full rounded-md border p-2"
+              className="placeholder:font-instrument mt-1 w-full rounded-md border p-2"
             />
           </div>
-          <div>
+          <div className="flex flex-col items-center">
             <button className="w-full rounded-md bg-[#633CFF] px-[27px] py-[11px]">
               <h4 className="text-white">Login</h4>
             </button>
+            <h5 className="mt-6 text-[#737373]">Don&apos;t have an account?</h5>
+            <Link href="/sign-up">
+              <h5 className="text-[#633CFF]">Create account</h5>
+            </Link>
           </div>
         </form>
       </main>
