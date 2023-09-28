@@ -63,7 +63,9 @@ export default function SignIn() {
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
     if (signIn) {
+      console.log("signing in");
       setIsSigningIn(true);
+
       await signIn
         .create({
           identifier: values.emailAddress,

@@ -24,7 +24,7 @@ const EmailInput = ({
     <FormField
       control={form.control}
       name="emailAddress"
-      render={({ field: { onChange, ...rest } }) => (
+      render={({ field }) => (
         <FormItem>
           <FormLabel>
             <h6>Email Address</h6>
@@ -32,7 +32,7 @@ const EmailInput = ({
           <FormControl>
             <Input
               placeholder="e.g. alex@email.com"
-              {...rest}
+              {...field}
               icon={
                 <Image
                   src="/images/icon-email.svg"
@@ -42,7 +42,7 @@ const EmailInput = ({
                 />
               }
               onChange={(val) => {
-                onChange(val);
+                field.onChange(val);
                 setErrorMessage({
                   ...errorMessage,
                   emailErrorMessage: undefined,

@@ -24,7 +24,7 @@ const PasswordInput = ({
     <FormField
       control={form.control}
       name="password"
-      render={({ field: { onChange, ...rest } }) => (
+      render={({ field }) => (
         <FormItem>
           <FormLabel>
             <h6>Password</h6>
@@ -32,7 +32,7 @@ const PasswordInput = ({
           <FormControl>
             <Input
               placeholder="Enter your password"
-              {...rest}
+              {...field}
               type="password"
               autoComplete="on"
               icon={
@@ -45,7 +45,7 @@ const PasswordInput = ({
               }
               isError={!!errorMessage.passwordErrorMessage}
               onChange={(val) => {
-                onChange(val);
+                field.onChange(val);
                 setErrorMessage({
                   ...errorMessage,
                   passwordErrorMessage: undefined,

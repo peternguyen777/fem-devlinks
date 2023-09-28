@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         className={cn(
-          "flex h-12 items-center gap-3 rounded-md border border-[#D9D9D9] px-4 transition-colors duration-100 focus-within:border-[#633CFF] focus-within:shadow-custom",
+          "flex h-12 items-center gap-3 rounded-md border border-[#D9D9D9] px-4 transition-colors duration-300 focus-within:border-[#633CFF] focus-within:shadow-custom",
           (error ?? isError) && "border-destructive",
           className,
         )}
