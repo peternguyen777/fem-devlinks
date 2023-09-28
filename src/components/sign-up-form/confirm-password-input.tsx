@@ -1,8 +1,6 @@
-import type { ClerkAPIError } from "@clerk/types";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
-import { useClerkErrors } from "~/hooks/useClerkErrors";
-import type { InferredSignInSchema } from "~/pages/sign-in";
+import type { InferredSignUpSchema } from "~/pages/sign-up";
 import {
   FormControl,
   FormField,
@@ -12,26 +10,21 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 
-const PasswordInput = ({
-  clerkErrors,
-}: {
-  clerkErrors: ClerkAPIError[] | undefined;
-}) => {
-  const form = useFormContext<InferredSignInSchema>();
-  const { passwordErrors, setPasswordErrors } = useClerkErrors(clerkErrors);
+const ConfirmPasswordInput = () => {
+  const form = useFormContext<InferredSignUpSchema>();
 
   return (
     <FormField
       control={form.control}
-      name="password"
+      name="confirmPassword"
       render={({ field }) => (
         <FormItem>
           <FormLabel>
-            <h6>Password</h6>
+            <h6>Confirm Password</h6>
           </FormLabel>
           <FormControl>
             <Input
-              placeholder="Enter your password"
+              placeholder="At least 8 characters"
               {...field}
               type="password"
               autoComplete="on"
@@ -43,18 +36,13 @@ const PasswordInput = ({
                   width={16}
                 />
               }
-              onChange={(val) => {
-                field.onChange(val);
-                setPasswordErrors([]);
-              }}
-              isError={!!(passwordErrors.length > 0)}
             />
           </FormControl>
-          <FormMessage>{passwordErrors[0]?.message}</FormMessage>
+          <FormMessage />
         </FormItem>
       )}
     />
   );
 };
 
-export default PasswordInput;
+export default ConfirmPasswordInput;

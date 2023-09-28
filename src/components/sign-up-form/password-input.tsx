@@ -2,7 +2,7 @@ import type { ClerkAPIError } from "@clerk/types";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
 import { useClerkErrors } from "~/hooks/useClerkErrors";
-import type { InferredSignInSchema } from "~/pages/sign-in";
+import type { InferredSignUpSchema } from "~/pages/sign-up";
 import {
   FormControl,
   FormField,
@@ -17,7 +17,7 @@ const PasswordInput = ({
 }: {
   clerkErrors: ClerkAPIError[] | undefined;
 }) => {
-  const form = useFormContext<InferredSignInSchema>();
+  const form = useFormContext<InferredSignUpSchema>();
   const { passwordErrors, setPasswordErrors } = useClerkErrors(clerkErrors);
 
   return (
@@ -27,11 +27,11 @@ const PasswordInput = ({
       render={({ field }) => (
         <FormItem>
           <FormLabel>
-            <h6>Password</h6>
+            <h6>Create Password</h6>
           </FormLabel>
           <FormControl>
             <Input
-              placeholder="Enter your password"
+              placeholder="At least 8 characters"
               {...field}
               type="password"
               autoComplete="on"
