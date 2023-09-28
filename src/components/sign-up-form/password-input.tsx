@@ -18,7 +18,7 @@ const PasswordInput = ({
   clerkErrors: ClerkAPIError[] | undefined;
 }) => {
   const form = useFormContext<InferredSignUpSchema>();
-  const { passwordErrors, setPasswordErrors } = useClerkErrors(clerkErrors);
+  const { passwordError, setPasswordErrors } = useClerkErrors(clerkErrors);
 
   return (
     <FormField
@@ -47,10 +47,10 @@ const PasswordInput = ({
                 field.onChange(val);
                 setPasswordErrors([]);
               }}
-              isError={!!(passwordErrors.length > 0)}
+              isError={!!passwordError}
             />
           </FormControl>
-          <FormMessage>{passwordErrors[0]?.message}</FormMessage>
+          <FormMessage>{passwordError}</FormMessage>
         </FormItem>
       )}
     />

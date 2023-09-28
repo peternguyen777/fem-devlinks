@@ -19,8 +19,12 @@ import { Button } from "~/components/ui/button";
 import { Form } from "~/components/ui/form";
 
 const SignInSchema = z.object({
-  emailAddress: z.string().email({ message: "Invalid email" }),
-  password: z.string().min(1, { message: "Required" }),
+  emailAddress: z
+    .string()
+    .trim()
+    .min(1, { message: "Can't be empty" })
+    .email({ message: "Invalid email" }),
+  password: z.string().min(1, { message: "Please check again" }),
 });
 
 export type InferredSignInSchema = z.infer<typeof SignInSchema>;

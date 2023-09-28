@@ -20,9 +20,13 @@ import { Form } from "~/components/ui/form";
 
 const SignUpSchema = z
   .object({
-    emailAddress: z.string().email({ message: "Invalid email" }),
-    password: z.string(),
-    confirmPassword: z.string(),
+    emailAddress: z
+      .string()
+      .trim()
+      .min(1, { message: "Can't be empty" })
+      .email({ message: "Invalid email" }),
+    password: z.string().min(8, { message: "Must be 8 characters min" }),
+    confirmPassword: z.string().min(8, { message: "Must be 8 characters min" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -69,12 +73,9 @@ export default function SignUp() {
         })
         .then((result) => {
           if (result.status === "complete") {
-            console.log("complete", result);
             setActive({ session: result.createdSessionId });
             setClerkErrors(undefined);
             router.push("/");
-          } else {
-            console.log("not complete", result);
           }
         })
         .catch(({ errors }: { errors: ClerkAPIError[] | null }) => {

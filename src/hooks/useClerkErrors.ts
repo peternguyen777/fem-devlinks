@@ -27,9 +27,27 @@ export const useClerkErrors = (errors: ClerkAPIError[] | undefined) => {
   }, [errors]);
 
   return {
-    emailErrors,
+    emailError: emailErrors[0]
+      ? getErrorMessage(emailErrors[0].code, errorConditions)
+      : undefined,
     setEmailErrors,
-    passwordErrors,
+    passwordError: passwordErrors[0]
+      ? getErrorMessage(passwordErrors[0].code, errorConditions)
+      : undefined,
     setPasswordErrors,
   };
 };
+
+type ErrorMap<T extends string> = { [K in T]: string };
+
+const errorConditions: ErrorMap<string> = {
+  form_identifier_not_found: "Can't find account",
+  form_password_incorrect: "Incorrect password",
+  form_identifier_exists: "Email already used",
+  form_password_pwned: "Weak password",
+  form_password_length_too_short: "Must be 8 characters min",
+};
+
+function getErrorMessage<T extends string>(error: T, errorMap: ErrorMap<T>) {
+  return errorMap[error] ?? "Unknown error";
+}

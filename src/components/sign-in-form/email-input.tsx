@@ -18,7 +18,7 @@ const EmailInput = ({
   clerkErrors: ClerkAPIError[] | undefined;
 }) => {
   const form = useFormContext<InferredSignInSchema>();
-  const { emailErrors, setEmailErrors } = useClerkErrors(clerkErrors);
+  const { emailError, setEmailErrors } = useClerkErrors(clerkErrors);
   return (
     <FormField
       control={form.control}
@@ -44,10 +44,10 @@ const EmailInput = ({
                 field.onChange(val);
                 setEmailErrors([]);
               }}
-              isError={!!(emailErrors.length > 0)}
+              isError={!!emailError}
             />
           </FormControl>
-          <FormMessage>{emailErrors[0]?.message}</FormMessage>
+          <FormMessage>{emailError}</FormMessage>
         </FormItem>
       )}
     />
