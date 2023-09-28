@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useSignUp, useUser } from "@clerk/nextjs";
@@ -130,22 +129,7 @@ export default function SignUp() {
                 <h6 className="text-[#737373]">
                   Password must contain at least 8 characters
                 </h6>
-                <div className="flex flex-col items-center">
-                  <Button
-                    type="submit"
-                    disabled={isSigningUp}
-                    className="w-full items-start bg-[#633CFF] font-instrument text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF]"
-                  >
-                    {isSigningUp && <Spinner />}
-                    Submit
-                  </Button>
-                  <h5 className="mt-6 text-[#737373]">
-                    Already have an account?{" "}
-                    <span className="text-[#633CFF]">
-                      <Link href="/sign-in">Login</Link>
-                    </span>
-                  </h5>
-                </div>
+                <SubmitForm isSigningUp={isSigningUp} />
               </form>
             </Form>
           </div>
@@ -154,3 +138,22 @@ export default function SignUp() {
     </>
   );
 }
+
+const SubmitForm = ({ isSigningUp }: { isSigningUp: boolean }) => (
+  <div className="flex flex-col items-center">
+    <Button
+      type="submit"
+      disabled={isSigningUp}
+      className="w-full items-start bg-[#633CFF] font-instrument text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF]"
+    >
+      {isSigningUp && <Spinner />}
+      Submit
+    </Button>
+    <h5 className="mt-6 text-[#737373]">
+      Already have an account?{" "}
+      <span className="text-[#633CFF]">
+        <Link href="/sign-in">Login</Link>
+      </span>
+    </h5>
+  </div>
+);
