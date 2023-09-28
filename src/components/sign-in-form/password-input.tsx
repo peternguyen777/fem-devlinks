@@ -8,17 +8,17 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import Image from "next/image";
-import type { ClerkErrorMessage, InferredFormSchema } from "~/pages/sign-in";
+import type { SignInErrorMessage, InferredSignInSchema } from "~/pages/sign-in";
 import type { Dispatch, SetStateAction } from "react";
 
 const PasswordInput = ({
   errorMessage,
   setErrorMessage,
 }: {
-  errorMessage: ClerkErrorMessage;
-  setErrorMessage: Dispatch<SetStateAction<ClerkErrorMessage>>;
+  errorMessage: SignInErrorMessage;
+  setErrorMessage: Dispatch<SetStateAction<SignInErrorMessage>>;
 }) => {
-  const form = useFormContext<InferredFormSchema>();
+  const form = useFormContext<InferredSignInSchema>();
 
   return (
     <FormField

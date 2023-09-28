@@ -17,36 +17,36 @@ import PasswordInput from "~/components/sign-in-form/password-input";
 import { Button } from "~/components/ui/button";
 import { Form } from "~/components/ui/form";
 
-export interface ClerkErrorMessage {
+export interface SignInErrorMessage {
   emailErrorMessage: string | undefined;
   passwordErrorMessage: string | undefined;
 }
 
-enum ClerkErrorCode {
+enum ClerkSigninErrorCode {
   IdentifierNotFound = "form_identifier_not_found",
   PasswordIncorrect = "form_password_incorrect",
 }
 
-const FormSchema = z.object({
+const SignInSchema = z.object({
   emailAddress: z.string().email({ message: "Invalid email" }),
   password: z.string().min(1, { message: "Required" }),
 });
 
-export type InferredFormSchema = z.infer<typeof FormSchema>;
+export type InferredSignInSchema = z.infer<typeof SignInSchema>;
 
 export default function SignIn() {
   const { isSignedIn } = useUser();
   const { isLoaded, signIn, setActive } = useSignIn();
   const router = useRouter();
 
-  const [errorMessage, setErrorMessage] = useState<ClerkErrorMessage>({
+  const [errorMessage, setErrorMessage] = useState<SignInErrorMessage>({
     emailErrorMessage: undefined,
     passwordErrorMessage: undefined,
   });
   const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof SignInSchema>>({
+    resolver: zodResolver(SignInSchema),
     defaultValues: {
       emailAddress: "",
       password: "",
@@ -61,7 +61,7 @@ export default function SignIn() {
     return null;
   }
 
-  async function onSubmit(values: z.infer<typeof FormSchema>) {
+  async function onSubmit(values: z.infer<typeof SignInSchema>) {
     if (signIn) {
       console.log("signing in");
       setIsSigningIn(true);
@@ -86,11 +86,11 @@ export default function SignIn() {
 
           const errorMessages = {
             emailErrorMessage:
-              code === ClerkErrorCode.IdentifierNotFound
+              code === ClerkSigninErrorCode.IdentifierNotFound
                 ? "Email not found"
                 : undefined,
             passwordErrorMessage:
-              code === ClerkErrorCode.PasswordIncorrect
+              code === ClerkSigninErrorCode.PasswordIncorrect
                 ? "Incorrect password"
                 : undefined,
           };

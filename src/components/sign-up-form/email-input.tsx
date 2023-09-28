@@ -8,17 +8,10 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import Image from "next/image";
-import type { SignInErrorMessage, InferredSignInSchema } from "~/pages/sign-in";
-import type { Dispatch, SetStateAction } from "react";
+import type { InferredSignUpSchema } from "~/pages/sign-up";
 
-const EmailInput = ({
-  errorMessage,
-  setErrorMessage,
-}: {
-  errorMessage: SignInErrorMessage;
-  setErrorMessage: Dispatch<SetStateAction<SignInErrorMessage>>;
-}) => {
-  const form = useFormContext<InferredSignInSchema>();
+const EmailInput = () => {
+  const form = useFormContext<InferredSignUpSchema>();
 
   return (
     <FormField
@@ -41,17 +34,9 @@ const EmailInput = ({
                   width={16}
                 />
               }
-              onChange={(val) => {
-                field.onChange(val);
-                setErrorMessage({
-                  ...errorMessage,
-                  emailErrorMessage: undefined,
-                });
-              }}
-              isError={!!errorMessage.emailErrorMessage}
             />
           </FormControl>
-          <FormMessage>{errorMessage.emailErrorMessage}</FormMessage>
+          <FormMessage />
         </FormItem>
       )}
     />
