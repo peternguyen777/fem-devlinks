@@ -2,22 +2,22 @@ import type { ClerkAPIError } from "@clerk/types";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
 import { useClerkErrors } from "~/hooks/useClerkErrors";
-import type { InferredSignUpSchema } from "~/pages/sign-up";
+import type { InferredSignInSchema } from "~/pages/sign-in";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "../../ui/form";
+import { Input } from "../../ui/input";
 
 const EmailInput = ({
   clerkErrors,
 }: {
   clerkErrors: ClerkAPIError[] | undefined;
 }) => {
-  const form = useFormContext<InferredSignUpSchema>();
+  const form = useFormContext<InferredSignInSchema>();
   const { emailError, setEmailErrors } = useClerkErrors(clerkErrors);
   return (
     <FormField

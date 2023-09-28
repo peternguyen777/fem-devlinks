@@ -2,42 +2,39 @@ import type { ClerkAPIError } from "@clerk/types";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
 import { useClerkErrors } from "~/hooks/useClerkErrors";
-import type { InferredSignInSchema } from "~/pages/sign-in";
+import type { InferredSignUpSchema } from "~/pages/sign-up";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "../../ui/form";
+import { Input } from "../../ui/input";
 
-const PasswordInput = ({
+const EmailInput = ({
   clerkErrors,
 }: {
   clerkErrors: ClerkAPIError[] | undefined;
 }) => {
-  const form = useFormContext<InferredSignInSchema>();
-  const { passwordError, setPasswordErrors } = useClerkErrors(clerkErrors);
-
+  const form = useFormContext<InferredSignUpSchema>();
+  const { emailError, setEmailErrors } = useClerkErrors(clerkErrors);
   return (
     <FormField
       control={form.control}
-      name="password"
+      name="emailAddress"
       render={({ field }) => (
         <FormItem>
           <FormLabel>
-            <h6>Password</h6>
+            <h6>Email Address</h6>
           </FormLabel>
           <FormControl>
             <Input
-              placeholder="Enter your password"
+              placeholder="e.g. alex@email.com"
               {...field}
-              type="password"
-              autoComplete="on"
               icon={
                 <Image
-                  src="/images/icon-password.svg"
+                  src="/images/icon-email.svg"
                   alt="password icon"
                   height={16}
                   width={16}
@@ -45,16 +42,16 @@ const PasswordInput = ({
               }
               onChange={(val) => {
                 field.onChange(val);
-                setPasswordErrors([]);
+                setEmailErrors([]);
               }}
-              isError={!!passwordError}
+              isError={!!emailError}
             />
           </FormControl>
-          <FormMessage>{passwordError}</FormMessage>
+          <FormMessage>{emailError}</FormMessage>
         </FormItem>
       )}
     />
   );
 };
 
-export default PasswordInput;
+export default EmailInput;
