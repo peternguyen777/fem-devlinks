@@ -24,7 +24,7 @@ const SignInSchema = z.object({
     .trim()
     .min(1, { message: "Can't be empty" })
     .email({ message: "Invalid email" }),
-  password: z.string().min(1, { message: "Please check again" }),
+  password: z.string().min(2, { message: "Please check again" }),
 });
 
 export type InferredSignInSchema = z.infer<typeof SignInSchema>;

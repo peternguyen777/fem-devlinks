@@ -25,8 +25,14 @@ const SignUpSchema = z
       .trim()
       .min(1, { message: "Can't be empty" })
       .email({ message: "Invalid email" }),
-    password: z.string().min(8, { message: "Must be 8 characters min" }),
-    confirmPassword: z.string().min(8, { message: "Must be 8 characters min" }),
+    password: z
+      .string()
+      .min(2, { message: "Please check again" })
+      .min(8, { message: "Must be 8 characters min" }),
+    confirmPassword: z
+      .string()
+      .min(2, { message: "Please check again" })
+      .min(8, { message: "Must be 8 characters min" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
