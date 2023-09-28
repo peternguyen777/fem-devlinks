@@ -2,23 +2,23 @@ import type { ClerkAPIError } from "@clerk/types";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
 import { useClerkErrors } from "~/hooks/useClerkErrors";
-import type { InferredSignInSchema } from "~/pages/sign-in";
+import type { InferredSignUpSchema } from "~/pages/sign-up";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "../../ui/form";
+import { Input } from "../../ui/input";
 
 const EmailInput = ({
   clerkErrors,
 }: {
   clerkErrors: ClerkAPIError[] | undefined;
 }) => {
-  const form = useFormContext<InferredSignInSchema>();
-  const { emailErrors, setEmailErrors } = useClerkErrors(clerkErrors);
+  const form = useFormContext<InferredSignUpSchema>();
+  const { emailError, setEmailErrors } = useClerkErrors(clerkErrors);
   return (
     <FormField
       control={form.control}
@@ -44,10 +44,10 @@ const EmailInput = ({
                 field.onChange(val);
                 setEmailErrors([]);
               }}
-              isError={!!(emailErrors.length > 0)}
+              isError={!!emailError}
             />
           </FormControl>
-          <FormMessage>{emailErrors[0]?.message}</FormMessage>
+          <FormMessage>{emailError}</FormMessage>
         </FormItem>
       )}
     />

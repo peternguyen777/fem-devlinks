@@ -9,32 +9,35 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "../../ui/form";
+import { Input } from "../../ui/input";
 
-const EmailInput = ({
+const PasswordInput = ({
   clerkErrors,
 }: {
   clerkErrors: ClerkAPIError[] | undefined;
 }) => {
   const form = useFormContext<InferredSignUpSchema>();
-  const { emailErrors, setEmailErrors } = useClerkErrors(clerkErrors);
+  const { passwordError, setPasswordErrors } = useClerkErrors(clerkErrors);
+
   return (
     <FormField
       control={form.control}
-      name="emailAddress"
+      name="password"
       render={({ field }) => (
         <FormItem>
           <FormLabel>
-            <h6>Email Address</h6>
+            <h6>Create Password</h6>
           </FormLabel>
           <FormControl>
             <Input
-              placeholder="e.g. alex@email.com"
+              placeholder="At least 8 characters"
               {...field}
+              type="password"
+              autoComplete="on"
               icon={
                 <Image
-                  src="/images/icon-email.svg"
+                  src="/images/icon-password.svg"
                   alt="password icon"
                   height={16}
                   width={16}
@@ -42,16 +45,16 @@ const EmailInput = ({
               }
               onChange={(val) => {
                 field.onChange(val);
-                setEmailErrors([]);
+                setPasswordErrors([]);
               }}
-              isError={!!(emailErrors.length > 0)}
+              isError={!!passwordError}
             />
           </FormControl>
-          <FormMessage>{emailErrors[0]?.message}</FormMessage>
+          <FormMessage>{passwordError}</FormMessage>
         </FormItem>
       )}
     />
   );
 };
 
-export default EmailInput;
+export default PasswordInput;
