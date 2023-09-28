@@ -11,22 +11,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { z } from "zod";
 import { Spinner } from "~/components/icons/spinner";
 import EmailInput from "~/components/sign-in-form/email-input";
 import PasswordInput from "~/components/sign-in-form/password-input";
 import { Button } from "~/components/ui/button";
 import { Form } from "~/components/ui/form";
-
-export interface SignInErrorMessage {
-  emailErrorMessage: string | undefined;
-  passwordErrorMessage: string | undefined;
-}
-
-// enum ClerkSigninErrorCode {
-//   IdentifierNotFound = "form_identifier_not_found",
-//   PasswordIncorrect = "form_password_incorrect",
-// }
 
 const SignInSchema = z.object({
   emailAddress: z.string().email({ message: "Invalid email" }),
@@ -117,8 +107,8 @@ export default function SignIn() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="mt-10 space-y-6"
               >
-                <EmailInput errors={clerkErrors} />
-                <PasswordInput errors={clerkErrors} />
+                <EmailInput clerkErrors={clerkErrors} />
+                <PasswordInput clerkErrors={clerkErrors} />
                 <SubmitForm isSigningIn={isSigningIn} />
               </form>
             </Form>

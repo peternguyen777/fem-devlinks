@@ -28,6 +28,8 @@ export const useClerkErrors = (errors: ClerkAPIError[] | undefined) => {
 
   return {
     emailErrors,
+    setEmailErrors,
     passwordErrors,
+    setPasswordErrors,
   };
 };

@@ -12,9 +12,13 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 
-const PasswordInput = ({ errors }: { errors: ClerkAPIError[] | undefined }) => {
+const PasswordInput = ({
+  clerkErrors,
+}: {
+  clerkErrors: ClerkAPIError[] | undefined;
+}) => {
   const form = useFormContext<InferredSignInSchema>();
-  const { passwordErrors } = useClerkErrors(errors);
+  const { passwordErrors, setPasswordErrors } = useClerkErrors(clerkErrors);
 
   return (
     <FormField
@@ -39,6 +43,10 @@ const PasswordInput = ({ errors }: { errors: ClerkAPIError[] | undefined }) => {
                   width={16}
                 />
               }
+              onChange={(val) => {
+                field.onChange(val);
+                setPasswordErrors([]);
+              }}
               isError={!!(passwordErrors.length > 0)}
             />
           </FormControl>

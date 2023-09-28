@@ -12,9 +12,13 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 
-const EmailInput = ({ errors }: { errors: ClerkAPIError[] | undefined }) => {
+const EmailInput = ({
+  clerkErrors,
+}: {
+  clerkErrors: ClerkAPIError[] | undefined;
+}) => {
   const form = useFormContext<InferredSignInSchema>();
-  const { emailErrors } = useClerkErrors(errors);
+  const { emailErrors, setEmailErrors } = useClerkErrors(clerkErrors);
   return (
     <FormField
       control={form.control}
@@ -36,6 +40,10 @@ const EmailInput = ({ errors }: { errors: ClerkAPIError[] | undefined }) => {
                   width={16}
                 />
               }
+              onChange={(val) => {
+                field.onChange(val);
+                setEmailErrors([]);
+              }}
               isError={!!(emailErrors.length > 0)}
             />
           </FormControl>
