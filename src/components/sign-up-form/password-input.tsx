@@ -1,5 +1,7 @@
+import type { ClerkAPIError } from "@clerk/types";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
+import { useClerkErrors } from "~/hooks/useClerkErrors";
 import type { InferredSignUpSchema } from "~/pages/sign-up";
 import {
   FormControl,
@@ -10,8 +12,13 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 
-const PasswordInput = () => {
+const PasswordInput = ({
+  clerkErrors,
+}: {
+  clerkErrors: ClerkAPIError[] | undefined;
+}) => {
   const form = useFormContext<InferredSignUpSchema>();
+  const { passwordErrors, setPasswordErrors } = useClerkErrors(clerkErrors);
 
   return (
     <FormField
@@ -36,9 +43,14 @@ const PasswordInput = () => {
                   width={16}
                 />
               }
+              onChange={(val) => {
+                field.onChange(val);
+                setPasswordErrors([]);
+              }}
+              isError={!!(passwordErrors.length > 0)}
             />
           </FormControl>
-          <FormMessage />
+          <FormMessage>{passwordErrors[0]?.message}</FormMessage>
         </FormItem>
       )}
     />

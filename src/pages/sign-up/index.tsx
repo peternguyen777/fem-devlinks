@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useSignUp, useUser } from "@clerk/nextjs";
+import type { ClerkAPIError } from "@clerk/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Head from "next/head";
 import Image from "next/image";
@@ -35,6 +36,9 @@ export default function SignUp() {
   const { isLoaded, signUp, setActive } = useSignUp();
   const router = useRouter();
 
+  const [clerkErrors, setClerkErrors] = useState<ClerkAPIError[] | undefined>(
+    undefined,
+  );
   const [isSigningUp, setIsSigningUp] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof SignUpSchema>>({
@@ -67,12 +71,17 @@ export default function SignUp() {
           if (result.status === "complete") {
             console.log("complete", result);
             setActive({ session: result.createdSessionId });
+            setClerkErrors(undefined);
             router.push("/");
           } else {
             console.log("not complete", result);
           }
         })
-        .catch((err) => console.error("error", err.errors))
+        .catch(({ errors }: { errors: ClerkAPIError[] | null }) => {
+          if (errors) {
+            setClerkErrors(errors);
+          }
+        })
         .finally(() => {
           setIsSigningUp(false);
         });
@@ -101,15 +110,15 @@ export default function SignUp() {
           <div className="mt-0 p-8 md:mx-auto md:mt-12 md:max-w-[476px] md:rounded-xl md:bg-white md:p-10">
             <h3 className="">Create account</h3>
             <p className="mt-2 text-[#737373]">
-              Let’s get you started sharing your links!
+              Let&apos;s get you started sharing your links!
             </p>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="mt-10 space-y-6"
               >
-                <EmailInput />
-                <PasswordInput />
+                <EmailInput clerkErrors={clerkErrors} />
+                <PasswordInput clerkErrors={clerkErrors} />
                 <ConfirmPasswordInput />
                 <h6 className="text-[#737373]">
                   Password must contain at least 8 characters
