@@ -10,8 +10,8 @@ import VerificationForm from "~/components/auth/sign-up-form/form/verification-f
 
 export default function SignUp() {
   const { isSignedIn } = useUser();
-  const [pendingVerification, setPendingVerification] = useState(false);
   const router = useRouter();
+  const [pendingVerification, setPendingVerification] = useState(false);
 
   if (isSignedIn) {
     router.push("/");
@@ -25,10 +25,10 @@ export default function SignUp() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AuthCard>
-        {!pendingVerification && (
+        {pendingVerification && (
           <SignUpForm setPendingVerification={setPendingVerification} />
         )}
-        {pendingVerification && <VerificationForm />}
+        {!pendingVerification && <VerificationForm />}
       </AuthCard>
     </>
   );

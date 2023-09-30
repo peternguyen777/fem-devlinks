@@ -76,10 +76,10 @@ const VerificationForm = () => {
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="md:min-h-[532px]">
       <h3>Create account</h3>
       <p className="mt-2 text-[#737373]">
-        Please enter the verification code sent to your email.
+        Please enter the verification code sent to your email
       </p>
       <Form {...verificationForm}>
         <form
@@ -91,7 +91,7 @@ const VerificationForm = () => {
             <Button
               type="submit"
               disabled={isVerifyingCode}
-              className="w-full items-start bg-[#633CFF] font-instrument text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF]"
+              variant="dlPrimary"
             >
               {isVerifyingCode && <Spinner />}
               Submit
