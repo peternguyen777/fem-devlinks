@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "../ui/button";
+import { UserButton } from "@clerk/nextjs";
 
 const Header = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ const Header = () => {
             onClick={() => void router.push("/")}
           />
         </>
-        <div className="absolute left-1/2 flex -translate-x-1/2">
+        <div className="absolute left-1/2 flex -translate-x-1/2 md:relative md:left-auto md:translate-x-0">
           <Button
             variant="dlTab"
             className={`px-[27px] py-[11px] ${
@@ -66,17 +67,20 @@ const Header = () => {
             <span className="hidden md:inline">Profile Details</span>
           </Button>
         </div>
-        <Button variant="dlSecondary" className="px-4 py-[11px]">
-          <Image
-            priority
-            src="/images/icon-preview-header.svg"
-            alt="preview"
-            width={20}
-            height={20}
-            className="md:hidden"
-          />
-          <span className="hidden md:inline">Preview</span>
-        </Button>
+        <div className="flex items-center gap-4">
+          <Button variant="dlSecondary" className="px-4 py-[11px]">
+            <Image
+              priority
+              src="/images/icon-preview-header.svg"
+              alt="preview"
+              width={20}
+              height={20}
+              className="md:hidden"
+            />
+            <span className="hidden md:inline">Preview</span>
+          </Button>
+          <UserButton afterSignOutUrl="/" />
+        </div>
       </div>
     </div>
   );
