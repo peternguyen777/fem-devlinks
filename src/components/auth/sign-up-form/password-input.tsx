@@ -2,7 +2,6 @@ import type { ClerkAPIError } from "@clerk/types";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
 import { useClerkErrors } from "~/hooks/useClerkErrors";
-import type { InferredSignUpSchema } from "~/pages/sign-up";
 import {
   FormControl,
   FormField,
@@ -11,6 +10,7 @@ import {
   FormMessage,
 } from "../../ui/form";
 import { Input } from "../../ui/input";
+import type { InferredSignUpSchema } from "./form/sign-up-form";
 
 const PasswordInput = ({
   clerkErrors,

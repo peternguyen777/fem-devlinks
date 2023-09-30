@@ -3,6 +3,7 @@ import { type AppType } from "next/app";
 import "~/styles/globals.css";
 import { api } from "~/utils/api";
 import localFont from "next/font/local";
+import { Toaster } from "~/components/ui/toaster";
 
 const InstrumentSans = localFont({
   src: "../../public/fonts/InstrumentSans-VariableFont_wdth,wght.ttf",
@@ -29,6 +30,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <main
           className={`${InstrumentSansItalic.variable} ${InstrumentSans.variable}`}
         >
+          <Toaster />
           <Component {...pageProps} />
         </main>
       </ClerkProvider>

@@ -1,134 +1,20 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { useSignUp, useUser } from "@clerk/nextjs";
-import type { ClerkAPIError } from "@clerk/types";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import AuthCard from "~/components/auth/auth-card";
-import ConfirmPasswordInput from "~/components/auth/sign-up-form/confirm-password-input";
-import EmailInput from "~/components/auth/sign-up-form/email-input";
-import PasswordInput from "~/components/auth/sign-up-form/password-input";
-import VerificationCodeInput from "~/components/auth/sign-up-form/verification-code-input";
-import { Spinner } from "~/components/icons/spinner";
-import { Button } from "~/components/ui/button";
-import { Form } from "~/components/ui/form";
-
-const SignUpSchema = z
-  .object({
-    emailAddress: z
-      .string()
-      .trim()
-      .min(1, { message: "Can't be empty" })
-      .email({ message: "Invalid email" }),
-    password: z
-      .string()
-      .min(2, { message: "Please check again" })
-      .min(8, { message: "Must be 8 characters min" }),
-    confirmPassword: z
-      .string()
-      .min(2, { message: "Please check again" })
-      .min(8, { message: "Must be 8 characters min" }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
-
-const VerificationSchema = z.object({
-  code: z.string().min(1, { message: "Required" }),
-});
-
-export type InferredSignUpSchema = z.infer<typeof SignUpSchema>;
-
-export type InferredVerificationSchema = z.infer<typeof VerificationSchema>;
+import SignUpForm from "~/components/auth/sign-up-form/form/sign-up-form";
+import VerificationForm from "~/components/auth/sign-up-form/form/verification-form";
 
 export default function SignUp() {
-  const signUpForm = useForm<InferredSignUpSchema>({
-    resolver: zodResolver(SignUpSchema),
-    defaultValues: {
-      emailAddress: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
-  const verificationForm = useForm<InferredVerificationSchema>({
-    resolver: zodResolver(VerificationSchema),
-  });
-
-  const { isLoaded, signUp, setActive } = useSignUp();
-  const [isSigningUp, setIsSigningUp] = useState<boolean>(false);
-  const [pendingVerification, setPendingVerification] = useState(false);
-  const [clerkErrors, setClerkErrors] = useState<ClerkAPIError[] | undefined>(
-    undefined,
-  );
-
   const { isSignedIn } = useUser();
+  const [pendingVerification, setPendingVerification] = useState(false);
   const router = useRouter();
 
   if (isSignedIn) {
     router.push("/");
-  }
-
-  async function onSignUpSubmit(values: InferredSignUpSchema) {
-    if (!isLoaded) {
-      return;
-    }
-    setIsSigningUp(true);
-
-    try {
-      await signUp
-        .create({
-          emailAddress: values.emailAddress,
-          password: values.password,
-        })
-        .then(() => {
-          setClerkErrors(undefined);
-        });
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-      setPendingVerification(true);
-      setClerkErrors(undefined);
-    } catch (error) {
-      if ((error as { errors: ClerkAPIError[] }).errors !== null) {
-        const errors: ClerkAPIError[] = (error as { errors: ClerkAPIError[] })
-          .errors;
-        setClerkErrors(errors);
-      }
-    } finally {
-      setIsSigningUp(false);
-    }
-  }
-
-  async function onVerificationSubmit(values: InferredVerificationSchema) {
-    if (!isLoaded) {
-      return;
-    }
-    setIsSigningUp(true);
-
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code: values.code,
-      });
-
-      if (completeSignUp.status === "complete") {
-        await setActive({ session: completeSignUp.createdSessionId });
-        setClerkErrors(undefined);
-        router.push("/");
-      }
-    } catch (error) {
-      if ((error as { errors: ClerkAPIError[] }).errors !== null) {
-        const errors: ClerkAPIError[] = (error as { errors: ClerkAPIError[] })
-          .errors;
-        setClerkErrors(errors);
-        console.error(errors);
-      }
-    } finally {
-      setIsSigningUp(false);
-    }
   }
 
   return (
@@ -140,69 +26,9 @@ export default function SignUp() {
       </Head>
       <AuthCard>
         {!pendingVerification && (
-          <>
-            <h3>Create account</h3>
-            <p className="mt-2 text-[#737373]">
-              Let&apos;s get you started sharing your links!
-            </p>
-            <Form {...signUpForm}>
-              <form
-                onSubmit={signUpForm.handleSubmit(onSignUpSubmit)}
-                className="mt-10 space-y-6"
-              >
-                <EmailInput clerkErrors={clerkErrors} />
-                <PasswordInput clerkErrors={clerkErrors} />
-                <ConfirmPasswordInput />
-                <h6 className="text-[#737373]">
-                  Password must contain at least 8 characters
-                </h6>
-                <div className="flex flex-col items-center">
-                  <Button
-                    type="submit"
-                    disabled={isSigningUp}
-                    className="w-full items-start bg-[#633CFF] font-instrument text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF]"
-                  >
-                    {isSigningUp && <Spinner />}
-                    Submit
-                  </Button>
-                  <h5 className="mt-6 text-[#737373]">
-                    Already have an account?{" "}
-                    <span className="text-[#633CFF]">
-                      <Link href="/sign-in">Login</Link>
-                    </span>
-                  </h5>
-                </div>
-              </form>
-            </Form>
-          </>
+          <SignUpForm setPendingVerification={setPendingVerification} />
         )}
-        {pendingVerification && (
-          <>
-            <h3>Create account</h3>
-            <p className="mt-2 text-[#737373]">
-              Please enter the verification code sent to{" "}
-              <span className="font-semibold">
-                {signUpForm.watch("emailAddress")}
-              </span>
-            </p>
-            <Form {...verificationForm}>
-              <form
-                onSubmit={verificationForm.handleSubmit(onVerificationSubmit)}
-                className="mt-10 space-y-6"
-              >
-                <VerificationCodeInput clerkErrors={clerkErrors} />
-                <Button
-                  type="submit"
-                  disabled={isSigningUp}
-                  className="w-full items-start bg-[#633CFF] font-instrument text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF]"
-                >
-                  {isSigningUp && <Spinner />}
-                  Submit
-                </Button>
-              </form>
-            </Form>
-          </>
-        )}
+        {pendingVerification && <VerificationForm />}
       </AuthCard>
     </>
   );

@@ -1,6 +1,6 @@
 import type { ClerkAPIError } from "@clerk/types";
 import { useFormContext } from "react-hook-form";
-import type { InferredVerificationSchema } from "~/pages/sign-up";
+import { useClerkErrors } from "~/hooks/useClerkErrors";
 import {
   FormControl,
   FormField,
@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "../../ui/form";
 import { Input } from "../../ui/input";
-import { useClerkErrors } from "~/hooks/useClerkErrors";
+import type { InferredVerificationSchema } from "./form/verification-form";
 
 const VerificationCodeInput = ({
   clerkErrors,

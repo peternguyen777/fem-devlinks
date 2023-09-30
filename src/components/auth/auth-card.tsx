@@ -10,6 +10,7 @@ const AuthCard = ({ children }: { children: ReactNode }) => {
       <div className="md:my-16">
         <div className="p-8 md:flex md:justify-center md:p-0">
           <Image
+            priority
             src="/images/logo-devlinks-large.svg"
             alt="devlinks logo"
             width={183}
@@ -18,7 +19,7 @@ const AuthCard = ({ children }: { children: ReactNode }) => {
             onClick={() => router.push("/")}
           />
         </div>
-        <div className="mt-0 p-8 md:mx-auto md:mt-12 md:max-w-[476px] md:rounded-xl md:bg-white md:p-10">
+        <div className="mt-0 p-8 md:mx-auto md:mt-12 md:min-h-[612px] md:max-w-[476px] md:rounded-xl md:bg-white md:p-10">
           {children}
         </div>
       </div>
