@@ -7,7 +7,7 @@ import AuthCard from "~/components/auth/auth-card";
 import SignUpForm from "~/components/auth/sign-up-form/form/sign-up-form";
 import VerificationForm from "~/components/auth/sign-up-form/form/verification-form";
 
-export default function SignUp() {
+export default function SignUpPage() {
   const { isSignedIn } = useUser();
   const router = useRouter();
   const [pendingVerification, setPendingVerification] = useState(false);

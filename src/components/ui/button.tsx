@@ -19,7 +19,11 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         dlPrimary:
-          "w-full items-start bg-[#633CFF] font-instrument text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF] active:shadow-custom transition duration-100 ease-in-out",
+          "bg-[#633CFF] font-instrument text-[16px] font-semibold leading-[24px] text-white rounded-[8px] hover:bg-[#BEADFF] active:shadow-custom transition duration-100 ease-in-out disabled:opacity-25 select-none",
+        dlSecondary:
+          "bg-background font-instrument text-[16px] font-semibold leading-[24px] text-[#633CFF] rounded-[8px] border border-[#633CFF] hover:bg-[#EFEBFF] active:shadow-custom transition duration-100 ease-in-out disabled:opacity-25 select-none",
+        dlTab:
+          "bg-background font-instrument text-[16px] font-semibold leading-[24px] text-[#737373] hover:text-[#633CFF] rounded-[8px] hover:bg-[#EFEBFF] select-none",
       },
       size: {
         default: "h-10 px-4 py-2",

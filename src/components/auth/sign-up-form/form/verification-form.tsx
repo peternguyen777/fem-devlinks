@@ -92,6 +92,7 @@ const VerificationForm = () => {
               type="submit"
               disabled={isVerifyingCode}
               variant="dlPrimary"
+              className="w-full"
             >
               {isVerifyingCode && <Spinner />}
               Submit
