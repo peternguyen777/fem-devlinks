@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -25,10 +24,10 @@ export default function SignUp() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AuthCard>
-        {pendingVerification && (
+        {!pendingVerification && (
           <SignUpForm setPendingVerification={setPendingVerification} />
         )}
-        {!pendingVerification && <VerificationForm />}
+        {pendingVerification && <VerificationForm />}
       </AuthCard>
     </>
   );
