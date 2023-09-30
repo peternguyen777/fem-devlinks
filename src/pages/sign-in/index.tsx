@@ -1,83 +1,16 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-misused-promises */
-import { useSignIn, useUser } from "@clerk/nextjs";
-import type { ClerkAPIError } from "@clerk/types";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import AuthCard from "~/components/auth/auth-card";
-import EmailInput from "~/components/auth/sign-in-form/email-input";
-import PasswordInput from "~/components/auth/sign-in-form/password-input";
-import { Spinner } from "~/components/icons/spinner";
-import { Button } from "~/components/ui/button";
-import { Form } from "~/components/ui/form";
-
-const SignInSchema = z.object({
-  emailAddress: z
-    .string()
-    .trim()
-    .min(1, { message: "Can't be empty" })
-    .email({ message: "Invalid email" }),
-  password: z.string().min(2, { message: "Please check again" }),
-});
-
-export type InferredSignInSchema = z.infer<typeof SignInSchema>;
+import SignInForm from "~/components/auth/sign-in-form/form/sign-in-form";
 
 export default function SignIn() {
   const { isSignedIn } = useUser();
-  const { isLoaded, signIn, setActive } = useSignIn();
   const router = useRouter();
-
-  const [clerkErrors, setClerkErrors] = useState<ClerkAPIError[] | undefined>(
-    undefined,
-  );
-  const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
-
-  const form = useForm<z.infer<typeof SignInSchema>>({
-    resolver: zodResolver(SignInSchema),
-    defaultValues: {
-      emailAddress: "",
-      password: "",
-    },
-  });
 
   if (isSignedIn) {
     router.push("/");
-  }
-
-  if (!isLoaded) {
-    return null;
-  }
-
-  async function onSubmit(values: z.infer<typeof SignInSchema>) {
-    if (signIn) {
-      setIsSigningIn(true);
-
-      await signIn
-        .create({
-          identifier: values.emailAddress,
-          password: values.password,
-        })
-        .then((result) => {
-          if (result.status === "complete") {
-            setActive({ session: result.createdSessionId });
-            setClerkErrors(undefined);
-            router.push("/");
-          }
-        })
-        .catch(({ errors }: { errors: ClerkAPIError[] | null }) => {
-          if (errors) {
-            setClerkErrors(errors);
-          }
-        })
-        .finally(() => {
-          setIsSigningIn(false);
-        });
-    }
   }
 
   return (
@@ -88,38 +21,8 @@ export default function SignIn() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AuthCard>
-        <h3>Login</h3>
-        <p className="mt-2 text-[#737373]">
-          Add your details below to get back into the app
-        </p>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="mt-10 space-y-6"
-          >
-            <EmailInput clerkErrors={clerkErrors} />
-            <PasswordInput clerkErrors={clerkErrors} />
-            <SubmitForm isSigningIn={isSigningIn} />
-          </form>
-        </Form>
+        <SignInForm />
       </AuthCard>
     </>
   );
 }
-
-const SubmitForm = ({ isSigningIn }: { isSigningIn: boolean }) => (
-  <div className="flex flex-col items-center">
-    <Button
-      type="submit"
-      disabled={isSigningIn}
-      className="w-full items-start bg-[#633CFF] font-instrument text-[16px] font-semibold leading-[24px] text-white hover:bg-[#BEADFF]"
-    >
-      {isSigningIn && <Spinner />}
-      Submit
-    </Button>
-    <h5 className="mt-6 text-[#737373]">Don&apos;t have an account?</h5>
-    <Link href="/sign-up">
-      <h5 className="text-[#633CFF]">Create account</h5>
-    </Link>
-  </div>
-);

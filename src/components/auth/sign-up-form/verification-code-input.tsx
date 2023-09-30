@@ -10,31 +10,31 @@ import {
   FormMessage,
 } from "../../ui/form";
 import { Input } from "../../ui/input";
-import type { InferredSignInSchema } from "./form/sign-in-form";
+import type { InferredVerificationSchema } from "./form/verification-form";
 
-const EmailInput = ({
+const VerificationCodeInput = ({
   clerkErrors,
 }: {
   clerkErrors: ClerkAPIError[] | undefined;
 }) => {
-  const form = useFormContext<InferredSignInSchema>();
-  const { emailError, setEmailErrors } = useClerkErrors(clerkErrors);
+  const form = useFormContext<InferredVerificationSchema>();
+  const { codeError, setCodeErrors } = useClerkErrors(clerkErrors);
+
   return (
     <FormField
       control={form.control}
-      name="emailAddress"
+      name="code"
       render={({ field }) => (
         <FormItem>
           <FormLabel>
-            <h6>Email Address</h6>
+            <h6>Code</h6>
           </FormLabel>
           <FormControl>
             <Input
-              placeholder="e.g. alex@email.com"
               {...field}
               icon={
                 <Image
-                  src="/images/icon-email.svg"
+                  src="/images/icon-password.svg"
                   alt="password icon"
                   height={16}
                   width={16}
@@ -42,16 +42,16 @@ const EmailInput = ({
               }
               onChange={(val) => {
                 field.onChange(val);
-                setEmailErrors([]);
+                setCodeErrors([]);
               }}
-              isError={!!emailError}
+              isError={!!codeError}
             />
           </FormControl>
-          <FormMessage>{emailError}</FormMessage>
+          <FormMessage>{codeError}</FormMessage>
         </FormItem>
       )}
     />
   );
 };
 
-export default EmailInput;
+export default VerificationCodeInput;

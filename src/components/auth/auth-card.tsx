@@ -10,6 +10,7 @@ const AuthCard = ({ children }: { children: ReactNode }) => {
       <div className="md:my-16">
         <div className="p-8 md:flex md:justify-center md:p-0">
           <Image
+            priority
             src="/images/logo-devlinks-large.svg"
             alt="devlinks logo"
             width={183}
