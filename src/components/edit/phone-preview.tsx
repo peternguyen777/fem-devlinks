@@ -1,5 +1,8 @@
 const PhonePreview = () => (
-  <div className="hidden lg:flex lg:w-[560px] lg:flex-col lg:items-center lg:justify-center lg:rounded-xl lg:bg-white lg:shadow-lg">
+  <div
+    className="hidden
+  lg:flex lg:h-[calc(100vh-152px)] lg:w-[560px] lg:flex-col lg:items-center lg:justify-center lg:rounded-xl lg:bg-white lg:py-6 lg:shadow-lg"
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="308"

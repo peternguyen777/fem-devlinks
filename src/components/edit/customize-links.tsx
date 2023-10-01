@@ -100,21 +100,19 @@ const CustomizeLinks = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 lg:w-auto">
-      <div>
-        <h3>Customize your links</h3>
-        <p className="mt-2 text-[#737373]">
-          Add/edit/remove links below and then share all your profiles with the
-          world!
-        </p>
-        <Button
-          variant="dlSecondary"
-          className="mt-10 h-auto w-full px-[27px] py-[11px]"
-          onClick={AddLinkHandler}
-        >
-          + Add new link
-        </Button>
-      </div>
+    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 lg:h-[calc(100vh-152px)] lg:overflow-y-auto">
+      <h3>Customize your links</h3>
+      <p className="mt-2 text-[#737373]">
+        Add/edit/remove links below and then share all your profiles with the
+        world!
+      </p>
+      <Button
+        variant="dlSecondary"
+        className="mt-10 h-auto w-full px-[27px] py-[11px]"
+        onClick={AddLinkHandler}
+      >
+        + Add new link
+      </Button>
 
       {!hasLinks && <EmptyLinks />}
       {hasLinks && <DevLinks links={links} setLinks={setLinks} />}

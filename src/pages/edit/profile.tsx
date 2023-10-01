@@ -1,9 +1,10 @@
 import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
+import PhonePreview from "~/components/edit/phone-preview";
 import Header from "~/components/header/header";
 
 export default function EditProfilePage() {
-  const { isLoaded, isSignedIn, user } = useUser();
+  const { isLoaded, isSignedIn } = useUser();
 
   if (!isLoaded || !isSignedIn) {
     return null;
@@ -16,8 +17,8 @@ export default function EditProfilePage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="h-screen bg-[#FAFAFA]">
-        <div className="container pt-10">{`Hello ${user.primaryEmailAddress?.emailAddress}`}</div>
+      <main className="bg-[#FAFAFA] p-4 md:p-6 md:pt-0 lg:flex lg:gap-6">
+        <PhonePreview />
       </main>
     </>
   );
