@@ -5,7 +5,7 @@ import PhonePreview from "~/components/edit/phone-preview";
 import Header from "~/components/header/header";
 
 export default function EditLinksPage() {
-  const { isLoaded, isSignedIn } = useUser();
+  const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded || !isSignedIn) {
     return null;
@@ -20,7 +20,7 @@ export default function EditLinksPage() {
       <Header />
       <main className="bg-[#FAFAFA] p-4 md:p-6 md:pt-0 lg:flex lg:gap-6">
         <PhonePreview />
-        <CustomizeLinks />
+        <CustomizeLinks userId={user.id} />
       </main>
     </>
   );
