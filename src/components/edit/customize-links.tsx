@@ -31,9 +31,9 @@ const DevLinks = ({
 
   return (
     <div className="my-6 flex flex-1 flex-col items-center space-y-6 md:mb-10">
-      {links.map((link, index) => (
+      {links.map((link) => (
         <div
-          key={link.id ?? index}
+          key={link.id}
           className="w-full space-y-3 rounded-lg bg-[#FAFAFA] p-5"
         >
           <div className="flex justify-between">
@@ -86,14 +86,12 @@ const CustomizeLinks = ({ userId }: { userId: string }) => {
 
   const AddLinkHandler = () => {
     const priority = links.length > 0 ? links.length + 1 : 1;
-    const randomId = crypto.randomUUID();
-    console.log("randomId:", randomId);
 
     setLinks([
       ...links,
       {
         id: crypto.randomUUID(),
-        userId: userId,
+        userId,
         linkName: "GitHub",
         url: "https://www.github.com/johnappleseed",
         priority,
