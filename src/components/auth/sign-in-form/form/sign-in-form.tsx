@@ -92,7 +92,12 @@ const SignInForm = () => {
 
 const SubmitForm = ({ isSigningIn }: { isSigningIn: boolean }) => (
   <div className="flex flex-col items-center">
-    <Button type="submit" disabled={isSigningIn} variant="dlPrimary">
+    <Button
+      type="submit"
+      disabled={isSigningIn}
+      variant="dlPrimary"
+      className="w-full"
+    >
       {isSigningIn && <Spinner />}
       Submit
     </Button>

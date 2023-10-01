@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import AuthCard from "~/components/auth/auth-card";
 import SignInForm from "~/components/auth/sign-in-form/form/sign-in-form";
 
-export default function SignIn() {
+export default function SignInPage() {
   const { isSignedIn } = useUser();
   const router = useRouter();
 

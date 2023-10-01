@@ -103,7 +103,12 @@ const SignUpForm = ({
             Password must contain at least 8 characters
           </h6>
           <div className="flex flex-col items-center">
-            <Button type="submit" disabled={isSigningUp} variant="dlPrimary">
+            <Button
+              type="submit"
+              disabled={isSigningUp}
+              variant="dlPrimary"
+              className="w-full"
+            >
               {isSigningUp && <Spinner />}
               Submit
             </Button>
