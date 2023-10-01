@@ -4,7 +4,6 @@ import LogoLarge from "./logo-large";
 import LinksTab from "./links-tab";
 import ProfileTab from "./profile-tab";
 import PreviewButton from "./preview-button";
-import { UserButton } from "@clerk/nextjs";
 
 const Header = () => {
   const router = useRouter();
@@ -22,7 +21,6 @@ const Header = () => {
           <ProfileTab currentRoute={currentRoute} />
         </div>
         <PreviewButton />
-        <UserButton />
       </div>
     </div>
   );
