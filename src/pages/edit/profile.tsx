@@ -1,10 +1,8 @@
 import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
-import CustomizeLinks from "~/components/edit/customize-links";
-import PhonePreview from "~/components/edit/phone-preview";
 import Header from "~/components/header/header";
 
-export default function EditLinksPage() {
+export default function EditProfilePage() {
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded || !isSignedIn) {
@@ -18,9 +16,8 @@ export default function EditLinksPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="bg-[#FAFAFA] p-4 md:p-6 md:pt-0 lg:flex lg:gap-6">
-        <PhonePreview />
-        <CustomizeLinks userId={user.id} />
+      <main className="h-screen bg-[#FAFAFA]">
+        <div className="container pt-10">{`Hello ${user.primaryEmailAddress?.emailAddress}`}</div>
       </main>
     </>
   );

@@ -1,7 +1,7 @@
 import { Button } from "../ui/button";
 
 const PreviewButton = ({ onClick }: { onClick?: () => void }) => (
-  <Button variant="dlSecondary" className="px-4 py-[11px]">
+  <Button variant="dlSecondary" className="h-auto px-4 py-[11px]">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="20"

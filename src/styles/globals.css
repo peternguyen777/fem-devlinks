@@ -75,7 +75,7 @@
   }
 
   h3 {
-    @apply text-[32px] font-bold leading-[48px] text-[#333333];
+    @apply text-[24px] font-bold leading-[36px] text-[#333333] md:text-[32px] md:leading-[48px];
   }
 
   h4 {

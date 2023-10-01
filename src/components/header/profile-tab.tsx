@@ -1,13 +1,20 @@
 import { Button } from "../ui/button";
 
-const ProfileTab = ({ currentRoute }: { currentRoute: string }) => (
+const ProfileTab = ({
+  currentRoute,
+  onClick,
+}: {
+  currentRoute: string;
+  onClick: () => void;
+}) => (
   <Button
     variant="dlTab"
-    className={`group px-[27px] py-[11px] ${
+    className={`group h-auto px-[27px] py-[11px] ${
       currentRoute === "/edit/profile"
         ? `bg-[#EFEBFF] text-[#633CFF]  `
         : `bg-background`
     } md:gap-2`}
+    onClick={onClick}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
