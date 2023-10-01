@@ -17,8 +17,14 @@ const Header = () => {
           <LogoLarge onClick={() => void router.push("/")} />
         </>
         <div className="absolute left-1/2 flex -translate-x-1/2 md:relative md:left-auto md:translate-x-0">
-          <LinksTab currentRoute={currentRoute} />
-          <ProfileTab currentRoute={currentRoute} />
+          <LinksTab
+            currentRoute={currentRoute}
+            onClick={() => void router.push("/edit/links")}
+          />
+          <ProfileTab
+            currentRoute={currentRoute}
+            onClick={() => void router.push("/edit/profile")}
+          />
         </div>
         <PreviewButton />
       </div>
