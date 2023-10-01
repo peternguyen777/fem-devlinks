@@ -10,7 +10,7 @@ const Header = () => {
   const currentRoute = router.pathname;
 
   return (
-    <div className="sticky top-0 bg-[#FAFAFA] md:p-6">
+    <div className="sticky top-0 z-10 bg-[#FAFAFA] md:p-6">
       <div className="relative flex items-center justify-between rounded-b-xl bg-background py-4 pl-6 pr-4 shadow-lg md:rounded-xl">
         <>
           <LogoSmall onClick={() => void router.push("/")} />

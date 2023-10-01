@@ -9,7 +9,7 @@ const LinksTab = ({
 }) => (
   <Button
     variant="dlTab"
-    className={`group px-[27px] py-[11px] ${
+    className={`group h-auto px-[27px] py-[11px] ${
       currentRoute === "/edit/links"
         ? `bg-[#EFEBFF] text-[#633CFF]`
         : `bg-background`
