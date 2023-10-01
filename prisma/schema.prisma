@@ -19,3 +19,11 @@ model Example {
 
     @@index([name])
 }
+
+model Links {
+  id          String    @id @default(cuid())
+  userId      String
+  linkName    String
+  url         String
+  priority    Int       @unique @default(autoincrement())
+}
