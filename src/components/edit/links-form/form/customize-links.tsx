@@ -1,29 +1,23 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "../ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import type { LinkState } from "./edit-links";
-import IllustrationEmpty from "./illustration-empty";
-import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
-import { toast } from "../ui/use-toast";
+import { Button } from "../../../ui/button";
+import { Form } from "../../../ui/form";
+import { toast } from "../../../ui/use-toast";
+import type { LinkState } from "../../edit-links";
+import IllustrationEmpty from "../illustration-empty";
+import PlatformSelector from "../platform-selector";
+import UrlInput from "../url-input";
 
 export const formSchema = z.object({
   links: z
     .object({
       linkId: z.string().optional(),
       linkName: z.string().nonempty(),
-      url: z.string().nonempty(),
+      url: z.string().url().nonempty(),
       priority: z.number(),
     })
     .array(),
@@ -43,7 +37,10 @@ const CustomizeLinks = ({
     defaultValues: {
       links,
     },
+    mode: "onSubmit",
+    reValidateMode: "onChange",
   });
+
   const { fields, remove, append } = useFieldArray<InferredFormSchema>({
     control: form.control,
     name: "links",
@@ -96,6 +93,7 @@ const CustomizeLinks = ({
           <Button
             variant="dlSecondary"
             className="mt-10 h-auto w-full px-[27px] py-[11px]"
+            type="button"
             onClick={() => {
               append({
                 linkName: "",
@@ -140,32 +138,8 @@ const CustomizeLinks = ({
                       Remove
                     </h5>
                   </div>
-                  <FormField
-                    control={form.control}
-                    name={`links.${index}.linkName`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Platform</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name={`links.${index}.url`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Link</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <PlatformSelector control={form.control} index={index} />
+                  <UrlInput control={form.control} index={index} />
                 </div>
               ))}
             </div>

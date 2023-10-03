@@ -1,5 +1,5 @@
 import { api, type RouterOutputs } from "~/utils/api";
-import CustomizeLinks from "./customize-links";
+import CustomizeLinks from "./links-form/form/customize-links";
 import PhonePreview from "./phone-preview";
 import { useEffect, useState } from "react";
 
