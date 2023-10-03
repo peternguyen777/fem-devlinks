@@ -49,7 +49,7 @@ const PlatformSelector = ({
           <FormLabel>
             <h6>Platform</h6>
           </FormLabel>
-          <Select onValueChange={field.onChange}>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger className="h-auto border-[#D9D9D9] py-[11px] text-[16px] leading-[24px]">
                 <SelectValue placeholder="Select a platform" />
