@@ -1,7 +1,192 @@
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
-import { api, type RouterOutputs } from "~/utils/api";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useFieldArray, useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "../ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
+import type { LinkState } from "./edit-links";
 import IllustrationEmpty from "./illustration-empty";
+import { useEffect, useState } from "react";
+import { api } from "~/utils/api";
+import { toast } from "../ui/use-toast";
+
+export const formSchema = z.object({
+  links: z
+    .object({
+      linkId: z.string().optional(),
+      linkName: z.string().nonempty(),
+      url: z.string().nonempty(),
+      priority: z.number(),
+    })
+    .array(),
+});
+
+export type InferredFormSchema = z.infer<typeof formSchema>;
+
+const CustomizeLinks = ({
+  links,
+  isLoading,
+}: {
+  links: LinkState[];
+  isLoading: boolean;
+}) => {
+  const form = useForm<InferredFormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      links,
+    },
+  });
+  const { fields, remove, append } = useFieldArray<InferredFormSchema>({
+    control: form.control,
+    name: "links",
+  });
+
+  const [deleteLinks, setDeleteLinks] = useState<string[]>([]);
+
+  useEffect(() => form.reset({ links }), [form, links]);
+
+  const hasLinks = fields.length > 0;
+
+  const ctx = api.useContext();
+
+  const updateLinks = api.links.updateLinks.useMutation({
+    onSuccess: () => {
+      setDeleteLinks([]);
+      toast({
+        variant: "devlinks",
+        description: <p>{`Links successfully updated`}</p>,
+      });
+    },
+    onError: (error) => {
+      toast({
+        variant: "devlinks",
+        title: "Error occured:",
+        description: <p>{error.message}</p>,
+      });
+    },
+    onSettled: async () => {
+      await ctx.links.invalidate();
+    },
+  });
+
+  const onSubmit = (values: InferredFormSchema) => {
+    updateLinks.mutate({ ...values, deleteLinks });
+  };
+
+  return (
+    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 lg:h-[calc(100vh-152px)] lg:overflow-y-auto">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-1 flex-col"
+        >
+          <h3>Customize your links</h3>
+          <p className="mt-2 text-[#737373]">
+            Add/edit/remove links below and then share all your profiles with
+            the world!
+          </p>
+          <Button
+            variant="dlSecondary"
+            className="mt-10 h-auto w-full px-[27px] py-[11px]"
+            onClick={() => {
+              append({
+                linkName: "",
+                url: "",
+                priority: fields.length + 1,
+              });
+            }}
+          >
+            + Add new link
+          </Button>
+
+          {!hasLinks && !isLoading && <EmptyLinks />}
+          {hasLinks && (
+            <div className="my-6 flex flex-1 flex-col items-center space-y-6 md:mb-10">
+              {fields.map((link, index) => (
+                <div
+                  key={link.id}
+                  className="w-full space-y-3 rounded-lg bg-[#FAFAFA] p-5"
+                >
+                  <div className="flex justify-between">
+                    <div className="flex cursor-pointer items-center gap-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="6"
+                        fill="none"
+                        viewBox="0 0 12 6"
+                      >
+                        <path fill="#737373" d="M0 0h12v1H0zM0 5h12v1H0z" />
+                      </svg>
+                      <h5 className="select-none font-bold text-[#737373]">{`Link #${link.priority}`}</h5>
+                    </div>
+                    <h5
+                      className="cursor-pointer text-[#737373]"
+                      onClick={() => {
+                        if (link.linkId) {
+                          setDeleteLinks([...deleteLinks, link.linkId]);
+                        }
+                        remove(index);
+                      }}
+                    >
+                      Remove
+                    </h5>
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name={`links.${index}.linkName`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Platform</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`links.${index}.url`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Link</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+
+          <hr className="-mx-6 mb-4 border-[#D9D9D9] md:-mx-10 md:mb-6" />
+          <div className="md:flex md:justify-end">
+            <Button
+              variant="dlPrimary"
+              className="h-auto w-full py-[11px] md:w-fit md:px-[27px]"
+              disabled={links.length === 0 && fields.length === 0}
+              type="submit"
+            >
+              Save
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
+  );
+};
 
 const EmptyLinks = () => (
   <div className="my-6 flex flex-1 flex-col items-center justify-center rounded-xl bg-[#FAFAFA] p-5 md:mb-10">
@@ -16,119 +201,5 @@ const EmptyLinks = () => (
     </div>
   </div>
 );
-
-const DevLinks = ({
-  links,
-  setLinks,
-}: {
-  links: LinkState[];
-  setLinks: Dispatch<SetStateAction<LinkState[]>>;
-}) => {
-  const removeLinkHandler = (id: string) => {
-    const filteredLinks = links.filter((link) => link.id !== id);
-    setLinks(filteredLinks);
-  };
-
-  return (
-    <div className="my-6 flex flex-1 flex-col items-center space-y-6 md:mb-10">
-      {links.map((link) => (
-        <div
-          key={link.id}
-          className="w-full space-y-3 rounded-lg bg-[#FAFAFA] p-5"
-        >
-          <div className="flex justify-between">
-            <div className="flex cursor-pointer items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="6"
-                fill="none"
-                viewBox="0 0 12 6"
-              >
-                <path fill="#737373" d="M0 0h12v1H0zM0 5h12v1H0z" />
-              </svg>
-              <h5 className="select-none font-bold text-[#737373]">{`Link #${link.priority}`}</h5>
-            </div>
-            <h5
-              className="cursor-pointer text-[#737373]"
-              onClick={() => removeLinkHandler(link.id)}
-            >
-              Remove
-            </h5>
-          </div>
-          <div className="space-y-1">
-            <h6>Platform</h6>
-            <p>{link.linkName}</p>
-          </div>
-          <div className="space-y-1">
-            <h6>Link</h6>
-            <p className="text-[#737373]">{link.url}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-type LinkState = RouterOutputs["links"]["getLinks"][number];
-
-const CustomizeLinks = ({ userId }: { userId: string }) => {
-  const [links, setLinks] = useState<LinkState[]>([]);
-  const hasLinks = links.length > 0;
-
-  const { data } = api.links.getLinks.useQuery({ userId });
-
-  useEffect(() => {
-    if (data) {
-      setLinks(data);
-    }
-  }, [data]);
-
-  const AddLinkHandler = () => {
-    const priority = links.length > 0 ? links.length + 1 : 1;
-
-    setLinks([
-      ...links,
-      {
-        id: crypto.randomUUID(),
-        userId,
-        linkName: "GitHub",
-        url: "https://www.github.com/johnappleseed",
-        priority,
-      },
-    ]);
-  };
-
-  return (
-    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 lg:h-[calc(100vh-152px)] lg:overflow-y-auto">
-      <h3>Customize your links</h3>
-      <p className="mt-2 text-[#737373]">
-        Add/edit/remove links below and then share all your profiles with the
-        world!
-      </p>
-      <Button
-        variant="dlSecondary"
-        className="mt-10 h-auto w-full px-[27px] py-[11px]"
-        onClick={AddLinkHandler}
-      >
-        + Add new link
-      </Button>
-
-      {!hasLinks && <EmptyLinks />}
-      {hasLinks && <DevLinks links={links} setLinks={setLinks} />}
-
-      <hr className="-mx-6 mb-4 border-[#D9D9D9] md:-mx-10 md:mb-6" />
-      <div className="md:flex md:justify-end">
-        <Button
-          variant="dlPrimary"
-          className="h-auto w-full py-[11px] md:w-fit md:px-[27px]"
-          disabled={!hasLinks}
-        >
-          Save
-        </Button>
-      </div>
-    </div>
-  );
-};
 
 export default CustomizeLinks;

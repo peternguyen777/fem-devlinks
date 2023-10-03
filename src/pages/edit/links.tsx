@@ -1,7 +1,6 @@
 import { useUser } from "@clerk/nextjs";
 import Head from "next/head";
-import CustomizeLinks from "~/components/edit/customize-links";
-import PhonePreview from "~/components/edit/phone-preview";
+import EditLinks from "~/components/edit/edit-links";
 import Header from "~/components/header/header";
 
 export default function EditLinksPage() {
@@ -10,6 +9,7 @@ export default function EditLinksPage() {
   if (!isLoaded || !isSignedIn) {
     return null;
   }
+
   return (
     <>
       <Head>
@@ -18,10 +18,7 @@ export default function EditLinksPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="bg-[#FAFAFA] p-4 md:p-6 md:pt-0 lg:flex lg:gap-6">
-        <PhonePreview />
-        <CustomizeLinks userId={user.id} />
-      </main>
+      <EditLinks userId={user.id} />
     </>
   );
 }
