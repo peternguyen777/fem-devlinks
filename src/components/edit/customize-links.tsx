@@ -44,8 +44,6 @@ const CustomizeLinks = ({
     defaultValues: {
       links,
     },
-    mode: "onSubmit",
-    reValidateMode: "onSubmit",
   });
 
   const { fields, remove, append } = useFieldArray<InferredFormSchema>({
@@ -62,9 +60,12 @@ const CustomizeLinks = ({
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 lg:h-[calc(100vh-152px)] lg:overflow-y-auto">
+    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 lg:h-[calc(100vh-152px)] lg:overflow-y-auto">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-1 flex-col"
+        >
           <h3>Customize your links</h3>
           <p className="mt-2 text-[#737373]">
             Add/edit/remove links below and then share all your profiles with
@@ -156,9 +157,9 @@ const CustomizeLinks = ({
               Save
             </Button>
           </div>
-        </div>
-      </form>
-    </Form>
+        </form>
+      </Form>
+    </div>
   );
 };
 
