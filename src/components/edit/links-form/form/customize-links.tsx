@@ -16,8 +16,8 @@ export const formSchema = z.object({
   links: z
     .object({
       linkId: z.string().optional(),
-      linkName: z.string().nonempty(),
-      url: z.string().url().nonempty(),
+      linkName: z.string().nonempty("Invalid platform"),
+      url: z.string().url(),
       priority: z.number(),
     })
     .array(),
@@ -146,6 +146,7 @@ const CustomizeLinks = ({
           )}
 
           <hr className="-mx-6 mb-4 border-[#D9D9D9] md:-mx-10 md:mb-6" />
+
           <div className="md:flex md:justify-end">
             <Button
               variant="dlPrimary"
