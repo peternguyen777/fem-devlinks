@@ -14,20 +14,19 @@ import {
 import { Input } from "../ui/input";
 import type { LinkState } from "./edit-links";
 import IllustrationEmpty from "./illustration-empty";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 import { toast } from "../ui/use-toast";
 
 export const formSchema = z.object({
   links: z
     .object({
-      id: z.string().optional(),
+      linkId: z.string().optional(),
       linkName: z.string().nonempty(),
       url: z.string().nonempty(),
       priority: z.number(),
     })
     .array(),
-  // deleteLinks: z.object({ id: z.string().optional() }).array(),
 });
 
 export type InferredFormSchema = z.infer<typeof formSchema>;
@@ -45,38 +44,41 @@ const CustomizeLinks = ({
       links,
     },
   });
-
   const { fields, remove, append } = useFieldArray<InferredFormSchema>({
     control: form.control,
     name: "links",
   });
 
+  const [deleteLinks, setDeleteLinks] = useState<string[]>([]);
+
   useEffect(() => form.reset({ links }), [form, links]);
 
-  const hasLinks = links.length > 0;
+  const hasLinks = fields.length > 0;
 
   const ctx = api.useContext();
 
   const updateLinks = api.links.updateLinks.useMutation({
     onSuccess: () => {
+      setDeleteLinks([]);
       toast({
-        title: "Success!",
+        variant: "devlinks",
         description: <p>{`Links successfully updated`}</p>,
       });
     },
     onError: (error) => {
       toast({
+        variant: "devlinks",
         title: "Error occured:",
         description: <p>{error.message}</p>,
       });
     },
     onSettled: async () => {
-      await ctx.links.getLinks.invalidate();
+      await ctx.links.invalidate();
     },
   });
 
   const onSubmit = (values: InferredFormSchema) => {
-    updateLinks.mutate(values);
+    updateLinks.mutate({ ...values, deleteLinks });
   };
 
   return (
@@ -128,7 +130,12 @@ const CustomizeLinks = ({
                     </div>
                     <h5
                       className="cursor-pointer text-[#737373]"
-                      onClick={() => remove(index)}
+                      onClick={() => {
+                        if (link.linkId) {
+                          setDeleteLinks([...deleteLinks, link.linkId]);
+                        }
+                        remove(index);
+                      }}
                     >
                       Remove
                     </h5>
@@ -169,7 +176,7 @@ const CustomizeLinks = ({
             <Button
               variant="dlPrimary"
               className="h-auto w-full py-[11px] md:w-fit md:px-[27px]"
-              disabled={!hasLinks}
+              disabled={links.length === 0 && fields.length === 0}
               type="submit"
             >
               Save
