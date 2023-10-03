@@ -15,28 +15,28 @@ import { Input } from "../ui/input";
 import type { LinkState } from "./edit-links";
 import IllustrationEmpty from "./illustration-empty";
 import { useEffect } from "react";
+import { api } from "~/utils/api";
+import { toast } from "../ui/use-toast";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   links: z
     .object({
-      id: z.string(),
-      userId: z.string(),
+      id: z.string().optional(),
       linkName: z.string().nonempty(),
       url: z.string().nonempty(),
       priority: z.number(),
     })
     .array(),
+  // deleteLinks: z.object({ id: z.string().optional() }).array(),
 });
 
 export type InferredFormSchema = z.infer<typeof formSchema>;
 
 const CustomizeLinks = ({
   links,
-  userId,
   isLoading,
 }: {
   links: LinkState[];
-  userId: string;
   isLoading: boolean;
 }) => {
   const form = useForm<InferredFormSchema>({
@@ -55,8 +55,28 @@ const CustomizeLinks = ({
 
   const hasLinks = links.length > 0;
 
+  const ctx = api.useContext();
+
+  const updateLinks = api.links.updateLinks.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Success!",
+        description: <p>{`Links successfully updated`}</p>,
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error occured:",
+        description: <p>{error.message}</p>,
+      });
+    },
+    onSettled: async () => {
+      await ctx.links.getLinks.invalidate();
+    },
+  });
+
   const onSubmit = (values: InferredFormSchema) => {
-    console.log(values);
+    updateLinks.mutate(values);
   };
 
   return (
@@ -76,8 +96,6 @@ const CustomizeLinks = ({
             className="mt-10 h-auto w-full px-[27px] py-[11px]"
             onClick={() => {
               append({
-                id: crypto.randomUUID(),
-                userId,
                 linkName: "",
                 url: "",
                 priority: fields.length + 1,
@@ -122,7 +140,7 @@ const CustomizeLinks = ({
                       <FormItem>
                         <FormLabel>Platform</FormLabel>
                         <FormControl>
-                          <Input placeholder="shadcn" {...field} />
+                          <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -135,7 +153,7 @@ const CustomizeLinks = ({
                       <FormItem>
                         <FormLabel>Link</FormLabel>
                         <FormControl>
-                          <Input placeholder="shadcn" {...field} />
+                          <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

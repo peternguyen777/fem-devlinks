@@ -18,7 +18,7 @@ const EditLinks = ({ userId }: { userId: string }) => {
   return (
     <main className="bg-[#FAFAFA] p-4 md:p-6 md:pt-0 lg:flex lg:gap-6">
       <PhonePreview />
-      <CustomizeLinks links={links} isLoading={isLoading} userId={userId} />
+      <CustomizeLinks links={links} isLoading={isLoading} />
     </main>
   );
 };
