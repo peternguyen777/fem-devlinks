@@ -1,17 +1,17 @@
 export const platform = [
-  { label: "GitHub", value: "github", color: "1A1A1A" },
-  { label: "Portfolio", value: "portfolio", color: "FFFFFF" },
-  { label: "Twitter", value: "twitter", color: "43B7E9" },
-  { label: "LinkedIn", value: "linkedin", color: "2D68FF" },
-  { label: "Youtube", value: "youtube", color: "EE3939" },
-  { label: "Facebook", value: "facebook", color: "2442AC" },
-  { label: "Twitch", value: "twitch", color: "EE3FC8" },
-  { label: "Dev.to", value: "devto", color: "333333" },
-  { label: "Codewars", value: "codewars", color: "8A1A50" },
-  { label: "freeCodeCamp", value: "freecodecamp", color: "302267" },
-  { label: "GitLab", value: "gitlab", color: "EB4925" },
-  { label: "Hashnode", value: "hashnode", color: "0330D1" },
-  { label: "Stack Overflow", value: "stack-overflow", color: "EC7100" },
+  { label: "GitHub", value: "github" },
+  { label: "Portfolio", value: "portfolio" },
+  { label: "Twitter", value: "twitter" },
+  { label: "LinkedIn", value: "linkedin" },
+  { label: "Youtube", value: "youtube" },
+  { label: "Facebook", value: "facebook" },
+  { label: "Twitch", value: "twitch" },
+  { label: "Dev.to", value: "devto" },
+  { label: "Codewars", value: "codewars" },
+  { label: "freeCodeCamp", value: "freecodecamp" },
+  { label: "GitLab", value: "gitlab" },
+  { label: "Hashnode", value: "hashnode" },
+  { label: "Stack Overflow", value: "stack-overflow" },
 ];
 
 export const platformNameMap: Record<string, string> = platform.reduce(
@@ -21,3 +21,19 @@ export const platformNameMap: Record<string, string> = platform.reduce(
   },
   {} as Record<string, string>,
 );
+
+export const colorVariants: Record<string, string> = {
+  github: `bg-[#1A1A1A] text-white`,
+  portfolio: `bg-[#FFFFFF] text-[#333333] border border-[#D9D9D9]`,
+  twitter: `bg-[#43B7E9] text-white`,
+  linkedin: `bg-[#2D68FF] text-white`,
+  youtube: `bg-[#EE3939] text-white`,
+  facebook: `bg-[#2442AC] text-white`,
+  twitch: `bg-[#EE3FC8] text-white`,
+  devto: `bg-[#333333] text-white`,
+  codewars: `bg-[#8A1A50] text-white`,
+  freecodecamp: `bg-[#302267] text-white`,
+  gitlab: `bg-[#EB4925] text-white`,
+  hashnode: `bg-[#0330D1] text-white`,
+  "stack-overflow": `bg-[#EC7100] text-white`,
+};
