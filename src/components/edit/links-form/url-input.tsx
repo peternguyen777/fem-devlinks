@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Control } from "react-hook-form";
 import {
   FormControl,
@@ -8,7 +9,6 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import type { InferredFormSchema } from "./form/customize-links";
-import Image from "next/image";
 
 const UrlInput = ({
   control,
@@ -28,6 +28,7 @@ const UrlInput = ({
           </FormLabel>
           <FormControl>
             <Input
+              {...field}
               placeholder="e.g. https://www.github.com/johnappleseed"
               icon={
                 <Image
@@ -37,7 +38,6 @@ const UrlInput = ({
                   width={16}
                 />
               }
-              {...field}
             />
           </FormControl>
           <FormMessage />

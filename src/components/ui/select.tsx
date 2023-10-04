@@ -20,7 +20,7 @@ const SelectTrigger = React.forwardRef<
     <SelectPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex h-10 w-full items-center justify-between rounded-md border border-[#D9D9D9] bg-background px-3 py-2 text-sm transition-colors duration-300 placeholder:text-muted-foreground focus-within:border-[#633CFF] focus-within:shadow-custom disabled:cursor-not-allowed disabled:opacity-50",
+        "mt-1 flex h-10 w-full items-center justify-between rounded-md border border-[#D9D9D9] bg-background px-3 py-2 text-sm transition-colors duration-300 placeholder:text-muted-foreground focus-within:border-[#633CFF] focus-within:shadow-custom disabled:cursor-not-allowed disabled:opacity-50",
         error && "border-destructive",
         className,
       )}

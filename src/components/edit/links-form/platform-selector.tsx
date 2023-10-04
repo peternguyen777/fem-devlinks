@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Control } from "react-hook-form";
 import {
   FormControl,
@@ -14,7 +15,6 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import type { InferredFormSchema } from "./form/customize-links";
-import Image from "next/image";
 
 const platform = [
   { label: "GitHub", value: "github" },
@@ -75,7 +75,7 @@ const PlatformSelector = ({
               ))}
             </SelectContent>
           </Select>
-          <FormMessage className="right-8" />
+          <FormMessage />
         </FormItem>
       )}
     />
