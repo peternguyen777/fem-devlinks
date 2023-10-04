@@ -21,8 +21,10 @@ const PhonePreview = ({ links }: { links: LinkState[] }) => {
               return link ? (
                 <div
                   key={link.linkId}
-                  className={`flex h-[44px] w-[237px] items-center rounded-[8px] bg-blue-200
-                  pl-4 text-white`}
+                  className={`flex h-[44px] w-[237px] items-center rounded-[8px] ${
+                    link.linkName === "portfolio" ? `bg-red-500` : `bg-blue-500`
+                  } 
+                  pl-4 text-white`} //how do we make dynamic bg-colors?
                 >
                   <div className="flex items-center gap-3">
                     <Image
