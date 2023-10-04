@@ -15,23 +15,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import type { InferredFormSchema } from "./form/customize-links";
-
-const platform = [
-  { label: "GitHub", value: "github" },
-  { label: "Portfolio", value: "portfolio" },
-  { label: "Twitter", value: "twitter" },
-  { label: "LinkedIn", value: "linkedin" },
-  { label: "Youtube", value: "youtube" },
-  { label: "Facebook", value: "facebook" },
-  { label: "Twitch", value: "twitch" },
-  { label: "Dev.to", value: "devto" },
-  { label: "Codewars", value: "codewars" },
-  { label: "Codepen", value: "codepen" },
-  { label: "freeCodeCamp", value: "freecodecamp" },
-  { label: "GitLab", value: "gitlab" },
-  { label: "Hashnode", value: "hashnode" },
-  { label: "Stack Overflow", value: "stack-overflow" },
-];
+import { platform } from "./platform-types";
 
 const PlatformSelector = ({
   control,

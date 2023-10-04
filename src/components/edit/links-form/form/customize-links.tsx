@@ -101,6 +101,7 @@ const CustomizeLinks = ({
                 priority: fields.length + 1,
               });
             }}
+            disabled={fields.length === 5}
           >
             + Add new link
           </Button>
