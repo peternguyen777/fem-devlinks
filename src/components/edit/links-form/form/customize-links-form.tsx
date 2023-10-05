@@ -79,7 +79,7 @@ const CustomizeLinksForm = ({
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 lg:h-[calc(100vh-152px)] lg:overflow-y-auto">
+    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 xl:h-[calc(100vh-152px)] xl:overflow-y-auto">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -169,7 +169,7 @@ const CustomizeLinksForm = ({
 
 const EmptyLinks = () => (
   <div className="my-6 flex flex-1 flex-col items-center justify-center rounded-xl bg-[#FAFAFA] p-5 md:mb-10">
-    <div className="flex flex-col items-center space-y-6 py-[26.5px] md:px-[56.5px] md:py-[62.5px] lg:px-[100px] lg:py-[42.5px]">
+    <div className="flex flex-col items-center space-y-6 py-[26.5px] md:px-[56.5px] md:py-[62.5px] xl:px-[100px] xl:py-[42.5px]">
       <IllustrationEmpty />
       <h3 className="text-center">Let&apos;s get you started</h3>
       <p className="text-center text-[#737373]">
