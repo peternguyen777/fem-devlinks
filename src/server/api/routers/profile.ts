@@ -88,5 +88,7 @@ export const profileRouter = createTRPCRouter({
           image: input.image,
         },
       });
+
+      // delete previous pic
     }),
 });

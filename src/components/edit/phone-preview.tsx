@@ -30,7 +30,7 @@ const PhonePreview = ({ profile }: { profile: Profile }) => {
         </svg>
         <div className="z-10 flex w-[308px] flex-col items-center justify-start">
           {profile.image ? (
-            <div className="relative mt-[10px] h-[96px] w-[96px] overflow-hidden rounded-full">
+            <div className="relative mt-[10px] h-[96px] w-[96px] overflow-hidden rounded-full border border-[#737373]">
               <Image
                 src={profile.image}
                 alt="Profile picture"
