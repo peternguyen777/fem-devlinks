@@ -27,14 +27,13 @@ model Profile {
   lastName    String
   email       String
   links       Links[]   
-   @@index([userId])
 }
 model Links {
   linkId      String    @id @default(cuid())
   userId      String    
   linkName    String
-  url         String
-  priority    Int       @unique @default(autoincrement())
+  url         String   
+  priority    Int        
   profile     Profile   @relation(fields:[userId], references: [userId])
   @@index([userId])
 }

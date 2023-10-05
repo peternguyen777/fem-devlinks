@@ -54,6 +54,7 @@ const ProfileDetailsForm = ({ profile }: { profile: Profile | undefined }) => {
 
   const onSubmit = (data: InferredProfileFormSchema) => {
     updateProfile.mutate(data);
+    form.reset(data);
   };
 
   return (
