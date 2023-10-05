@@ -1,11 +1,13 @@
 import Image from "next/image";
-import type { LinkState } from "./edit-links";
 import { colorVariants, platformNameMap } from "./links-form/platform-types";
+import type { Profile } from "./edit-types";
 
-const PhonePreview = ({ links }: { links: LinkState[] }) => {
-  const paddingSize = Math.max(5 - links.length, 0);
+const PhonePreview = ({ profile }: { profile: Profile | undefined }) => {
+  if (!profile) return;
+
+  const paddingSize = Math.max(5 - profile.links.length, 0);
   const paddedArray = [
-    ...links,
+    ...profile.links,
     ...Array<undefined>(paddingSize).fill(undefined),
   ];
 

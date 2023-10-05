@@ -7,6 +7,7 @@ import { Form } from "../../../ui/form";
 import FirstNameInput from "../first-name-input";
 import LastNameInput from "../last-name-input";
 import EmailInput from "../email-input";
+import type { Profile } from "../../edit-types";
 
 export const profileFormSchema = z.object({
   firstName: z.string().nonempty("Required"),
@@ -16,7 +17,7 @@ export const profileFormSchema = z.object({
 
 export type InferredProfileFormSchema = z.infer<typeof profileFormSchema>;
 
-const ProfileDetailsForm = () => {
+const ProfileDetailsForm = ({ profile }: { profile: Profile | undefined }) => {
   const form = useForm<InferredProfileFormSchema>({
     resolver: zodResolver(profileFormSchema),
     mode: "onSubmit",

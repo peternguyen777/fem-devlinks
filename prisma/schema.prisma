@@ -20,10 +20,21 @@ model Example {
     @@index([name])
 }
 
+model Profile {
+  profileId   String    @id @default(cuid())
+  userId      String    @unique
+  firstName   String
+  lastName    String
+  email       String
+  links       Links[]   
+   @@index([userId])
+}
 model Links {
   linkId      String    @id @default(cuid())
-  userId      String
+  userId      String    
   linkName    String
   url         String
   priority    Int       @unique @default(autoincrement())
+  profile     Profile   @relation(fields:[userId], references: [userId])
+  @@index([userId])
 }

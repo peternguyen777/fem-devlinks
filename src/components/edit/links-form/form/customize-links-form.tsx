@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 import { Button } from "../../../ui/button";
 import { Form } from "../../../ui/form";
 import { toast } from "../../../ui/use-toast";
-import type { LinkState } from "../../edit-links";
+import type { LinkState } from "../../edit-types";
 import IllustrationEmpty from "../illustration-empty";
 import PlatformSelector from "../platform-selector";
 import UrlInput from "../url-input";
@@ -70,7 +70,7 @@ const CustomizeLinksForm = ({
       });
     },
     onSettled: async () => {
-      await ctx.links.invalidate();
+      await ctx.profile.invalidate();
     },
   });
 
