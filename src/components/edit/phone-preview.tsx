@@ -11,13 +11,13 @@ const PhonePreview = ({ profile }: { profile: Profile }) => {
 
   return (
     <>
-      <div className="z-0 hidden lg:relative lg:flex lg:h-[calc(100vh-152px)] lg:w-[560px] lg:flex-col lg:items-center lg:justify-center lg:rounded-xl lg:bg-white lg:py-6 lg:shadow-lg">
+      <div className="z-0 hidden xl:relative xl:flex xl:h-[calc(100vh-152px)] xl:w-[560px] xl:flex-col xl:items-center xl:justify-center xl:rounded-xl xl:bg-white xl:py-6 xl:shadow-lg">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="308"
           height="632"
           fill="none"
-          className="lg:absolute"
+          className="xl:absolute"
         >
           <path
             stroke="#737373"
@@ -29,7 +29,19 @@ const PhonePreview = ({ profile }: { profile: Profile }) => {
           />
         </svg>
         <div className="z-10 flex w-[308px] flex-col items-center justify-start">
-          <div className="mt-[10px] h-[96px] w-[96px] animate-pulse rounded-full bg-[#EEE]" />
+          {profile.image ? (
+            <div className="relative mt-[10px] h-[96px] w-[96px] overflow-hidden rounded-full border border-[#737373]">
+              <Image
+                src={profile.image}
+                alt="Profile picture"
+                layout="fill"
+                objectFit="cover"
+                className="h-[96px] w-[96px]"
+              />
+            </div>
+          ) : (
+            <div className="mt-[10px] h-[96px] w-[96px] animate-pulse rounded-full bg-[#EEE]" />
+          )}
           {profile.firstName ?? profile.lastName ? (
             <span className="mt-[25px] text-[18px] font-semibold leading-[27px]">
               {`${profile.firstName} ${profile.lastName}`}

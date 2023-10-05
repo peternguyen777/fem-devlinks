@@ -1,24 +1,29 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { zodResolver } from "@hookform/resolvers/zod";
+import "@uploadthing/react/styles.css";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "~/components/ui/use-toast";
+import { api } from "~/utils/api";
 import { Button } from "../../../ui/button";
 import { Form } from "../../../ui/form";
+import type { Profile } from "../../edit-types";
+import EmailInput from "../email-input";
 import FirstNameInput from "../first-name-input";
 import LastNameInput from "../last-name-input";
-import EmailInput from "../email-input";
-import type { Profile } from "../../edit-types";
-import { api } from "~/utils/api";
-import { toast } from "~/components/ui/use-toast";
 import SlugInput from "../slug-input";
+import ProfilePicture from "../profile-picture";
 
 export const profileFormSchema = z.object({
   firstName: z.string().nonempty("Required"),
   lastName: z.string().nonempty("Required"),
   email: z.string().email(),
-  slug: z.string().refine((value) => !/\s/.test(value), {
-    message: "Slug must not contain spaces",
-  }),
+  slug: z
+    .string()
+    .nonempty("Required")
+    .refine((value) => !/\s/.test(value), {
+      message: "Slug must not contain spaces",
+    }),
 });
 
 export type InferredProfileFormSchema = z.infer<typeof profileFormSchema>;
@@ -63,7 +68,7 @@ const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 lg:h-[calc(100vh-152px)] lg:overflow-y-auto">
+    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 xl:h-[calc(100vh-152px)] xl:overflow-y-auto">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -75,6 +80,7 @@ const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
           </p>
 
           <div className="my-6 flex-1 space-y-6 md:mb-10">
+            <ProfilePicture profile={profile} />
             <div className="w-full space-y-3 rounded-lg bg-[#FAFAFA] p-5">
               <FirstNameInput control={form.control} />
               <LastNameInput control={form.control} />
