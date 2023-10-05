@@ -25,6 +25,7 @@ model Profile {
   userId      String    @unique
   firstName   String?
   lastName    String?
+  image       String?
   email       String
   slug        String    @unique
   links       Links[]   

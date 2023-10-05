@@ -73,4 +73,20 @@ export const profileRouter = createTRPCRouter({
         },
       });
     }),
+  updateProfileImage: privateProcedure
+    .input(
+      z.object({
+        image: z.string().url(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.profile.update({
+        where: {
+          userId: ctx.userId,
+        },
+        data: {
+          image: input.image,
+        },
+      });
+    }),
 });

@@ -29,7 +29,19 @@ const PhonePreview = ({ profile }: { profile: Profile }) => {
           />
         </svg>
         <div className="z-10 flex w-[308px] flex-col items-center justify-start">
-          <div className="mt-[10px] h-[96px] w-[96px] animate-pulse rounded-full bg-[#EEE]" />
+          {profile.image ? (
+            <div className="relative mt-[10px] h-[96px] w-[96px] overflow-hidden rounded-full">
+              <Image
+                src={profile.image}
+                alt="Profile picture"
+                layout="fill"
+                objectFit="cover"
+                className="h-[96px] w-[96px]"
+              />
+            </div>
+          ) : (
+            <div className="mt-[10px] h-[96px] w-[96px] animate-pulse rounded-full bg-[#EEE]" />
+          )}
           {profile.firstName ?? profile.lastName ? (
             <span className="mt-[25px] text-[18px] font-semibold leading-[27px]">
               {`${profile.firstName} ${profile.lastName}`}
