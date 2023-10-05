@@ -3,7 +3,11 @@ import PhonePreview from "./phone-preview";
 import ProfileDetailsForm from "./profile-form/form/profile-details-form";
 
 const EditProfile = ({ userId }: { userId: string }) => {
-  const { data } = api.profile.getProfile.useQuery({ userId });
+  const { data, isLoading } = api.profile.getProfile.useQuery({ userId });
+
+  if (!data || isLoading) {
+    return;
+  }
 
   return (
     <main className="bg-[#FAFAFA] p-4 md:p-6 md:pt-0 lg:flex lg:gap-6">

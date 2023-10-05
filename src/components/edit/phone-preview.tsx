@@ -18,7 +18,7 @@ const PhonePreview = ({ profile }: { profile: Profile | undefined }) => {
 
   return (
     <>
-      <div className="hidden lg:relative lg:flex lg:h-[calc(100vh-152px)] lg:w-[560px] lg:flex-col lg:items-center lg:justify-center lg:rounded-xl lg:bg-white lg:py-6 lg:shadow-lg">
+      <div className="z-0 hidden lg:relative lg:flex lg:h-[calc(100vh-152px)] lg:w-[560px] lg:flex-col lg:items-center lg:justify-center lg:rounded-xl lg:bg-white lg:py-6 lg:shadow-lg">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="308"

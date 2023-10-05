@@ -6,7 +6,6 @@ import PhonePreview from "./phone-preview";
 
 const EditLinks = ({ userId }: { userId: string }) => {
   const { data, isLoading } = api.profile.getProfile.useQuery({ userId });
-
   const [links, setLinks] = useState<LinkState[]>([]);
 
   useEffect(() => {
