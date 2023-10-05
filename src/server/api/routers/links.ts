@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  privateProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, privateProcedure } from "~/server/api/trpc";
 
 const updateLinksSchema = z.object({
   links: z
@@ -18,26 +14,6 @@ const updateLinksSchema = z.object({
 });
 
 export const linksRouter = createTRPCRouter({
-  getLinks: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const result = await ctx.db.links.findMany({
-        where: {
-          userId: input.userId,
-        },
-        orderBy: {
-          priority: "asc",
-        },
-      });
-
-      //remap priority by index
-      const prioritizedResult = result.map((link, index) => ({
-        ...link,
-        priority: index + 1,
-      }));
-
-      return prioritizedResult;
-    }),
   updateLinks: privateProcedure
     .input(updateLinksSchema)
     .mutation(async ({ ctx, input }) => {
@@ -51,7 +27,7 @@ export const linksRouter = createTRPCRouter({
             data: {
               linkName,
               url,
-              priority, //remap the priority according to index
+              priority,
             },
           });
         } else {
@@ -60,7 +36,7 @@ export const linksRouter = createTRPCRouter({
               userId: ctx.userId,
               linkName,
               url,
-              priority, //any subsequent links would have be
+              priority,
             },
           });
         }

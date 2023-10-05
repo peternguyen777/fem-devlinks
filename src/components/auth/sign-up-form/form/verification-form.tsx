@@ -10,8 +10,9 @@ import { z } from "zod";
 import { Spinner } from "~/components/icons/spinner";
 import { Button } from "~/components/ui/button";
 import { Form } from "~/components/ui/form";
-import VerificationCodeInput from "../verification-code-input";
 import { useToast } from "~/components/ui/use-toast";
+import { api } from "~/utils/api";
+import VerificationCodeInput from "../verification-code-input";
 
 const VerificationSchema = z.object({
   code: z.string().min(1, { message: "Required" }),
@@ -19,7 +20,7 @@ const VerificationSchema = z.object({
 
 export type InferredVerificationSchema = z.infer<typeof VerificationSchema>;
 
-const VerificationForm = () => {
+const VerificationForm = ({ email }: { email: string }) => {
   const { isLoaded, signUp, setActive } = useSignUp();
   const [isVerifyingCode, setIsVerifyingCode] = useState<boolean>(false);
   const [clerkErrors, setClerkErrors] = useState<ClerkAPIError[] | undefined>(
@@ -31,6 +32,8 @@ const VerificationForm = () => {
   const verificationForm = useForm<InferredVerificationSchema>({
     resolver: zodResolver(VerificationSchema),
   });
+
+  const createProfile = api.profile.createNewProfile.useMutation();
 
   async function onVerificationSubmit(values: InferredVerificationSchema) {
     if (!isLoaded) {
@@ -46,6 +49,7 @@ const VerificationForm = () => {
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId });
         setClerkErrors(undefined);
+        createProfile.mutate({ email });
         router.push("/");
       }
     } catch (error) {

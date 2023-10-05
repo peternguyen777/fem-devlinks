@@ -8,6 +8,8 @@ import FirstNameInput from "../first-name-input";
 import LastNameInput from "../last-name-input";
 import EmailInput from "../email-input";
 import type { Profile } from "../../edit-types";
+import { api } from "~/utils/api";
+import { toast } from "~/components/ui/use-toast";
 
 export const profileFormSchema = z.object({
   firstName: z.string().nonempty("Required"),
@@ -20,12 +22,38 @@ export type InferredProfileFormSchema = z.infer<typeof profileFormSchema>;
 const ProfileDetailsForm = ({ profile }: { profile: Profile | undefined }) => {
   const form = useForm<InferredProfileFormSchema>({
     resolver: zodResolver(profileFormSchema),
+    defaultValues: {
+      firstName: profile?.firstName,
+      lastName: profile?.lastName,
+      email: profile?.email,
+    },
     mode: "onSubmit",
     reValidateMode: "onChange",
   });
 
+  const ctx = api.useContext();
+
+  const updateProfile = api.profile.updateProfile.useMutation({
+    onSuccess: () => {
+      toast({
+        variant: "devlinks",
+        description: <p>{`Profile successfully updated`}</p>,
+      });
+    },
+    onError: (error) => {
+      toast({
+        variant: "devlinks",
+        title: "Error occured:",
+        description: <p>{error.message}</p>,
+      });
+    },
+    onSettled: async () => {
+      await ctx.profile.invalidate();
+    },
+  });
+
   const onSubmit = (data: InferredProfileFormSchema) => {
-    console.log(data);
+    updateProfile.mutate(data);
   };
 
   return (
