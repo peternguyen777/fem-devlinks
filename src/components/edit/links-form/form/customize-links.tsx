@@ -152,7 +152,10 @@ const CustomizeLinks = ({
             <Button
               variant="dlPrimary"
               className="h-auto w-full py-[11px] md:w-fit md:px-[27px]"
-              disabled={links.length === 0 && fields.length === 0}
+              disabled={
+                (links.length === 0 && fields.length === 0) ||
+                !form.formState.isDirty
+              }
               type="submit"
             >
               Save

@@ -38,6 +38,7 @@ const UrlInput = ({
                   width={16}
                 />
               }
+              className="bg-white"
             />
           </FormControl>
           <FormMessage />
