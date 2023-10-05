@@ -38,8 +38,10 @@ export type InferredSignUpSchema = z.infer<typeof SignUpSchema>;
 
 const SignUpForm = ({
   setPendingVerification,
+  setEmail,
 }: {
   setPendingVerification: Dispatch<SetStateAction<boolean>>;
+  setEmail: Dispatch<SetStateAction<string | undefined>>;
 }) => {
   const { isLoaded, signUp } = useSignUp();
   const [isSigningUp, setIsSigningUp] = useState<boolean>(false);
@@ -73,6 +75,7 @@ const SignUpForm = ({
         });
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
       setPendingVerification(true);
+      setEmail(values.emailAddress);
       setClerkErrors(undefined);
     } catch (error) {
       if ((error as { errors: ClerkAPIError[] }).errors !== null) {

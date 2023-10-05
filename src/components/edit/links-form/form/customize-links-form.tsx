@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 import { Button } from "../../../ui/button";
 import { Form } from "../../../ui/form";
 import { toast } from "../../../ui/use-toast";
-import type { LinkState } from "../../edit-links";
+import type { LinkState } from "../../edit-types";
 import IllustrationEmpty from "../illustration-empty";
 import PlatformSelector from "../platform-selector";
 import UrlInput from "../url-input";
@@ -25,7 +25,7 @@ export const formSchema = z.object({
 
 export type InferredFormSchema = z.infer<typeof formSchema>;
 
-const CustomizeLinks = ({
+const CustomizeLinksForm = ({
   links,
   isLoading,
 }: {
@@ -70,7 +70,7 @@ const CustomizeLinks = ({
       });
     },
     onSettled: async () => {
-      await ctx.links.invalidate();
+      await ctx.profile.invalidate();
     },
   });
 
@@ -181,4 +181,4 @@ const EmptyLinks = () => (
   </div>
 );
 
-export default CustomizeLinks;
+export default CustomizeLinksForm;

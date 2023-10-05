@@ -1,17 +1,17 @@
 import Image from "next/image";
-import type { LinkState } from "./edit-links";
 import { colorVariants, platformNameMap } from "./links-form/platform-types";
+import type { Profile } from "./edit-types";
 
-const PhonePreview = ({ links }: { links: LinkState[] }) => {
-  const paddingSize = Math.max(5 - links.length, 0);
+const PhonePreview = ({ profile }: { profile: Profile }) => {
+  const paddingSize = Math.max(5 - profile.links.length, 0);
   const paddedArray = [
-    ...links,
+    ...profile.links,
     ...Array<undefined>(paddingSize).fill(undefined),
   ];
 
   return (
     <>
-      <div className="hidden lg:relative lg:flex lg:h-[calc(100vh-152px)] lg:w-[560px] lg:flex-col lg:items-center lg:justify-center lg:rounded-xl lg:bg-white lg:py-6 lg:shadow-lg">
+      <div className="z-0 hidden lg:relative lg:flex lg:h-[calc(100vh-152px)] lg:w-[560px] lg:flex-col lg:items-center lg:justify-center lg:rounded-xl lg:bg-white lg:py-6 lg:shadow-lg">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="308"
@@ -30,9 +30,18 @@ const PhonePreview = ({ links }: { links: LinkState[] }) => {
         </svg>
         <div className="z-10 flex w-[308px] flex-col items-center justify-start">
           <div className="mt-[10px] h-[96px] w-[96px] animate-pulse rounded-full bg-[#EEE]" />
-          <div className="mt-[25px] h-[16px] w-[160px] animate-pulse rounded-full bg-[#EEE]" />
-          <div className="mt-[13px] h-[8px] w-[72px] animate-pulse rounded-full bg-[#EEE]" />
-          <div className="mt-[56px] flex flex-col space-y-5">
+          {profile.firstName ?? profile.lastName ? (
+            <span className="mt-[25px] text-[18px] font-semibold leading-[27px]">
+              {`${profile.firstName} ${profile.lastName}`}
+            </span>
+          ) : (
+            <div className="mt-[25px] h-[27px] w-[160px] animate-pulse rounded-full bg-[#EEE]" />
+          )}
+          <span className="mt-[8px] text-[14px] font-normal leading-[21px] text-[#737373]">
+            {profile.email}
+          </span>
+
+          <div className="mt-[40px] flex flex-col space-y-4">
             {paddedArray.map((link, index) => {
               return link ? (
                 <div

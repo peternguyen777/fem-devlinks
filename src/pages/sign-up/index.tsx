@@ -11,6 +11,7 @@ export default function SignUpPage() {
   const { isSignedIn } = useUser();
   const router = useRouter();
   const [pendingVerification, setPendingVerification] = useState(false);
+  const [email, setEmail] = useState<string | undefined>();
 
   if (isSignedIn) {
     router.push("/");
@@ -25,9 +26,12 @@ export default function SignUpPage() {
       </Head>
       <AuthCard>
         {!pendingVerification && (
-          <SignUpForm setPendingVerification={setPendingVerification} />
+          <SignUpForm
+            setPendingVerification={setPendingVerification}
+            setEmail={setEmail}
+          />
         )}
-        {pendingVerification && <VerificationForm />}
+        {pendingVerification && email && <VerificationForm email={email} />}
       </AuthCard>
     </>
   );

@@ -1,46 +1,43 @@
-import Image from "next/image";
 import type { Control } from "react-hook-form";
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import type { InferredFormSchema } from "./form/customize-links-form";
+import type { InferredProfileFormSchema } from "./form/profile-details-form";
 
-const UrlInput = ({
+const SlugInput = ({
   control,
-  index,
 }: {
-  control: Control<InferredFormSchema>;
-  index: number;
+  control: Control<InferredProfileFormSchema>;
 }) => {
+  //query for uniqueness onChange
+
   return (
     <FormField
       control={control}
-      name={`links.${index}.url`}
+      name="slug"
       render={({ field }) => (
         <FormItem>
           <FormLabel>
-            <h6>Link</h6>
+            <h6>Slug*</h6>
           </FormLabel>
           <FormControl>
             <Input
               {...field}
-              placeholder="e.g. https://www.github.com/johnappleseed"
-              icon={
-                <Image
-                  src="/images/icon-link.svg"
-                  alt="link icon"
-                  height={16}
-                  width={16}
-                />
-              }
+              placeholder="funny-pomeranian"
               className="bg-white"
             />
           </FormControl>
+          <FormDescription className="mt-1">
+            <h6 className="text-[#737373]">
+              {`Profile url: https://fem-devlinks.vercel.app/${field.value}/`}
+            </h6>
+          </FormDescription>
           <FormMessage />
         </FormItem>
       )}
@@ -48,4 +45,4 @@ const UrlInput = ({
   );
 };
 
-export default UrlInput;
+export default SlugInput;
