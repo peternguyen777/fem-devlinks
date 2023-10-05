@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { generateSlug } from "random-word-slugs";
 import { z } from "zod";
 import {
   createTRPCRouter,
@@ -46,8 +47,7 @@ export const profileRouter = createTRPCRouter({
         data: {
           userId: ctx.userId,
           email: input.email,
-          firstName: "",
-          lastName: "",
+          slug: generateSlug(),
         },
       });
     }),
@@ -57,23 +57,19 @@ export const profileRouter = createTRPCRouter({
         firstName: z.string().nonempty("Required"),
         lastName: z.string().nonempty("Required"),
         email: z.string().email(),
+        slug: z.string().refine((value) => !/\s/.test(value)),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.profile.upsert({
+      await ctx.db.profile.update({
         where: {
           userId: ctx.userId,
         },
-        update: {
+        data: {
           firstName: input.firstName,
           lastName: input.lastName,
           email: input.email,
-        },
-        create: {
-          userId: ctx.userId,
-          firstName: input.firstName,
-          lastName: input.lastName,
-          email: input.email,
+          slug: input.slug,
         },
       });
     }),

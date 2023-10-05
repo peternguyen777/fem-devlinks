@@ -33,7 +33,21 @@ const VerificationForm = ({ email }: { email: string }) => {
     resolver: zodResolver(VerificationSchema),
   });
 
-  const createProfile = api.profile.createNewProfile.useMutation();
+  const createProfile = api.profile.createNewProfile.useMutation({
+    onSuccess: () => {
+      toast({
+        variant: "devlinks",
+        description: <p>{`Links successfully updated`}</p>,
+      });
+    },
+    onError: (error) => {
+      toast({
+        variant: "devlinks",
+        title: "Error occured:",
+        description: <p>{error.message}</p>,
+      });
+    },
+  });
 
   async function onVerificationSubmit(values: InferredVerificationSchema) {
     if (!isLoaded) {

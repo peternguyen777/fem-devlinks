@@ -10,22 +10,27 @@ import EmailInput from "../email-input";
 import type { Profile } from "../../edit-types";
 import { api } from "~/utils/api";
 import { toast } from "~/components/ui/use-toast";
+import SlugInput from "../slug-input";
 
 export const profileFormSchema = z.object({
   firstName: z.string().nonempty("Required"),
   lastName: z.string().nonempty("Required"),
   email: z.string().email(),
+  slug: z.string().refine((value) => !/\s/.test(value), {
+    message: "Slug must not contain spaces",
+  }),
 });
 
 export type InferredProfileFormSchema = z.infer<typeof profileFormSchema>;
 
-const ProfileDetailsForm = ({ profile }: { profile: Profile | undefined }) => {
+const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
   const form = useForm<InferredProfileFormSchema>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      firstName: profile?.firstName,
-      lastName: profile?.lastName,
-      email: profile?.email,
+      firstName: profile.firstName ?? undefined,
+      lastName: profile.lastName ?? undefined,
+      email: profile.email,
+      slug: profile.slug,
     },
     mode: "onSubmit",
     reValidateMode: "onChange",
@@ -74,6 +79,7 @@ const ProfileDetailsForm = ({ profile }: { profile: Profile | undefined }) => {
               <FirstNameInput control={form.control} />
               <LastNameInput control={form.control} />
               <EmailInput control={form.control} />
+              <SlugInput control={form.control} />
             </div>
           </div>
 

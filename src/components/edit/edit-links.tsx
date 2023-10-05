@@ -14,6 +14,10 @@ const EditLinks = ({ userId }: { userId: string }) => {
     }
   }, [data]);
 
+  if (!data || isLoading) {
+    return;
+  }
+
   return (
     <main className="bg-[#FAFAFA] p-4 md:p-6 md:pt-0 lg:flex lg:gap-6">
       <PhonePreview profile={data} />
