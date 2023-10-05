@@ -1,11 +1,14 @@
 import { TRPCError } from "@trpc/server";
 import { generateSlug } from "random-word-slugs";
+import { UTApi } from "uploadthing/server";
 import { z } from "zod";
 import {
   createTRPCRouter,
   privateProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+
+const utapi = new UTApi();
 
 export const profileRouter = createTRPCRouter({
   getProfile: publicProcedure
@@ -80,7 +83,16 @@ export const profileRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.profile.update({
+      const profile = await ctx.db.profile.findUnique({
+        where: {
+          userId: ctx.userId,
+        },
+        select: {
+          image: true,
+        },
+      });
+
+      const result = await ctx.db.profile.update({
         where: {
           userId: ctx.userId,
         },
@@ -89,6 +101,21 @@ export const profileRouter = createTRPCRouter({
         },
       });
 
-      // delete previous pic
+      if (profile?.image) {
+        const fileKey = profile.image.replace("https://utfs.io/f/", "");
+
+        try {
+          await utapi.deleteFiles([fileKey]);
+          console.log("old image deleted!");
+        } catch (err) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message:
+              "Unable to delete original profile picture on UploadThing.",
+          });
+        }
+      }
+
+      return result;
     }),
 });
