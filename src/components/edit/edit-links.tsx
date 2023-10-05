@@ -1,5 +1,5 @@
 import { api, type RouterOutputs } from "~/utils/api";
-import CustomizeLinks from "./links-form/form/customize-links";
+import CustomizeLinksForm from "./links-form/form/customize-links-form";
 import PhonePreview from "./phone-preview";
 import { useEffect, useState } from "react";
 
@@ -18,7 +18,7 @@ const EditLinks = ({ userId }: { userId: string }) => {
   return (
     <main className="bg-[#FAFAFA] p-4 md:p-6 md:pt-0 lg:flex lg:gap-6">
       <PhonePreview links={links} />
-      <CustomizeLinks links={links} isLoading={isLoading} />
+      <CustomizeLinksForm links={links} isLoading={isLoading} />
     </main>
   );
 };

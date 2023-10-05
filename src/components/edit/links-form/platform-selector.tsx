@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import type { InferredFormSchema } from "./form/customize-links";
+import type { InferredFormSchema } from "./form/customize-links-form";
 import { platform } from "./platform-types";
 
 const PlatformSelector = ({

@@ -25,7 +25,7 @@ export const formSchema = z.object({
 
 export type InferredFormSchema = z.infer<typeof formSchema>;
 
-const CustomizeLinks = ({
+const CustomizeLinksForm = ({
   links,
   isLoading,
 }: {
@@ -181,4 +181,4 @@ const EmptyLinks = () => (
   </div>
 );
 
-export default CustomizeLinks;
+export default CustomizeLinksForm;

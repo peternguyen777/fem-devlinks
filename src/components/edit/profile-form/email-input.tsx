@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Control } from "react-hook-form";
 import {
   FormControl,
@@ -8,36 +7,26 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import type { InferredFormSchema } from "./form/customize-links-form";
+import type { InferredProfileFormSchema } from "./form/profile-details-form";
 
-const UrlInput = ({
+const EmailInput = ({
   control,
-  index,
 }: {
-  control: Control<InferredFormSchema>;
-  index: number;
+  control: Control<InferredProfileFormSchema>;
 }) => {
   return (
     <FormField
       control={control}
-      name={`links.${index}.url`}
+      name="email"
       render={({ field }) => (
         <FormItem>
           <FormLabel>
-            <h6>Link</h6>
+            <h6>Email*</h6>
           </FormLabel>
           <FormControl>
             <Input
               {...field}
-              placeholder="e.g. https://www.github.com/johnappleseed"
-              icon={
-                <Image
-                  src="/images/icon-link.svg"
-                  alt="link icon"
-                  height={16}
-                  width={16}
-                />
-              }
+              placeholder="e.g. alex@email.com"
               className="bg-white"
             />
           </FormControl>
@@ -48,4 +37,4 @@ const UrlInput = ({
   );
 };
 
-export default UrlInput;
+export default EmailInput;
