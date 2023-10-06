@@ -37,10 +37,8 @@ const SlugInput = ({
             </FormControl>
             <FormMessage className="md:right-[17px] md:top-6 md:-translate-y-1/2" />
           </div>
-          <FormDescription className="mt-1 text-right">
-            <h6 className="text-[#737373]">
-              {`Profile url: eg. https://fem-devlinks.vercel.app/sly-sloths/`}
-            </h6>
+          <FormDescription className="mt-1 text-right text-[12px] font-normal leading-[18px] text-[#737373]">
+            Your profile url name eg. /slinky-sloth
           </FormDescription>
         </FormItem>
       )}

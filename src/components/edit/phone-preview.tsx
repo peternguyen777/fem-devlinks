@@ -42,6 +42,7 @@ const PhonePreview = ({ profile }: { profile: Profile }) => {
                 layout="fill"
                 objectFit="cover"
                 className="h-[96px] w-[96px]"
+                priority
               />
             </div>
           ) : (

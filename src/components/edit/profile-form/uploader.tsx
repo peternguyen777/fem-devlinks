@@ -123,6 +123,8 @@ export function Uploader({ profile }: { profile: Profile }) {
               alt="Profile picture"
               layout="fill"
               objectFit="cover"
+              className="h-[193px] w-[193px]"
+              priority
             />
           </div>
         </>

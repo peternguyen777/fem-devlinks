@@ -11,34 +11,25 @@ import {
 const utapi = new UTApi();
 
 export const profileRouter = createTRPCRouter({
-  getProfile: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const result = await ctx.db.profile.findFirstOrThrow({
-        where: {
-          userId: input.userId,
+  getProfile: privateProcedure.query(async ({ ctx }) => {
+    const result = await ctx.db.profile.findFirstOrThrow({
+      where: {
+        userId: ctx.userId,
+      },
+      include: {
+        links: {
+          orderBy: { priority: "asc" },
         },
-        include: {
-          links: {
-            orderBy: { priority: "asc" },
-          },
-        },
-      });
+      },
+    });
 
-      if (!result)
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Profile not found",
-        });
+    const remapLinksPriority = result.links.map((link, index) => ({
+      ...link,
+      priority: index + 1,
+    }));
 
-      // remap priority by index
-      const remapLinksPriority = result.links.map((link, index) => ({
-        ...link,
-        priority: index + 1,
-      }));
-
-      return { ...result, links: remapLinksPriority };
-    }),
+    return { ...result, links: remapLinksPriority };
+  }),
   getProfileBySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
