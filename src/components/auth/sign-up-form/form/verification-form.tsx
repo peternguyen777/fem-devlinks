@@ -112,7 +112,7 @@ const VerificationForm = ({ email }: { email: string }) => {
               variant="dlPrimary"
               className="w-full"
             >
-              {isVerifyingCode && <Spinner />}
+              {isVerifyingCode && <Spinner className="mr-4" />}
               Submit
             </Button>
             <h5 className="mt-6 text-[#737373]">
