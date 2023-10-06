@@ -1,11 +1,19 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { useRouter } from "next/router";
 import LogoSmall from "./logo-small";
 import LogoLarge from "./logo-large";
 import LinksTab from "./links-tab";
 import ProfileTab from "./profile-tab";
 import PreviewButton from "./preview-button";
+import type { Profile } from "../edit/edit-types";
 
-const Header = () => {
+const Header = ({
+  data,
+  isLoading,
+}: {
+  data: Profile | undefined;
+  isLoading: boolean;
+}) => {
   const router = useRouter();
   const currentRoute = router.pathname;
 
@@ -26,7 +34,14 @@ const Header = () => {
             onClick={() => void router.push("/edit/profile")}
           />
         </div>
-        <PreviewButton />
+        <PreviewButton
+          isLoading={isLoading ?? !data}
+          onClick={() => {
+            if (data) {
+              router.push(`/${data.slug}`);
+            }
+          }}
+        />
       </div>
     </div>
   );

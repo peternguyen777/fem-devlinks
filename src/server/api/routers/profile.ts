@@ -39,6 +39,22 @@ export const profileRouter = createTRPCRouter({
 
       return { ...result, links: remapLinksPriority };
     }),
+  getProfileBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const result = await ctx.db.profile.findFirstOrThrow({
+        where: {
+          slug: input.slug,
+        },
+        include: {
+          links: {
+            orderBy: { priority: "asc" },
+          },
+        },
+      });
+
+      return result;
+    }),
   createNewProfile: privateProcedure
     .input(
       z.object({

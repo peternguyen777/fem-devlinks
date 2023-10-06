@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import { api } from "~/utils/api";
-import type { LinkState } from "./edit-types";
+import type { LinkState, Profile } from "./edit-types";
 import CustomizeLinksForm from "./links-form/form/customize-links-form";
 import PhonePreview from "./phone-preview";
 
-const EditLinks = ({ userId }: { userId: string }) => {
-  const { data, isLoading } = api.profile.getProfile.useQuery({ userId });
+const EditLinks = ({
+  data,
+  isLoading,
+}: {
+  data: Profile | undefined;
+  isLoading: boolean;
+}) => {
   const [links, setLinks] = useState<LinkState[]>([]);
 
   useEffect(() => {
