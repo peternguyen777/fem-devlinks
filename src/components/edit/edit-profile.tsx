@@ -1,10 +1,14 @@
-import { api } from "~/utils/api";
+import type { Profile } from "./edit-types";
 import PhonePreview from "./phone-preview";
 import ProfileDetailsForm from "./profile-form/form/profile-details-form";
 
-const EditProfile = ({ userId }: { userId: string }) => {
-  const { data, isLoading } = api.profile.getProfile.useQuery({ userId });
-
+const EditProfile = ({
+  data,
+  isLoading,
+}: {
+  data: Profile | undefined;
+  isLoading: boolean;
+}) => {
   if (!data || isLoading) {
     return;
   }
