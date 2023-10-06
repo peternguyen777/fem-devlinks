@@ -8,9 +8,8 @@ import { api } from "~/utils/api";
 const ProfilePage: NextPage<{ slug: string }> = ({ slug }) => {
   const { data, isLoading } = api.profile.getProfileBySlug.useQuery({ slug });
 
-  if (isLoading || !data) {
-    return;
-  }
+  if (isLoading) return;
+  if (!data) return;
 
   return (
     <>

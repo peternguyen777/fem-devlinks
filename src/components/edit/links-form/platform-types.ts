@@ -1,17 +1,35 @@
+import {
+  IconResume,
+  IconPortfolio,
+  IconGithub,
+  IconLinkedin,
+  IconTwitter,
+  IconYoutube,
+  IconFacebook,
+  IconTwitch,
+  IconDevto,
+  IconCodewars,
+  IconFreecodecamp,
+  IconGitlab,
+  IconHashnode,
+  IconStackOverflow,
+} from "~/components/icons";
+
 export const platform = [
-  { label: "GitHub", value: "github" },
-  { label: "Portfolio", value: "portfolio" },
-  { label: "Twitter", value: "twitter" },
-  { label: "LinkedIn", value: "linkedin" },
-  { label: "Youtube", value: "youtube" },
-  { label: "Facebook", value: "facebook" },
-  { label: "Twitch", value: "twitch" },
-  { label: "Dev.to", value: "devto" },
-  { label: "Codewars", value: "codewars" },
-  { label: "freeCodeCamp", value: "freecodecamp" },
-  { label: "GitLab", value: "gitlab" },
-  { label: "Hashnode", value: "hashnode" },
-  { label: "Stack Overflow", value: "stack-overflow" },
+  { label: "Curriculum Vitae", value: "resume", icon: IconResume },
+  { label: "GitHub", value: "github", icon: IconGithub },
+  { label: "Portfolio", value: "portfolio", icon: IconPortfolio },
+  { label: "Twitter", value: "twitter", icon: IconTwitter },
+  { label: "LinkedIn", value: "linkedin", icon: IconLinkedin },
+  { label: "Youtube", value: "youtube", icon: IconYoutube },
+  { label: "Facebook", value: "facebook", icon: IconFacebook },
+  { label: "Twitch", value: "twitch", icon: IconTwitch },
+  { label: "Dev.to", value: "devto", icon: IconDevto },
+  { label: "Codewars", value: "codewars", icon: IconCodewars },
+  { label: "freeCodeCamp", value: "freecodecamp", icon: IconFreecodecamp },
+  { label: "GitLab", value: "gitlab", icon: IconGitlab },
+  { label: "Hashnode", value: "hashnode", icon: IconHashnode },
+  { label: "Stack Overflow", value: "stack-overflow", icon: IconStackOverflow },
 ];
 
 export const platformNameMap: Record<string, string> = platform.reduce(
@@ -22,7 +40,18 @@ export const platformNameMap: Record<string, string> = platform.reduce(
   {} as Record<string, string>,
 );
 
+type Icon = ({ className }: { className?: string | undefined }) => JSX.Element;
+
+export const platformIconMap: Record<string, Icon> = platform.reduce(
+  (acc, { icon, value }) => {
+    acc[value] = icon;
+    return acc;
+  },
+  {} as Record<string, Icon>,
+);
+
 export const colorVariants: Record<string, string> = {
+  resume: `bg-[#13ad5c] text-white`,
   github: `bg-[#1A1A1A] text-white`,
   portfolio: `bg-[#FFFFFF] text-[#333333] border border-[#D9D9D9]`,
   twitter: `bg-[#43B7E9] text-white`,
@@ -36,4 +65,21 @@ export const colorVariants: Record<string, string> = {
   gitlab: `bg-[#EB4925] text-white`,
   hashnode: `bg-[#0330D1] text-white`,
   "stack-overflow": `bg-[#EC7100] text-white`,
+};
+
+export const iconVariants: Record<string, string> = {
+  resume: `stroke-white`,
+  github: `text-white`,
+  portfolio: ``,
+  twitter: `text-white`,
+  linkedin: `text-white`,
+  youtube: `text-white`,
+  facebook: `text-white`,
+  twitch: `text-white`,
+  devto: `text-white`,
+  codewars: `text-white`,
+  freecodecamp: `text-white`,
+  gitlab: `text-white`,
+  hashnode: `text-white`,
+  "stack-overflow": `text-white`,
 };
