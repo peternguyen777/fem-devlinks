@@ -1,16 +1,9 @@
 import { Button } from "../../ui/button";
 
-const PreviewButton = ({
-  onClick,
-  isLoading,
-}: {
-  onClick?: () => void;
-  isLoading: boolean;
-}) => (
+const PreviewButton = ({ onClick }: { onClick?: () => void }) => (
   <Button
     variant="dlSecondary"
     className="h-auto px-4 py-[11px] md:px-[27px]"
-    disabled={isLoading}
     onClick={onClick}
   >
     <svg

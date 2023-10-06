@@ -7,13 +7,7 @@ import ProfileTab from "./profile-tab";
 import PreviewButton from "./preview-button";
 import type { Profile } from "../../edit/edit-types";
 
-const MainHeader = ({
-  data,
-  isLoading,
-}: {
-  data: Profile | undefined;
-  isLoading: boolean;
-}) => {
+const MainHeader = ({ data }: { data: Profile }) => {
   const router = useRouter();
   const currentRoute = router.pathname;
 
@@ -35,11 +29,8 @@ const MainHeader = ({
           />
         </div>
         <PreviewButton
-          isLoading={isLoading ?? !data}
           onClick={() => {
-            if (data) {
-              router.push(`/${data.slug}`);
-            }
+            router.push(`/${data.slug}`);
           }}
         />
       </div>

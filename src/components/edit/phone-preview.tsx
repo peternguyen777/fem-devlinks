@@ -1,5 +1,10 @@
 import Image from "next/image";
-import { colorVariants, platformNameMap } from "./links-form/platform-types";
+import {
+  colorVariants,
+  iconVariants,
+  platformIconMap,
+  platformNameMap,
+} from "./links-form/platform-types";
 import type { Profile } from "./edit-types";
 
 const PhonePreview = ({ profile }: { profile: Profile }) => {
@@ -30,13 +35,14 @@ const PhonePreview = ({ profile }: { profile: Profile }) => {
         </svg>
         <div className="z-10 flex w-[308px] flex-col items-center justify-start">
           {profile.image ? (
-            <div className="relative mt-[10px] h-[96px] w-[96px] overflow-hidden rounded-full border border-[#737373]">
+            <div className="relative mt-[10px] h-[96px] w-[96px] overflow-hidden rounded-full border-4 border-[#633CFF]">
               <Image
                 src={profile.image}
                 alt="Profile picture"
                 layout="fill"
                 objectFit="cover"
                 className="h-[96px] w-[96px]"
+                priority
               />
             </div>
           ) : (
@@ -55,7 +61,16 @@ const PhonePreview = ({ profile }: { profile: Profile }) => {
 
           <div className="mt-[40px] flex flex-col space-y-4">
             {paddedArray.map((link, index) => {
-              return link ? (
+              if (!link)
+                return (
+                  <div
+                    key={index}
+                    className="h-[44px] w-[237px] animate-pulse rounded-[8px] bg-[#EEE]"
+                  />
+                );
+
+              const Icon = platformIconMap[link.linkName];
+              return (
                 <div
                   key={link.linkId}
                   className={`flex h-[44px] w-[237px] cursor-pointer items-center justify-between rounded-[8px] px-4 ${
@@ -63,18 +78,13 @@ const PhonePreview = ({ profile }: { profile: Profile }) => {
                   } 
                   `}
                   onClick={() => {
-                    console.log(link.url);
                     window.open(link.url, "_blank");
                   }}
                 >
                   <span className="flex items-center gap-3">
-                    <Image
-                      src={`/images/icon-${link.linkName}.svg`}
-                      alt="platform icon"
-                      height={16}
-                      width={16}
-                      className="fill-white"
-                    />
+                    {Icon && (
+                      <Icon className={`${iconVariants[link.linkName]}`} />
+                    )}
                     {platformNameMap[link.linkName]}
                   </span>
                   <svg
@@ -92,11 +102,6 @@ const PhonePreview = ({ profile }: { profile: Profile }) => {
                     <path d="M2.667 7.333v1.334h8L7 12.333l.947.947L13.227 8l-5.28-5.28L7 3.667l3.667 3.666h-8Z" />
                   </svg>
                 </div>
-              ) : (
-                <div
-                  key={index}
-                  className="h-[44px] w-[237px] animate-pulse rounded-[8px] bg-[#EEE]"
-                />
               );
             })}
           </div>

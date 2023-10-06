@@ -25,13 +25,7 @@ export const formSchema = z.object({
 
 export type InferredFormSchema = z.infer<typeof formSchema>;
 
-const CustomizeLinksForm = ({
-  links,
-  isLoading,
-}: {
-  links: LinkState[];
-  isLoading: boolean;
-}) => {
+const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
   const form = useForm<InferredFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -106,7 +100,7 @@ const CustomizeLinksForm = ({
             + Add new link
           </Button>
 
-          {!hasLinks && !isLoading && <EmptyLinks />}
+          {!hasLinks && <EmptyLinks />}
           {hasLinks && (
             <div className="my-6 flex flex-1 flex-col items-center space-y-6 md:mb-10">
               {fields.map((link, index) => (
