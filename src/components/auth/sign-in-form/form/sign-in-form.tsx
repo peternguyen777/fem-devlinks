@@ -98,7 +98,7 @@ const SubmitForm = ({ isSigningIn }: { isSigningIn: boolean }) => (
       variant="dlPrimary"
       className="w-full"
     >
-      {isSigningIn && <Spinner />}
+      {isSigningIn && <Spinner className="mr-4" />}
       Submit
     </Button>
     <h5 className="mt-6 text-[#737373]">Don&apos;t have an account?</h5>

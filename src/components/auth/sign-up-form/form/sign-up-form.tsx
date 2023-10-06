@@ -112,7 +112,7 @@ const SignUpForm = ({
               variant="dlPrimary"
               className="w-full"
             >
-              {isSigningUp && <Spinner />}
+              {isSigningUp && <Spinner className="mr-4" />}
               Submit
             </Button>
             <h5 className="mt-6 text-[#737373]">
