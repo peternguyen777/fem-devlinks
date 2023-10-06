@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import Header from "~/components/header/header";
+import PreviewHeader from "~/components/header/preview/preview-header";
 import { generateSSGHelper } from "~/server/api/helpers/ssgHelper";
 import { api } from "~/utils/api";
 
@@ -17,7 +17,7 @@ const ProfilePage: NextPage<{ slug: string }> = ({ slug }) => {
       <Head>
         <title>{`${data.firstName} ${data.lastName}'s Devlinks`}</title>
       </Head>
-      <Header data={data} isLoading={isLoading} />
+      <PreviewHeader data={data} />
       <div>
         <div className="relative h-36 bg-slate-600">
           {data.image && (
@@ -35,7 +35,7 @@ const ProfilePage: NextPage<{ slug: string }> = ({ slug }) => {
         {data.links.map((item) => (
           <div key={item.linkId}>
             <p>{item.linkName}</p>
-            <p>{item.url}</p>
+            {/* <p>{item.url}</p> */}
             <p>{item.priority}</p>
           </div>
         ))}

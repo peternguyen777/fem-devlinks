@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { useRouter } from "next/router";
-import LogoSmall from "./logo-small";
-import LogoLarge from "./logo-large";
+import LogoSmall from "../logo-small";
+import LogoLarge from "../logo-large";
 import LinksTab from "./links-tab";
 import ProfileTab from "./profile-tab";
 import PreviewButton from "./preview-button";
-import type { Profile } from "../edit/edit-types";
+import type { Profile } from "../../edit/edit-types";
 
-const Header = ({
+const MainHeader = ({
   data,
   isLoading,
 }: {
@@ -47,4 +47,4 @@ const Header = ({
   );
 };
 
-export default Header;
+export default MainHeader;
