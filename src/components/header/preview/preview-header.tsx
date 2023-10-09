@@ -25,7 +25,7 @@ const PreviewHeader = ({ data }: { data: Profile }) => {
       .then(() => {
         toast({
           variant: "devlinks",
-          title: "The link has been copied to your clipboard!",
+          description: "The link has been copied to your clipboard!",
         });
       })
       .catch((error) => {
@@ -34,7 +34,7 @@ const PreviewHeader = ({ data }: { data: Profile }) => {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-[#FAFAFA] md:bg-[#633CFF] md:p-6">
+    <div className="bg-[#FAFAFA] md:h-[357px] md:rounded-b-[24px] md:bg-[#633CFF] md:p-6">
       <div
         className={`relative ${
           !isProfileOwner
