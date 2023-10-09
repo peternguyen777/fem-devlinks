@@ -116,7 +116,11 @@ export function Uploader({ profile }: { profile: Profile }) {
       </p>
       {profile.image && (
         <>
-          <div className="absolute z-10 h-[193px] w-[193px] rounded-xl bg-black opacity-50" />
+          <div
+            className={`absolute z-10 h-[193px] w-[193px] rounded-xl bg-black ${
+              dragOver ? `opacity-25` : `opacity-50`
+            } transition-opacity duration-200 hover:opacity-25`}
+          />
           <div className="absolute h-[193px] w-[193px] overflow-hidden rounded-xl">
             <Image
               src={profile.image}
