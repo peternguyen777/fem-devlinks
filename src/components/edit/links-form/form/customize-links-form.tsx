@@ -73,7 +73,7 @@ const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:min-h-[calc(100vh-152px)] md:p-10 md:pb-6 xl:h-[calc(100vh-152px)] xl:overflow-y-auto">
+    <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:h-[calc(100vh-152px)] md:min-h-[calc(100vh-152px)] md:overflow-y-auto md:p-10 md:pb-6">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

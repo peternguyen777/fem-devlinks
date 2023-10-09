@@ -101,7 +101,7 @@ const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
             <Button
               variant="dlPrimary"
               className="h-auto w-full py-[11px] md:w-fit md:px-[27px]"
-              disabled={isSlugTaken ?? !form.formState.isDirty}
+              disabled={!form.formState.isDirty || isSlugTaken}
               type="submit"
             >
               Save
