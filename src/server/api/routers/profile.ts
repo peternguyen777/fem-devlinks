@@ -46,6 +46,28 @@ export const profileRouter = createTRPCRouter({
 
       return result;
     }),
+  getAvailableSlug: privateProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const result = await ctx.db.profile.findFirst({
+        where: {
+          slug: input.slug,
+        },
+        select: {
+          userId: true,
+        },
+      });
+
+      if (!result) {
+        return true;
+      }
+
+      if (result.userId === ctx.userId) {
+        return true;
+      }
+
+      return false;
+    }),
   createNewProfile: privateProcedure
     .input(
       z.object({

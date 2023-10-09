@@ -1,3 +1,4 @@
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import type { Control } from "react-hook-form";
 import {
   FormControl,
@@ -8,14 +9,31 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { api } from "~/utils/api";
 import type { InferredProfileFormSchema } from "./form/profile-details-form";
 
 const SlugInput = ({
   control,
+  setSlugTakenError: setIsSlugTaken,
 }: {
   control: Control<InferredProfileFormSchema>;
+  setSlugTakenError: Dispatch<SetStateAction<boolean>>;
 }) => {
-  //query for uniqueness onChange
+  const [slugCheck, setSlugCheck] = useState("");
+  const { data: isSlugAvailable } = api.profile.getAvailableSlug.useQuery(
+    { slug: slugCheck },
+    { enabled: Boolean(slugCheck) },
+  );
+
+  useEffect(() => {
+    if (typeof isSlugAvailable === "boolean") {
+      if (isSlugAvailable) {
+        setIsSlugTaken(false);
+      } else {
+        setIsSlugTaken(true);
+      }
+    }
+  }, [isSlugAvailable, setIsSlugTaken]);
 
   return (
     <FormField
@@ -33,9 +51,16 @@ const SlugInput = ({
                 {...field}
                 placeholder="funny-pomeranian"
                 className="bg-white"
+                onChange={(e) => {
+                  field.onChange(e);
+                  setSlugCheck(e.target.value);
+                }}
+                isError={isSlugAvailable === false}
               />
             </FormControl>
-            <FormMessage className="md:right-[17px] md:top-6 md:-translate-y-1/2" />
+            <FormMessage className="md:right-[17px] md:top-6 md:-translate-y-1/2">
+              {isSlugAvailable == false && `Slug is already taken`}
+            </FormMessage>
           </div>
           <FormDescription className="mt-1 text-right text-[12px] font-normal leading-[18px] text-[#737373]">
             Your profile url name eg. /slinky-sloth

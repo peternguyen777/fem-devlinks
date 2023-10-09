@@ -57,7 +57,8 @@ const errorConditions: ErrorMap<string> = {
   form_identifier_not_found: "Can't find account",
   form_password_incorrect: "Incorrect password",
   form_identifier_exists: "Email in use",
-  form_password_pwned: "Weak password",
+  form_password_pwned:
+    "Password has been found as part of a breach. Try another.",
   form_password_length_too_short: "Must be 8 characters min",
   form_code_incorrect: "Incorrect code",
   form_param_nil: "Enter code",

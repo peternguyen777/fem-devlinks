@@ -13,6 +13,7 @@ import FirstNameInput from "../first-name-input";
 import LastNameInput from "../last-name-input";
 import SlugInput from "../slug-input";
 import ProfilePicture from "../profile-picture";
+import { useState } from "react";
 
 export const profileFormSchema = z.object({
   firstName: z.string().nonempty("Required"),
@@ -29,6 +30,8 @@ export const profileFormSchema = z.object({
 export type InferredProfileFormSchema = z.infer<typeof profileFormSchema>;
 
 const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
+  const [isSlugTaken, setIsSlugTaken] = useState(false);
+
   const form = useForm<InferredProfileFormSchema>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -85,7 +88,10 @@ const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
               <FirstNameInput control={form.control} />
               <LastNameInput control={form.control} />
               <EmailInput control={form.control} />
-              <SlugInput control={form.control} />
+              <SlugInput
+                control={form.control}
+                setSlugTakenError={setIsSlugTaken}
+              />
             </div>
           </div>
 
@@ -95,7 +101,7 @@ const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
             <Button
               variant="dlPrimary"
               className="h-auto w-full py-[11px] md:w-fit md:px-[27px]"
-              disabled={!form.formState.isDirty}
+              disabled={isSlugTaken ?? !form.formState.isDirty}
               type="submit"
             >
               Save
