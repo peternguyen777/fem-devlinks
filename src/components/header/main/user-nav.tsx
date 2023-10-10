@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { useRouter } from "next/router";
 import type { Profile } from "../../edit/edit-types";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
@@ -46,26 +46,38 @@ export function UserNav({ data }: { data: Profile }) {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem
-            onClick={() => router.push("/edit/profile")}
+            onClick={() => {
+              router.push("/edit/profile");
+            }}
             className="cursor-pointer"
           >
             Profile
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push("/edit/links")}
+            onClick={() => {
+              router.push("/edit/links");
+            }}
             className="cursor-pointer"
           >
             Links
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push(`/${slug}`)}
+            onClick={() => {
+              router.push(`/${slug}`);
+            }}
             className="cursor-pointer"
           >
             Preview
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer">
+        <DropdownMenuItem
+          onClick={() => {
+            router.push("/");
+            signOut();
+          }}
+          className="cursor-pointer"
+        >
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
