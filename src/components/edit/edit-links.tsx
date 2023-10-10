@@ -13,7 +13,7 @@ const EditLinks = ({ data }: { data: Profile }) => {
   return (
     <main className="bg-[#FAFAFA] p-4 md:p-6 md:pt-0 xl:flex xl:gap-6">
       <PhonePreview profile={data} />
-      <CustomizeLinksForm links={links} />
+      <CustomizeLinksForm links={links} setLinks={setLinks} />
     </main>
   );
 };

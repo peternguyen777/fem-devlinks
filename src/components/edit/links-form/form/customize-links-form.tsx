@@ -1,12 +1,18 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { zodResolver } from "@hookform/resolvers/zod";
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  type DropResult,
+} from "@hello-pangea/dnd";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import {
+  useFieldArray,
+  useForm,
   type Control,
   type FieldArrayWithId,
   type UseFieldArrayRemove,
-  useFieldArray,
-  useForm,
 } from "react-hook-form";
 import { z } from "zod";
 import { api } from "~/utils/api";
@@ -17,7 +23,7 @@ import type { LinkState } from "../../edit-types";
 import IllustrationEmpty from "../illustration-empty";
 import PlatformSelector from "../platform-selector";
 import UrlInput from "../url-input";
-import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { GripHorizontal, X } from "lucide-react";
 
 export const formSchema = z.object({
   links: z
@@ -32,7 +38,12 @@ export const formSchema = z.object({
 
 export type InferredFormSchema = z.infer<typeof formSchema>;
 
-const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
+const CustomizeLinksForm = ({
+  links,
+}: {
+  links: LinkState[];
+  setLinks: Dispatch<SetStateAction<LinkState[]>>;
+}) => {
   const form = useForm<InferredFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,10 +53,12 @@ const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
     reValidateMode: "onChange",
   });
 
-  const { fields, remove, append } = useFieldArray<InferredFormSchema>({
-    control: form.control,
-    name: "links",
-  });
+  const { fields, remove, append, replace } = useFieldArray<InferredFormSchema>(
+    {
+      control: form.control,
+      name: "links",
+    },
+  );
 
   const [deleteLinks, setDeleteLinks] = useState<string[]>([]);
 
@@ -76,11 +89,18 @@ const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
   });
 
   const onSubmit = (values: InferredFormSchema) => {
+    console.log("submit values:", values);
     updateLinks.mutate({ ...values, deleteLinks });
   };
 
-  const handleDragEnd = () => {
-    console.log("yoo!!");
+  const handleDragEnd = (result: DropResult) => {
+    if (result.destination) {
+      const items = Array.from(links);
+      const [reorderedItem] = items.splice(result.source.index, 1);
+      reorderedItem && items.splice(result.destination.index, 0, reorderedItem);
+
+      replace(items);
+    }
   };
 
   return (
@@ -129,8 +149,8 @@ const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
                       >
                         {(provided, snapshot) => (
                           <div
-                            className={`mb-6 w-full space-y-3 rounded-lg bg-[#FAFAFA] p-5 shadow-lg ${
-                              snapshot.isDragging && `ring-2`
+                            className={`mb-6 w-full space-y-3 rounded-lg bg-[#FAFAFA] p-5  ${
+                              snapshot.isDragging && `shadow-lg ring-2`
                             }`}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
@@ -218,29 +238,16 @@ const LinkCard = ({
 }) => (
   <>
     <div className="flex justify-between">
-      <div className="flex cursor-pointer items-center gap-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="12"
-          height="6"
-          fill="none"
-          viewBox="0 0 12 6"
-        >
-          <path fill="#737373" d="M0 0h12v1H0zM0 5h12v1H0z" />
-        </svg>
-        <h5 className="select-none font-bold text-[#737373]">{`Link #${link.priority}`}</h5>
-      </div>
-      <h5
-        className="cursor-pointer text-[#737373]"
+      <GripHorizontal className="text-[#737373]" />
+      <X
         onClick={() => {
           if (link.linkId) {
             setDeleteLinks([...deleteLinks, link.linkId]);
           }
           remove(index);
         }}
-      >
-        Remove
-      </h5>
+        className="text-[#737373]"
+      />
     </div>
     <PlatformSelector control={control} index={index} />
     <UrlInput control={control} index={index} />
