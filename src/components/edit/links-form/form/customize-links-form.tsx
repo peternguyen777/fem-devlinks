@@ -31,7 +31,6 @@ export const formSchema = z.object({
       linkId: z.string().optional(),
       linkName: z.string().nonempty("Invalid platform"),
       url: z.string().url(),
-      priority: z.number(),
     })
     .array(),
 });
@@ -113,7 +112,6 @@ const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
               append({
                 linkName: "",
                 url: "",
-                priority: fields.length + 1,
               });
             }}
             disabled={fields.length === 5}
@@ -214,7 +212,6 @@ const LinkCard = ({
       links: {
         linkName: string;
         url: string;
-        priority: number;
         linkId?: string | undefined;
       }[];
     },

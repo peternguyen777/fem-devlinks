@@ -7,7 +7,6 @@ const updateLinksSchema = z.object({
       linkId: z.string().optional(),
       linkName: z.string().nonempty(),
       url: z.string().nonempty(),
-      priority: z.number(),
     })
     .array(),
   deleteLinks: z.string().array(),

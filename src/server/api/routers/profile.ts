@@ -23,12 +23,7 @@ export const profileRouter = createTRPCRouter({
       },
     });
 
-    const remapLinksPriority = result.links.map((link, index) => ({
-      ...link,
-      priority: index + 1,
-    }));
-
-    return { ...result, links: remapLinksPriority };
+    return result;
   }),
   getProfileBySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
