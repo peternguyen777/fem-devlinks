@@ -7,7 +7,6 @@ const updateLinksSchema = z.object({
       linkId: z.string().optional(),
       linkName: z.string().nonempty(),
       url: z.string().nonempty(),
-      priority: z.number(),
     })
     .array(),
   deleteLinks: z.string().array(),
@@ -17,8 +16,10 @@ export const linksRouter = createTRPCRouter({
   updateLinks: privateProcedure
     .input(updateLinksSchema)
     .mutation(async ({ ctx, input }) => {
+      let index = 0;
+
       for (const link of input.links) {
-        const { linkId, linkName, url, priority } = link;
+        const { linkId, linkName, url } = link;
         if (linkId) {
           await ctx.db.links.update({
             where: {
@@ -27,7 +28,7 @@ export const linksRouter = createTRPCRouter({
             data: {
               linkName,
               url,
-              priority,
+              priority: index,
             },
           });
         } else {
@@ -36,10 +37,12 @@ export const linksRouter = createTRPCRouter({
               userId: ctx.userId,
               linkName,
               url,
-              priority,
+              priority: index,
             },
           });
         }
+
+        index++;
       }
 
       for (const linkId of input.deleteLinks) {
