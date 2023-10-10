@@ -6,6 +6,7 @@ import {
   type DropResult,
 } from "@hello-pangea/dnd";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { GripHorizontal, X } from "lucide-react";
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import {
   useFieldArray,
@@ -20,10 +21,10 @@ import { Button } from "../../../ui/button";
 import { Form } from "../../../ui/form";
 import { toast } from "../../../ui/use-toast";
 import type { LinkState } from "../../edit-types";
+import PreviewButton from "../../preview-button";
 import IllustrationEmpty from "../illustration-empty";
 import PlatformSelector from "../platform-selector";
 import UrlInput from "../url-input";
-import { GripHorizontal, X } from "lucide-react";
 
 export const formSchema = z.object({
   links: z
@@ -37,7 +38,13 @@ export const formSchema = z.object({
 
 export type InferredFormSchema = z.infer<typeof formSchema>;
 
-const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
+const CustomizeLinksForm = ({
+  links,
+  slug,
+}: {
+  links: LinkState[];
+  slug: string;
+}) => {
   const form = useForm<InferredFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -163,10 +170,9 @@ const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
               </Droppable>
             </DragDropContext>
           )}
-
           <hr className="-mx-6 mb-4 border-[#D9D9D9] md:-mx-10 md:mb-6" />
-
-          <div className="md:flex md:justify-end">
+          <div className="grid grid-cols-2 gap-4 md:flex md:justify-between">
+            <PreviewButton slug={slug} />
             <Button
               variant="dlPrimary"
               className="h-auto w-full py-[11px] md:w-fit md:px-[27px]"
@@ -208,17 +214,7 @@ const LinkCard = ({
   index,
   remove,
 }: {
-  link: FieldArrayWithId<
-    {
-      links: {
-        linkName: string;
-        url: string;
-        linkId?: string | undefined;
-      }[];
-    },
-    "links",
-    "id"
-  >;
+  link: FieldArrayWithId<InferredFormSchema, "links", "id">;
   deleteLinks: string[];
   setDeleteLinks: Dispatch<SetStateAction<string[]>>;
   control: Control<InferredFormSchema>;

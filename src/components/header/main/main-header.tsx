@@ -1,38 +1,61 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-floating-promises */
+import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/router";
-import LogoSmall from "../logo-small";
+import type { Profile } from "~/components/edit/edit-types";
+import { Button } from "~/components/ui/button";
 import LogoLarge from "../logo-large";
+import LogoSmall from "../logo-small";
 import LinksTab from "./links-tab";
 import ProfileTab from "./profile-tab";
-import PreviewButton from "./preview-button";
-import type { Profile } from "../../edit/edit-types";
+import { UserNav } from "./user-nav";
 
-const MainHeader = ({ data }: { data: Profile }) => {
+const MainHeader = ({ data }: { data?: Profile }) => {
+  const { user } = useUser();
   const router = useRouter();
   const currentRoute = router.pathname;
 
   return (
     <div className="sticky top-0 z-50 bg-[#FAFAFA] md:p-6">
-      <div className="relative flex items-center justify-between rounded-b-xl bg-background py-4 pl-6 pr-4 shadow-lg md:rounded-xl">
+      <div className="relative flex items-center justify-between rounded-b-xl bg-background px-6 py-4 shadow-lg md:rounded-xl">
         <>
           <LogoSmall onClick={() => void router.push("/")} />
           <LogoLarge onClick={() => void router.push("/")} />
         </>
-        <div className="absolute left-1/2 flex -translate-x-1/2 md:relative md:left-auto md:translate-x-0">
-          <LinksTab
-            currentRoute={currentRoute}
-            onClick={() => void router.push("/edit/links")}
-          />
-          <ProfileTab
-            currentRoute={currentRoute}
-            onClick={() => void router.push("/edit/profile")}
-          />
-        </div>
-        <PreviewButton
-          onClick={() => {
-            router.push(`/${data.slug}`);
-          }}
-        />
+        {user && data ? (
+          <>
+            <div className="absolute left-1/2 flex -translate-x-1/2 md:relative md:left-auto md:translate-x-0">
+              <ProfileTab
+                currentRoute={currentRoute}
+                onClick={() => void router.push("/edit/profile")}
+              />
+              <LinksTab
+                currentRoute={currentRoute}
+                onClick={() => void router.push("/edit/links")}
+              />
+            </div>
+            <UserNav data={data} />
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-4 md:gap-10">
+              <h4
+                onClick={() => router.push("/sign-in")}
+                className="cursor-pointer text-[#737373] hover:text-[#633CFF]"
+              >
+                Log in
+              </h4>
+              <Button
+                variant="dlSecondary"
+                type="button"
+                onClick={() => router.push("/sign-up")}
+                className="h-auto px-4 py-[11px] md:px-[27px]"
+              >
+                Sign up
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
