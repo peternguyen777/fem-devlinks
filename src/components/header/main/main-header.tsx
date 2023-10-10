@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { useRouter } from "next/router";
-import LogoSmall from "../logo-small";
+import type { Profile } from "~/components/edit/edit-types";
 import LogoLarge from "../logo-large";
+import LogoSmall from "../logo-small";
+import { UserNav } from "./user-nav";
 import LinksTab from "./links-tab";
 import ProfileTab from "./profile-tab";
-import PreviewButton from "./preview-button";
-import type { Profile } from "../../edit/edit-types";
 
 const MainHeader = ({ data }: { data: Profile }) => {
   const router = useRouter();
@@ -13,7 +13,7 @@ const MainHeader = ({ data }: { data: Profile }) => {
 
   return (
     <div className="sticky top-0 z-50 bg-[#FAFAFA] md:p-6">
-      <div className="relative flex items-center justify-between rounded-b-xl bg-background py-4 pl-6 pr-4 shadow-lg md:rounded-xl">
+      <div className="relative flex items-center justify-between rounded-b-xl bg-background px-6 py-4 shadow-lg md:rounded-xl">
         <>
           <LogoSmall onClick={() => void router.push("/")} />
           <LogoLarge onClick={() => void router.push("/")} />
@@ -28,11 +28,7 @@ const MainHeader = ({ data }: { data: Profile }) => {
             onClick={() => void router.push("/edit/profile")}
           />
         </div>
-        <PreviewButton
-          onClick={() => {
-            router.push(`/${data.slug}`);
-          }}
-        />
+        <UserNav data={data} />
       </div>
     </div>
   );
