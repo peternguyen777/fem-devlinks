@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import {
+  type Control,
+  type FieldArrayWithId,
+  type UseFieldArrayRemove,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { z } from "zod";
 import { api } from "~/utils/api";
 import { Button } from "../../../ui/button";
@@ -11,6 +17,7 @@ import type { LinkState } from "../../edit-types";
 import IllustrationEmpty from "../illustration-empty";
 import PlatformSelector from "../platform-selector";
 import UrlInput from "../url-input";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
 export const formSchema = z.object({
   links: z
@@ -72,6 +79,10 @@ const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
     updateLinks.mutate({ ...values, deleteLinks });
   };
 
+  const handleDragEnd = () => {
+    console.log("yoo!!");
+  };
+
   return (
     <div className="flex min-h-[calc(100vh-108px)] flex-1 flex-col rounded-xl bg-white p-6 shadow-lg md:h-[calc(100vh-152px)] md:min-h-[calc(100vh-152px)] md:overflow-y-auto md:p-10 md:pb-6">
       <Form {...form}>
@@ -102,42 +113,46 @@ const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
 
           {!hasLinks && <EmptyLinks />}
           {hasLinks && (
-            <div className="my-6 flex flex-1 flex-col items-center space-y-6 md:mb-10">
-              {fields.map((link, index) => (
-                <div
-                  key={link.id}
-                  className="w-full space-y-3 rounded-lg bg-[#FAFAFA] p-5"
-                >
-                  <div className="flex justify-between">
-                    <div className="flex cursor-pointer items-center gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="6"
-                        fill="none"
-                        viewBox="0 0 12 6"
+            <DragDropContext onDragEnd={handleDragEnd}>
+              <Droppable droppableId="droppable-1" type="LINKS">
+                {(provided) => (
+                  <div
+                    className="mt-6 flex flex-1 flex-col items-center md:mb-4"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {fields.map((link, index) => (
+                      <Draggable
+                        key={link.id}
+                        draggableId={link.id}
+                        index={index}
                       >
-                        <path fill="#737373" d="M0 0h12v1H0zM0 5h12v1H0z" />
-                      </svg>
-                      <h5 className="select-none font-bold text-[#737373]">{`Link #${link.priority}`}</h5>
-                    </div>
-                    <h5
-                      className="cursor-pointer text-[#737373]"
-                      onClick={() => {
-                        if (link.linkId) {
-                          setDeleteLinks([...deleteLinks, link.linkId]);
-                        }
-                        remove(index);
-                      }}
-                    >
-                      Remove
-                    </h5>
+                        {(provided, snapshot) => (
+                          <div
+                            className={`mb-6 w-full space-y-3 rounded-lg bg-[#FAFAFA] p-5 shadow-lg ${
+                              snapshot.isDragging && `ring-2`
+                            }`}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                          >
+                            <LinkCard
+                              control={form.control}
+                              deleteLinks={deleteLinks}
+                              setDeleteLinks={setDeleteLinks}
+                              index={index}
+                              link={link}
+                              remove={remove}
+                            />
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
                   </div>
-                  <PlatformSelector control={form.control} index={index} />
-                  <UrlInput control={form.control} index={index} />
-                </div>
-              ))}
-            </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           )}
 
           <hr className="-mx-6 mb-4 border-[#D9D9D9] md:-mx-10 md:mb-6" />
@@ -173,6 +188,63 @@ const EmptyLinks = () => (
       </p>
     </div>
   </div>
+);
+
+const LinkCard = ({
+  link,
+  deleteLinks,
+  setDeleteLinks,
+  control,
+  index,
+  remove,
+}: {
+  link: FieldArrayWithId<
+    {
+      links: {
+        linkName: string;
+        url: string;
+        priority: number;
+        linkId?: string | undefined;
+      }[];
+    },
+    "links",
+    "id"
+  >;
+  deleteLinks: string[];
+  setDeleteLinks: Dispatch<SetStateAction<string[]>>;
+  control: Control<InferredFormSchema>;
+  index: number;
+  remove: UseFieldArrayRemove;
+}) => (
+  <>
+    <div className="flex justify-between">
+      <div className="flex cursor-pointer items-center gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="6"
+          fill="none"
+          viewBox="0 0 12 6"
+        >
+          <path fill="#737373" d="M0 0h12v1H0zM0 5h12v1H0z" />
+        </svg>
+        <h5 className="select-none font-bold text-[#737373]">{`Link #${link.priority}`}</h5>
+      </div>
+      <h5
+        className="cursor-pointer text-[#737373]"
+        onClick={() => {
+          if (link.linkId) {
+            setDeleteLinks([...deleteLinks, link.linkId]);
+          }
+          remove(index);
+        }}
+      >
+        Remove
+      </h5>
+    </div>
+    <PlatformSelector control={control} index={index} />
+    <UrlInput control={control} index={index} />
+  </>
 );
 
 export default CustomizeLinksForm;
