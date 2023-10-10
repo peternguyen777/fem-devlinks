@@ -38,13 +38,7 @@ export const formSchema = z.object({
 
 export type InferredFormSchema = z.infer<typeof formSchema>;
 
-const CustomizeLinksForm = ({
-  links,
-  setLinks,
-}: {
-  links: LinkState[];
-  setLinks: Dispatch<SetStateAction<LinkState[]>>;
-}) => {
+const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
   const form = useForm<InferredFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,12 +48,10 @@ const CustomizeLinksForm = ({
     reValidateMode: "onChange",
   });
 
-  const { fields, remove, append, replace } = useFieldArray<InferredFormSchema>(
-    {
-      control: form.control,
-      name: "links",
-    },
-  );
+  const { fields, remove, append, move } = useFieldArray<InferredFormSchema>({
+    control: form.control,
+    name: "links",
+  });
 
   const [deleteLinks, setDeleteLinks] = useState<string[]>([]);
 
@@ -94,13 +86,11 @@ const CustomizeLinksForm = ({
   };
 
   const handleDragEnd = (result: DropResult) => {
-    if (result.destination) {
-      const items = Array.from(links);
-      const [reorderedItem] = items.splice(result.source.index, 1);
-      reorderedItem && items.splice(result.destination.index, 0, reorderedItem);
-      setLinks(items);
-      replace(items);
+    if (!result.destination) {
+      return;
     }
+
+    move(result.source.index, result.destination.index);
   };
 
   return (
@@ -181,10 +171,11 @@ const CustomizeLinksForm = ({
             <Button
               variant="dlPrimary"
               className="h-auto w-full py-[11px] md:w-fit md:px-[27px]"
-              // disabled={
-              //   (links.length === 0 && fields.length === 0) ||
-              //   !form.formState.isDirty
-              // }
+              disabled={
+                (links.length === 0 && fields.length === 0) ||
+                !form.formState.isDirty ||
+                fields.length > 5
+              }
               type="submit"
             >
               Save
