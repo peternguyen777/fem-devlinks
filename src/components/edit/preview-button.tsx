@@ -11,7 +11,7 @@ const PreviewButton = ({ slug }: { slug: string }) => {
       type="button"
       onClick={() => router.push(`/${slug}`)}
     >
-      Preview
+      Go to Profile
     </Button>
   );
 };

@@ -47,11 +47,22 @@ export function UserNav({ data }: { data: Profile }) {
         <DropdownMenuGroup>
           <DropdownMenuItem
             onClick={() => {
+              router.push(`/${slug}`);
+            }}
+            className="cursor-pointer"
+          >
+            Devlinks Profile
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+            onClick={() => {
               router.push("/edit/profile");
             }}
             className="cursor-pointer"
           >
-            Profile
+            Profile details
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
@@ -60,14 +71,6 @@ export function UserNav({ data }: { data: Profile }) {
             className="cursor-pointer"
           >
             Links
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              router.push(`/${slug}`);
-            }}
-            className="cursor-pointer"
-          >
-            Preview
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

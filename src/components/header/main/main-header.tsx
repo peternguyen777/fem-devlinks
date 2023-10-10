@@ -25,13 +25,13 @@ const MainHeader = ({ data }: { data?: Profile }) => {
         {user && data ? (
           <>
             <div className="absolute left-1/2 flex -translate-x-1/2 md:relative md:left-auto md:translate-x-0">
-              <LinksTab
-                currentRoute={currentRoute}
-                onClick={() => void router.push("/edit/links")}
-              />
               <ProfileTab
                 currentRoute={currentRoute}
                 onClick={() => void router.push("/edit/profile")}
+              />
+              <LinksTab
+                currentRoute={currentRoute}
+                onClick={() => void router.push("/edit/links")}
               />
             </div>
             <UserNav data={data} />
