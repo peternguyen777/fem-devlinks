@@ -138,7 +138,8 @@ const CustomizeLinksForm = ({ links }: { links: LinkState[] }) => {
                         {(provided, snapshot) => (
                           <div
                             className={`mb-6 w-full space-y-3 rounded-lg bg-[#FAFAFA] p-5  ${
-                              snapshot.isDragging && `shadow-lg ring-2`
+                              snapshot.isDragging &&
+                              `shadow-xl ring-2 ring-[#633CFF]`
                             }`}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
