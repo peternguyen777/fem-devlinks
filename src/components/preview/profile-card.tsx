@@ -10,12 +10,9 @@ import {
 const ProfileCard = ({ data }: { data: Profile }) => {
   const { email, firstName, lastName, image, links } = data;
 
-  console.log(image);
-
   return (
     <main className="relative">
-      <div className="hidden h-[230px] rounded-b-[24px] bg-[#633CFF] md:flex"></div>
-      <div className="absolute top-0 w-full pt-[60px] md:pt-[102px]">
+      <div className="absolute top-0 w-full py-[60px] md:-top-[150px] md:pb-[102px] md:pt-0">
         <div className="mx-auto flex w-fit flex-col items-center md:rounded-[24px] md:bg-white md:p-14 md:shadow-lg">
           {image ? (
             <Image

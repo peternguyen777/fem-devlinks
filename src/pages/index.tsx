@@ -31,18 +31,22 @@ export default function Home() {
             <span className="text-[hsl(280,100%,70%)]">Devlinks</span> Landing
             Page
           </h1>
-
           <p className="text-2xl text-white">
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
           </p>
           {isLoaded && isSignedIn && (
-            <p className="text-2xl font-thin text-white">
-              Hello{" "}
-              <span className="font-semibold">
-                {user.primaryEmailAddress?.emailAddress ?? user.firstName}
-              </span>{" "}
-              welcome to Clerk
-            </p>
+            <>
+              <Link href="/edit/links" className="text-white">
+                Edit Links
+              </Link>
+              <p className="text-2xl font-thin text-white">
+                Hello{" "}
+                <span className="font-semibold">
+                  {user.primaryEmailAddress?.emailAddress ?? user.firstName}
+                </span>{" "}
+                welcome to Clerk
+              </p>
+            </>
           )}
         </div>
       </main>

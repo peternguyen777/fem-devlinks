@@ -13,6 +13,9 @@ import FirstNameInput from "../first-name-input";
 import LastNameInput from "../last-name-input";
 import SlugInput from "../slug-input";
 import ProfilePicture from "../profile-picture";
+import { useState } from "react";
+import { LogOut } from "lucide-react";
+import { useClerk } from "@clerk/nextjs";
 
 export const profileFormSchema = z.object({
   firstName: z.string().nonempty("Required"),
@@ -29,6 +32,9 @@ export const profileFormSchema = z.object({
 export type InferredProfileFormSchema = z.infer<typeof profileFormSchema>;
 
 const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
+  const [isSlugTaken, setIsSlugTaken] = useState(false);
+  const { signOut } = useClerk();
+
   const form = useForm<InferredProfileFormSchema>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -74,7 +80,15 @@ const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-1 flex-col"
         >
-          <h3>Profile Details</h3>
+          <div className="flex items-center justify-between">
+            <h3>Profile Details</h3>
+            <div className="flex h-9 w-9 items-center justify-center">
+              <LogOut
+                className="cursor-pointer text-[#737373] hover:text-[#633CFF]"
+                onClick={() => signOut()}
+              />
+            </div>
+          </div>
           <p className="mt-2 text-[#737373]">
             Add your details to create a personal touch to your profile.
           </p>
@@ -85,7 +99,10 @@ const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
               <FirstNameInput control={form.control} />
               <LastNameInput control={form.control} />
               <EmailInput control={form.control} />
-              <SlugInput control={form.control} />
+              <SlugInput
+                control={form.control}
+                setSlugTakenError={setIsSlugTaken}
+              />
             </div>
           </div>
 
@@ -95,7 +112,7 @@ const ProfileDetailsForm = ({ profile }: { profile: Profile }) => {
             <Button
               variant="dlPrimary"
               className="h-auto w-full py-[11px] md:w-fit md:px-[27px]"
-              disabled={!form.formState.isDirty}
+              disabled={!form.formState.isDirty || isSlugTaken}
               type="submit"
             >
               Save
