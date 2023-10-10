@@ -208,17 +208,7 @@ const LinkCard = ({
   index,
   remove,
 }: {
-  link: FieldArrayWithId<
-    {
-      links: {
-        linkName: string;
-        url: string;
-        linkId?: string | undefined;
-      }[];
-    },
-    "links",
-    "id"
-  >;
+  link: FieldArrayWithId<InferredFormSchema, "links", "id">;
   deleteLinks: string[];
   setDeleteLinks: Dispatch<SetStateAction<string[]>>;
   control: Control<InferredFormSchema>;
