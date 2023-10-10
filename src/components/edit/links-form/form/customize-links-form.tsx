@@ -40,6 +40,7 @@ export type InferredFormSchema = z.infer<typeof formSchema>;
 
 const CustomizeLinksForm = ({
   links,
+  setLinks,
 }: {
   links: LinkState[];
   setLinks: Dispatch<SetStateAction<LinkState[]>>;
@@ -89,7 +90,6 @@ const CustomizeLinksForm = ({
   });
 
   const onSubmit = (values: InferredFormSchema) => {
-    console.log("submit values:", values);
     updateLinks.mutate({ ...values, deleteLinks });
   };
 
@@ -98,7 +98,7 @@ const CustomizeLinksForm = ({
       const items = Array.from(links);
       const [reorderedItem] = items.splice(result.source.index, 1);
       reorderedItem && items.splice(result.destination.index, 0, reorderedItem);
-
+      setLinks(items);
       replace(items);
     }
   };
@@ -181,10 +181,10 @@ const CustomizeLinksForm = ({
             <Button
               variant="dlPrimary"
               className="h-auto w-full py-[11px] md:w-fit md:px-[27px]"
-              disabled={
-                (links.length === 0 && fields.length === 0) ||
-                !form.formState.isDirty
-              }
+              // disabled={
+              //   (links.length === 0 && fields.length === 0) ||
+              //   !form.formState.isDirty
+              // }
               type="submit"
             >
               Save
