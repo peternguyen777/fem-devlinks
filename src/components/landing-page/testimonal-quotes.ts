@@ -8,13 +8,14 @@ export const QUOTES = [
     image: "/testimonial-images/jasmine-patel.png",
   },
   {
-    name: "Muhammad Ali",
-    title: "Student",
+    name: "Sophia Miller",
+    title: "Engineering Manager",
     testimonial:
-      "As a tech student, Devlinks is a game-changer. It's a fantastic platform to share my work and connect with employers.",
-    source: "twitter",
-    image: "/testimonial-images/muhammad-ali.png",
+      "As an engineering manager, DevLinks has been instrumental in building and leading high-performing engineering teams. It's an exceptional resource for identifying top talent, streamlining recruitment processes, and ensuring successful project deliveries. DevLinks simplifies the task of connecting with seasoned professionals in the tech world.",
+    source: "linkedin",
+    image: "/testimonial-images/sophia-miller.png",
   },
+
   {
     name: "Olivia Parker",
     title: "Product Manager",
@@ -72,12 +73,12 @@ export const QUOTES = [
     image: "/testimonial-images/elena-lopez.png",
   },
   {
-    name: "Carlos Rodriguez",
-    title: "Developer",
+    name: "Emily Hughes",
+    title: "Staff Software Engineer",
     testimonial:
-      "Devlinks has revolutionized how I present myself online as a developer. It offers a streamlined solution for consolidating my professional links. I can showcase my portfolio, GitHub, LinkedIn, and more with ease. It's a must-have for tech pros.",
-    source: "twitter",
-    image: "/testimonial-images/carlos-rodriguez.png",
+      "DevLinks has transformed my role as a staff software engineer. I can easily showcase my extensive portfolio, share my expertise, and collaborate with talented peers in the industry. The platform has become the go-to place for connecting with senior engineers, exchanging knowledge, and fostering innovation.",
+    source: "github",
+    image: "/testimonial-images/emily-hughes.png",
   },
   {
     name: "Jamal Johnson",
@@ -94,5 +95,30 @@ export const QUOTES = [
       "Devlinks simplifies event organization and resource sharing. An essential resource for tech communities.",
     source: "github",
     image: "/testimonial-images/aisha-khan.png",
+  },
+  {
+    name: "Oliver Patel",
+    title: "Staff Software Engineer",
+    testimonial:
+      "DevLinks provides me with a unique platform to share my expertise and experience as a staff software engineer. It's an excellent resource for networking with other senior professionals in the industry. I've found valuable collaborations and mentorship opportunities through DevLinks, making it an indispensable part of my career.",
+    source: "linkedin",
+    image: "/testimonial-images/oliver-patel.png",
+  },
+
+  {
+    name: "Muhammad Ali",
+    title: "Student",
+    testimonial:
+      "As a tech student, Devlinks is a game-changer. It's a fantastic platform to share my work and connect with employers.",
+    source: "twitter",
+    image: "/testimonial-images/muhammad-ali.png",
+  },
+  {
+    name: "Maria Clara Santos Reyes",
+    title: "Engineering Manager",
+    testimonial:
+      "DevLinks is my go-to platform for effective team management and collaboration. As an engineering manager, it enables me to discover and engage with skilled engineers and architects. DevLinks has played a crucial role in the success of my teams and projects, making it an indispensable tool for engineering leaders.",
+    source: "twitter",
+    image: "/testimonial-images/maria-clara.png",
   },
 ];
