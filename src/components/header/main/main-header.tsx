@@ -14,17 +14,18 @@ const MainHeader = ({ data }: { data?: Profile }) => {
   const { user } = useUser();
   const router = useRouter();
   const currentRoute = router.pathname;
+  const isLoggedIn = user && data;
 
   return (
     <div className="sticky top-0 z-50 bg-[#FAFAFA] md:p-6">
-      <div className="relative flex items-center justify-between rounded-b-xl bg-background px-6 py-4 shadow-lg md:rounded-xl">
+      <div className="relative flex items-center justify-between rounded-b-xl bg-white px-6 py-4 shadow-lg md:rounded-xl">
         <>
           <LogoSmall onClick={() => void router.push("/")} />
           <LogoLarge onClick={() => void router.push("/")} />
         </>
-        {user && data ? (
+        {isLoggedIn && (
           <>
-            <div className="absolute left-1/2 flex -translate-x-1/2 md:relative md:left-auto md:translate-x-0">
+            <div>
               <ProfileTab
                 currentRoute={currentRoute}
                 onClick={() => void router.push("/edit/profile")}
@@ -36,7 +37,8 @@ const MainHeader = ({ data }: { data?: Profile }) => {
             </div>
             <UserNav data={data} />
           </>
-        ) : (
+        )}
+        {!isLoggedIn && (
           <>
             <div className="flex items-center gap-4 md:gap-10">
               <h4

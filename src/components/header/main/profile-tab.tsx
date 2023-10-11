@@ -9,10 +9,8 @@ const ProfileTab = ({
 }) => (
   <Button
     variant="dlTab"
-    className={`group h-auto px-[27px] py-[11px] ${
-      currentRoute === "/edit/profile"
-        ? `bg-[#EFEBFF] text-[#633CFF]  `
-        : `bg-background`
+    className={`group h-auto px-[27px] py-[11px] transition-none ${
+      currentRoute === "/edit/profile" && `bg-[#EFEBFF] text-[#633CFF]`
     } md:gap-2`}
     onClick={onClick}
   >
