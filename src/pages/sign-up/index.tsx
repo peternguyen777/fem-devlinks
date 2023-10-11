@@ -14,7 +14,7 @@ export default function SignUpPage() {
   const [email, setEmail] = useState<string | undefined>();
 
   if (isSignedIn) {
-    router.push("/");
+    router.push("/edit/links");
   }
 
   return (

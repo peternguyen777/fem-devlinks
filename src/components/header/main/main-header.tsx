@@ -9,6 +9,7 @@ import LogoSmall from "../logo-small";
 import LinksTab from "./links-tab";
 import ProfileTab from "./profile-tab";
 import { UserNav } from "./user-nav";
+import Link from "next/link";
 
 const MainHeader = ({ data }: { data?: Profile }) => {
   const { user } = useUser();
@@ -40,7 +41,12 @@ const MainHeader = ({ data }: { data?: Profile }) => {
         )}
         {!isLoggedIn && (
           <>
-            <div className="flex items-center gap-4 md:gap-10">
+            <div className="flex items-center gap-4 md:gap-8">
+              <Link href="#pricing">
+                <p className="hidden cursor-pointer text-[#737373] md:flex">
+                  Pricing
+                </p>
+              </Link>
               <h4
                 onClick={() => router.push("/sign-in")}
                 className="cursor-pointer text-[#737373] hover:text-[#633CFF]"
@@ -51,7 +57,7 @@ const MainHeader = ({ data }: { data?: Profile }) => {
                 variant="dlSecondary"
                 type="button"
                 onClick={() => router.push("/sign-up")}
-                className="h-auto px-4 py-2 md:px-[27px]"
+                className="h-auto px-4 py-2 md:px-[27px] "
               >
                 Sign up
               </Button>
