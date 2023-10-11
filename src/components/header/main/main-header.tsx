@@ -18,7 +18,7 @@ const MainHeader = ({ data }: { data?: Profile }) => {
   const isLoggedIn = user && data;
 
   return (
-    <div className="sticky top-0 z-50 bg-[#FAFAFA] md:p-6">
+    <div className="sticky top-0 z-50 md:bg-gradient-to-b md:from-[#FAFAFA] md:via-[#FAFAFA] md:to-transparent md:p-6">
       <div className="relative flex items-center justify-between rounded-b-xl bg-white px-6 py-4 shadow-lg md:rounded-xl">
         <>
           <LogoSmall onClick={() => void router.push("/")} />
