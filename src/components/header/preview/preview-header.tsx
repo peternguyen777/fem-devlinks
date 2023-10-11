@@ -45,9 +45,7 @@ const PreviewHeader = ({ data }: { data: Profile }) => {
         {isProfileOwner ? (
           <Button
             variant="dlSecondary"
-            className={`h-auto py-[11px] md:px-[27px] ${
-              isProfileOwner ? `md:px-[27px]` : `px-[27px]`
-            }`}
+            className="h-auto py-2 md:px-[27px]"
             onClick={() => router.push("/edit/links")}
           >
             Back to Editor
@@ -63,9 +61,7 @@ const PreviewHeader = ({ data }: { data: Profile }) => {
         )}
         <Button
           variant="dlPrimary"
-          className={`h-auto py-[11px]  ${
-            isProfileOwner ? `md:px-[27px]` : `px-[27px]`
-          }`}
+          className="h-auto py-2"
           onClick={copyURLToClipboardHandler}
         >
           Share Link
