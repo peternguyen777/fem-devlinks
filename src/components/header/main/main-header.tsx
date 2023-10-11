@@ -51,7 +51,7 @@ const MainHeader = ({ data }: { data?: Profile }) => {
                 variant="dlSecondary"
                 type="button"
                 onClick={() => router.push("/sign-up")}
-                className="h-auto px-4 py-[11px] md:px-[27px]"
+                className="h-auto px-4 py-2 md:px-[27px]"
               >
                 Sign up
               </Button>
