@@ -92,7 +92,7 @@ const Pricing = () => {
       className="container mt-16 px-4 pb-16 sm:px-8 sm:pb-28 lg:mt-20"
       id="pricing"
     >
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-5xl">
         <h3 className="text-center">Pricing</h3>
         <p className="text-center text-[#737373]">
           Feature-packed tiers for every user

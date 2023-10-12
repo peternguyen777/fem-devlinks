@@ -67,7 +67,7 @@ const Testimonials = () => {
   return (
     <section className="container relative mt-16 px-4 sm:px-8 lg:mt-20">
       <div
-        className={`mx-auto max-w-4xl  ${
+        className={`mx-auto max-w-5xl  ${
           readMore
             ? "max-h-[none]"
             : "max-h-[800px] overflow-hidden lg:max-h-[1000px]"
