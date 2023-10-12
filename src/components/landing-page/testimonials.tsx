@@ -68,10 +68,14 @@ const Testimonials = () => {
     <section className="container relative mt-16 px-4 sm:px-8 lg:mt-20">
       <div
         className={`mx-auto max-w-4xl  ${
-          readMore ? "max-h-[none]" : "overflow-hidden lg:max-h-[1000px]"
+          readMore
+            ? "max-h-[none]"
+            : "max-h-[800px] overflow-hidden lg:max-h-[1000px]"
         }`}
       >
-        <h3 className="text-center">Join 500+ users already using devlinks</h3>
+        <h3 className="text-center">
+          Join thousands of users already using devlinks
+        </h3>
         <p className="text-center text-[#737373]">Why people love devlinks</p>
         <div className="mt-16 grid grid-cols-1 gap-4 lg:grid-cols-3">
           <TestimonalCard quotes={firstThird} />
@@ -81,12 +85,12 @@ const Testimonials = () => {
       </div>
       {!readMore && (
         <>
-          <div className="absolute bottom-20 left-0 right-0 hidden h-[500px] w-full bg-gradient-to-t from-[#FAFAFA] to-transparent lg:flex" />
+          <div className="absolute bottom-20 left-0 right-0 h-[250px] w-full bg-gradient-to-t from-[#FAFAFA] to-transparent lg:h-[500px] " />
           <Button
             type="button"
             variant="dlPrimary"
             onClick={() => setReadMore(true)}
-            className="z-20 mx-auto mt-10 hidden px-7 lg:flex"
+            className="z-20 mx-auto mt-10 flex px-7"
           >
             Read More
           </Button>

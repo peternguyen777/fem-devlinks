@@ -58,15 +58,15 @@ const PricingCard = ({
           <span className="flex text-2xl font-bold">{`${price}`}</span>
           <div className="mt-6">
             {properties.map((item, index) => (
-              <>
-                <div className="flex items-center gap-2" key={item}>
+              <div key={item}>
+                <div className="flex items-center gap-2">
                   {index === 0 ? <CheckCircle /> : <CheckCircle2 />}
                   <p className="text-sm">{item}</p>
                 </div>
                 {index < properties.length - 1 && (
                   <Separator className="my-2" />
                 )}
-              </>
+              </div>
             ))}
           </div>
         </div>
@@ -99,9 +99,9 @@ const Pricing = () => {
         </p>
         <div className="mt-16 grid grid-cols-1 gap-6 lg:mt-20 lg:grid-cols-3">
           <PricingCard
-            title="Trial"
+            title="Basic"
             description="Create a personalized DevLinks profile."
-            price="Free"
+            price="$0 forever"
             properties={["5 included links", "Unlimited link sharing"]}
             includeButton
           />
@@ -110,23 +110,23 @@ const Pricing = () => {
             description="DevLinks profile with extended customization options."
             price="$10 / month"
             properties={[
-              "Unlimited Links",
-              "Extended Themes",
-              "Featured in Devlinks Gallery",
+              "Unlimited links",
+              "Extended themes",
+              "Featured in devlinks gallery",
+              "LinkedIn integration",
             ]}
             includeComingSoon
             className="md:scale-105 md:shadow-lg"
           />
           <PricingCard
             title="Professional"
-            description="DevLinks profile for businesses with SEO and payment integrations."
+            description="DevLinks profile for businesses with SEO, analytics and integrations."
             price="$20 / month"
             properties={[
-              "Unlimited Links",
-              "Extended Themes",
-              "Featured in Devlinks Gallery",
-              "LinkedIn integration",
+              "All premium-level features",
               "Search engine optimization",
+              "Location-based analytics",
+              "Mailchimp, Zapier integrations",
             ]}
             includeComingSoon
           />
