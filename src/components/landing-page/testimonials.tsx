@@ -85,7 +85,7 @@ const Testimonials = () => {
       </div>
       {!readMore && (
         <>
-          <div className="absolute bottom-20 left-0 right-0 h-[250px] w-full bg-gradient-to-t from-[#FAFAFA] to-transparent lg:h-[500px] " />
+          <div className="absolute bottom-20 left-0 right-0 h-[200px] w-full bg-gradient-to-t from-[#FAFAFA] to-transparent lg:h-[250px] " />
           <Button
             type="button"
             variant="dlPrimary"
