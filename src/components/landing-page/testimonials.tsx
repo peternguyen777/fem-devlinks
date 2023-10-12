@@ -65,38 +65,39 @@ const Testimonials = () => {
   const lastThird = QUOTES.slice(secondThirdIndex);
 
   return (
-    <section className="container relative mt-16 px-4 sm:px-8 lg:mt-20">
-      <div
-        className={`mx-auto max-w-5xl  ${
-          readMore
-            ? "max-h-[none]"
-            : "max-h-[800px] overflow-hidden lg:max-h-[1000px]"
-        }`}
-      >
-        <h3 className="text-center">
-          Join thousands of users already using devlinks
-        </h3>
-        <p className="text-center text-[#737373]">Why people love devlinks</p>
-        <div className="mt-16 grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <TestimonalCard quotes={firstThird} />
-          <TestimonalCard quotes={secondThird} className="hidden lg:flex" />
-          <TestimonalCard quotes={lastThird} className="hidden lg:flex" />
+    <>
+      <div className="hidden lg:flex lg:h-[122px]" id="testimonials"></div>
+      <section className="container relative mt-16 px-4 sm:px-8 lg:mt-0">
+        <div
+          className={`mx-auto max-w-5xl  ${
+            readMore ? "max-h-[none]" : "max-h-[800px] overflow-hidden "
+          }`}
+        >
+          <h3 className="text-center">
+            Join thousands of users already using devlinks
+          </h3>
+          <p className="text-center text-[#737373]">Why people love devlinks</p>
+          <div className="mt-16 grid grid-cols-1 gap-4 lg:grid-cols-3">
+            <TestimonalCard quotes={firstThird} />
+            <TestimonalCard quotes={secondThird} className="hidden lg:flex" />
+            <TestimonalCard quotes={lastThird} className="hidden lg:flex" />
+          </div>
         </div>
-      </div>
-      {!readMore && (
-        <>
-          <div className="absolute bottom-20 left-0 right-0 h-[200px] w-full bg-gradient-to-t from-[#FAFAFA] to-transparent lg:h-[250px] " />
-          <Button
-            type="button"
-            variant="dlPrimary"
-            onClick={() => setReadMore(true)}
-            className="z-20 mx-auto mt-10 flex px-7"
-          >
-            Read More
-          </Button>
-        </>
-      )}
-    </section>
+        {!readMore && (
+          <>
+            <div className="absolute bottom-20 left-0 right-0 h-[200px] w-full bg-gradient-to-t from-[#FAFAFA] to-transparent" />
+            <Button
+              type="button"
+              variant="dlPrimary"
+              onClick={() => setReadMore(true)}
+              className="z-20 mx-auto mt-10 flex px-7"
+            >
+              Read More
+            </Button>
+          </>
+        )}
+      </section>
+    </>
   );
 };
 

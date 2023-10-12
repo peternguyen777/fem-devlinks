@@ -88,51 +88,51 @@ const PricingCard = ({
 
 const Pricing = () => {
   return (
-    <section
-      className="container mt-16 px-4 pb-16 sm:px-8 sm:pb-28 lg:mt-20"
-      id="pricing"
-    >
-      <div className="mx-auto max-w-5xl">
-        <h3 className="text-center">Pricing</h3>
-        <p className="text-center text-[#737373]">
-          Feature-packed tiers for every user
-        </p>
-        <div className="mt-16 grid grid-cols-1 gap-6 lg:mt-20 lg:grid-cols-3">
-          <PricingCard
-            title="Basic"
-            description="Create a personalized DevLinks profile."
-            price="$0 forever"
-            properties={["5 included links", "Unlimited link sharing"]}
-            includeButton
-          />
-          <PricingCard
-            title="Premium"
-            description="DevLinks profile with extended customization options."
-            price="$10 / month"
-            properties={[
-              "Unlimited links",
-              "Extended themes",
-              "Featured in devlinks gallery",
-              "LinkedIn integration",
-            ]}
-            includeComingSoon
-            className="md:scale-105 md:shadow-lg"
-          />
-          <PricingCard
-            title="Professional"
-            description="DevLinks profile for businesses with SEO, analytics and integrations."
-            price="$20 / month"
-            properties={[
-              "All premium-level features",
-              "Search engine optimization",
-              "Location-based analytics",
-              "Mailchimp, Zapier integrations",
-            ]}
-            includeComingSoon
-          />
+    <>
+      <div className="hidden lg:flex lg:h-[122px]" id="pricing" />
+      <section className="container mt-16 px-4 pb-16 sm:px-8 sm:pb-28 lg:mt-0">
+        <div className="mx-auto max-w-5xl">
+          <h3 className="text-center">Pricing</h3>
+          <p className="text-center text-[#737373]">
+            Feature-packed tiers for every user
+          </p>
+          <div className="mt-16 grid grid-cols-1 gap-6 lg:mt-20 lg:grid-cols-3">
+            <PricingCard
+              title="Basic"
+              description="Create a personalized DevLinks profile."
+              price="$0 forever"
+              properties={["5 included links", "Unlimited link sharing"]}
+              includeButton
+            />
+            <PricingCard
+              title="Premium"
+              description="DevLinks profile with extended customization options."
+              price="$10 / month"
+              properties={[
+                "Unlimited links",
+                "Extended themes",
+                "Featured in devlinks gallery",
+                "LinkedIn integration",
+              ]}
+              includeComingSoon
+              className="md:scale-105 md:shadow-lg"
+            />
+            <PricingCard
+              title="Professional"
+              description="DevLinks profile for businesses with SEO, analytics and integrations."
+              price="$20 / month"
+              properties={[
+                "All premium-level features",
+                "Search engine optimization",
+                "Location-based analytics",
+                "Mailchimp, Zapier integrations",
+              ]}
+              includeComingSoon
+            />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
