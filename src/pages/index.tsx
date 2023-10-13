@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Footer from "~/components/footer/footer";
 import MainHeader from "~/components/header/main/main-header";
+import DemoSection from "~/components/landing-page/demo-section";
 import Pricing from "~/components/landing-page/pricing";
 import Testimonials from "~/components/landing-page/testimonials";
 import { api } from "~/utils/api";
@@ -19,7 +20,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainHeader data={data} />
-      <main className="mx-auto flex max-w-7xl flex-1 flex-col items-center">
+      <main className="mx-auto flex flex-1 flex-col items-center">
+        <DemoSection />
         <Testimonials />
         <Pricing />
       </main>

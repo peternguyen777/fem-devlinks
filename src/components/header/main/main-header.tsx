@@ -42,6 +42,16 @@ const MainHeader = ({ data }: { data?: Profile }) => {
         {!isLoggedIn && (
           <>
             <div className="flex items-center gap-4 md:gap-8">
+              <Link href="#demo">
+                <p className="hidden cursor-pointer text-[#737373] md:flex">
+                  Demo
+                </p>
+              </Link>
+              <Link href="#testimonials">
+                <p className="hidden cursor-pointer text-[#737373] md:flex">
+                  Testimonials
+                </p>
+              </Link>
               <Link href="#pricing">
                 <p className="hidden cursor-pointer text-[#737373] md:flex">
                   Pricing

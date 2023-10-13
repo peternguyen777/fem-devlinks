@@ -114,7 +114,7 @@ export const QUOTES = [
     image: "/testimonial-images/muhammad-ali.png",
   },
   {
-    name: "Maria Clara Santos Reyes",
+    name: "Maria Clara Santos",
     title: "Engineering Manager",
     testimonial:
       "DevLinks is my go-to platform for effective team management and collaboration. As an engineering manager, it enables me to discover and engage with skilled engineers and architects. DevLinks has played a crucial role in the success of my teams and projects, making it an indispensable tool for engineering leaders.",
