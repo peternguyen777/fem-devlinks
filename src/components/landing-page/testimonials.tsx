@@ -67,7 +67,7 @@ const Testimonials = () => {
   return (
     <>
       <div className="hidden lg:flex lg:h-[122px]" id="testimonials"></div>
-      <section className="container relative mt-16 px-4 sm:px-8 lg:mt-0">
+      <section className="container relative mt-24 px-4 sm:px-8 lg:mt-0">
         <div
           className={`mx-auto max-w-5xl  ${
             readMore ? "max-h-[none]" : "max-h-[800px] overflow-hidden "

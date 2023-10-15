@@ -7,7 +7,7 @@ const PreviewButton = ({ slug }: { slug: string }) => {
   return (
     <Button
       variant="dlSecondary"
-      className="h-auto  px-[27px] py-[11px]"
+      className="h-auto px-[27px] py-[11px]"
       type="button"
       onClick={() => router.push(`/${slug}`)}
     >

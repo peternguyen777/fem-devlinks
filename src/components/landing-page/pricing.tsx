@@ -38,7 +38,7 @@ const PricingCard = ({
   return (
     <Card
       className={cn(
-        "relative cursor-pointer transition-all duration-200 sm:hover:scale-105 sm:hover:shadow-lg sm:hover:outline sm:hover:outline-2 sm:hover:outline-offset-2 sm:hover:outline-[#633CFF]",
+        "relative cursor-pointer transition-all duration-200 lg:hover:scale-105 lg:hover:shadow-lg lg:hover:outline lg:hover:outline-2 lg:hover:outline-offset-2 lg:hover:outline-[#633CFF]",
         className,
       )}
     >
@@ -90,13 +90,13 @@ const Pricing = () => {
   return (
     <>
       <div className="hidden lg:flex lg:h-[122px]" id="pricing" />
-      <section className="container mt-16 px-4 pb-16 sm:px-8 sm:pb-28 lg:mt-0">
+      <section className="container mt-24 px-4 pb-16 sm:px-8 sm:pb-28 lg:mt-0">
         <div className="mx-auto max-w-5xl">
           <h3 className="text-center">Pricing</h3>
           <p className="text-center text-[#737373]">
             Feature-packed tiers for every user
           </p>
-          <div className="mt-16 grid grid-cols-1 gap-6 lg:mt-20 lg:grid-cols-3">
+          <div className="mt-16 grid grid-cols-1 gap-4 lg:mt-20 lg:grid-cols-3 lg:gap-6">
             <PricingCard
               title="Basic"
               description="Create a personalized DevLinks profile."
