@@ -2,6 +2,7 @@ import Head from "next/head";
 import Footer from "~/components/footer/footer";
 import MainHeader from "~/components/header/main/main-header";
 import DemoSection from "~/components/landing-page/demo-section";
+import HeroBanner from "~/components/landing-page/hero-banner";
 import Pricing from "~/components/landing-page/pricing";
 import Testimonials from "~/components/landing-page/testimonials";
 import { api } from "~/utils/api";
@@ -21,6 +22,7 @@ export default function Home() {
       </Head>
       <MainHeader data={data} />
       <main className="mx-auto flex flex-1 flex-col items-center">
+        <HeroBanner />
         <DemoSection />
         <Testimonials />
         <Pricing />
