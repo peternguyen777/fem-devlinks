@@ -90,7 +90,7 @@ const Pricing = () => {
   return (
     <>
       <div className="hidden lg:flex lg:h-[122px]" id="pricing" />
-      <section className="container mt-16 px-4 pb-16 sm:px-8 sm:pb-28 lg:mt-0">
+      <section className="container mt-24 px-4 pb-16 sm:px-8 sm:pb-28 lg:mt-0">
         <div className="mx-auto max-w-5xl">
           <h3 className="text-center">Pricing</h3>
           <p className="text-center text-[#737373]">
