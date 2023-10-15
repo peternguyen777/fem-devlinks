@@ -14,7 +14,7 @@ const HeroBanner = () => {
           for developers to seamlessly connect, showcase their portfolios, and
           foster collaboration within a thriving tech community.
         </p>
-        <div className="flex items-center justify-center gap-4 lg:justify-start">
+        <div className="flex items-center justify-center lg:justify-start lg:gap-4">
           <Link href="/sign-up">
             <Button
               variant="dlPrimary"
@@ -26,7 +26,7 @@ const HeroBanner = () => {
           <Link href="/#demo">
             <Button
               variant="dlSecondary"
-              className="h-auto w-fit px-[27px] py-[11px]"
+              className="hidden h-auto w-fit px-[27px] py-[11px] lg:flex"
             >
               Learn more
             </Button>
