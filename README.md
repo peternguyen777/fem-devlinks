@@ -1,28 +1,14 @@
-# Create T3 App
+<img width="1435" alt="Screenshot 2023-10-24 at 6 07 35 pm" src="https://github.com/peternguyen777/fem-devlinks/assets/83804066/c3ac575d-90d6-47c5-9cf0-4bd532f4141e">
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+### Deployment: https://fem-devlinks.vercel.app/
 
-## What's next? How do I make an app with this?
+**NextJS / Typescript / TRPC / TailwindCSS / PrismaORM / MySQL / Clerk Auth / UploadThing / React Beautiful DnD**
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+---
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+**_DevLinks_** is a link-sharing application that simplifies how software developers connect with startups, companies, or recruiters looking for programming talent. It offers a centralized platform to showcase and share various profiles and links, including portfolios, LinkedIn, resumes, GitHub, and other programming-related social media. This full-stack web application is built using the T3 stack, which includes Next.js, TypeScript, TRPC, and Tailwind CSS, prioritizing performance and development speed.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+On the front-end, the user interface is constructed with Tailwind and modified shadcn components, featuring a user-friendly drag-and-drop interface and validation through React Hook Form with Zod for data validation. On the backend, APIs are created with TRPC, with data management handled by Prisma ORM in a PlanetScale MySQL database. Custom sign-in/sign-up flows are developed around Clerk authentication, while file uploads are managed through UploadThing, a wrapper for Amazon S3.
 
-## Learn More
+DevLinks is currently free to use, allowing users to create a profile at their custom domain. Paid tiers will be developed in the future to expand the product offering, which will include SEO, analytics, and payment integration.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
